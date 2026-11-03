@@ -1,0 +1,36 @@
+# Routage Traefik (Dokploy) du nouveau site PS GROUP.
+# Copier dans /etc/dokploy/traefik/dynamic/psg-v2.yml après avoir remplacé
+# v2.psgroupsarl.com par le domaine voulu. Traefik le prend en compte à chaud.
+http:
+  routers:
+    psgv2-backend:
+      rule: Host(`v2.psgroupsarl.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`) || PathPrefix(`/media`))
+      service: psgv2-backend
+      entryPoints: [websecure]
+      priority: 100
+      tls:
+        certResolver: letsencrypt
+    psgv2-frontend:
+      rule: Host(`v2.psgroupsarl.com`)
+      service: psgv2-frontend
+      entryPoints: [websecure]
+      priority: 10
+      tls:
+        certResolver: letsencrypt
+    psgv2-http:
+      rule: Host(`v2.psgroupsarl.com`)
+      service: psgv2-frontend
+      entryPoints: [web]
+      middlewares: [redirect-to-https]
+
+  services:
+    psgv2-backend:
+      loadBalancer:
+        servers:
+          - url: http://psgv2-backend:8000
+        passHostHeader: true
+    psgv2-frontend:
+      loadBalancer:
+        servers:
+          - url: http://psgv2-frontend:3000
+        passHostHeader: true

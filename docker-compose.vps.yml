@@ -1,0 +1,29 @@
+# Surcharge pour un serveur géré par Dokploy (Traefik occupe déjà les ports 80/443).
+# - Caddy n'est pas démarré et aucun port n'est publié sur l'hôte.
+# - frontend et backend rejoignent le réseau de Traefik ; le routage HTTPS est
+#   décrit dans deploy/traefik-psg-v2.yml (à copier dans /etc/dokploy/traefik/dynamic/).
+#
+# docker compose -f docker-compose.yml -f docker-compose.vps.yml -p psgv2 up -d --build
+services:
+  db:
+    mem_limit: 512m
+
+  backend:
+    container_name: psgv2-backend
+    mem_limit: 512m
+    environment:
+      DJANGO_ALLOWED_HOSTS: ${SITE_DOMAIN},backend,psgv2-backend
+    networks: [default, dokploy-network]
+
+  frontend:
+    container_name: psgv2-frontend
+    mem_limit: 512m
+    networks: [default, dokploy-network]
+
+  caddy:
+    profiles: ["caddy"]
+    ports: !reset []
+
+networks:
+  dokploy-network:
+    external: true
