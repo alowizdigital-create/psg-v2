@@ -1,0 +1,65 @@
+# Nouveau site PS GROUP : PostgreSQL + Django (admin/API) + Next.js (site) + Caddy (HTTPS).
+# Démarrage : cp .env.example .env  (puis le compléter)  &&  docker compose up -d --build
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: psg
+      POSTGRES_USER: psg
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?à définir dans .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U psg -d psg"]
+      interval: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://psg:${POSTGRES_PASSWORD}@db:5432/psg
+      DJANGO_ALLOWED_HOSTS: ${SITE_DOMAIN:-localhost},backend
+      DJANGO_CSRF_TRUSTED_ORIGINS: https://${SITE_DOMAIN:-localhost}
+      FRONTEND_URL: https://${SITE_DOMAIN:-localhost}
+      FRONTEND_INTERNAL_URL: http://frontend:3000
+      ADMIN_PUBLIC_URL: https://${SITE_DOMAIN:-localhost}
+      DJANGO_NUM_PROXIES: "1"
+      DJANGO_MEDIA_ROOT: /app/media
+    volumes:
+      - media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    environment:
+      BACKEND_INTERNAL_URL: http://backend:8000
+      REVALIDATE_SECRET: ${FRONTEND_REVALIDATE_SECRET:?à définir dans .env}
+    depends_on:
+      - backend
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:-localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - media:/srv/media:ro
+      - caddy_data:/data
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  pgdata:
+  media:
+  caddy_data:

@@ -1,0 +1,30 @@
+# Remplacer {$SITE_DOMAIN} par le domaine (ex. nouveau.psgroupsarl.com) dans .env :
+# Caddy obtient et renouvelle automatiquement le certificat HTTPS.
+{$SITE_DOMAIN:localhost} {
+	encode zstd gzip
+
+	# Back-office, API et fichiers statiques de l'admin → Django
+	@django path /admin /admin/* /api/* /static/*
+	handle @django {
+		reverse_proxy backend:8000
+	}
+
+	# Images téléversées dans l'admin (servies directement, mises en cache)
+	handle /media/* {
+		root * /srv
+		header Cache-Control "public, max-age=2592000"
+		file_server
+	}
+
+	# Tout le reste → site Next.js
+	handle {
+		reverse_proxy frontend:3000
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+}

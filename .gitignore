@@ -10,3 +10,5 @@ backend/media/
 backend/staticfiles/
 backend/db.sqlite3
 .pytest_cache/
+frontend/tsconfig.tsbuildinfo
+frontend/next-env.d.ts
