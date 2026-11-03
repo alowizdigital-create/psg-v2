@@ -13,7 +13,7 @@ export default function Success({ reference, titre, choix = [], total }: {
 }) {
   const reduit = useReducedMotion();
   return (
-    <motion.div className="success" initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }}
+    <motion.div id="confirmation" className="success" initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} role="status">
       {!reduit && Array.from({ length: 36 }).map((_, i) => (
         <motion.span key={i} className="confetti"

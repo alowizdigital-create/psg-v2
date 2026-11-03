@@ -69,8 +69,18 @@ export default function OfferConfigurator({ offre }: { offre: OffreDetail }) {
     choix: selection.map(({ o }) => o.id),
     avantEnvoi: verifier,
     surErreursGroupes: setErreursGroupes,
-    surSucces: (ref) => { setReference(ref); window.scrollTo({ top: 0, behavior: "smooth" }); },
+    surSucces: setReference,
   };
+
+  // Après l'envoi, la page se limite au message de remerciement : on masque
+  // la description et la galerie de l'offre et on se place sur le message.
+  useEffect(() => {
+    if (!reference) return;
+    document.body.classList.add("demande-envoyee");
+    requestAnimationFrame(() =>
+      document.getElementById("confirmation")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    return () => document.body.classList.remove("demande-envoyee");
+  }, [reference]);
 
   if (reference) {
     return (

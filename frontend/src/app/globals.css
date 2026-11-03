@@ -488,3 +488,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 
 .spin { animation: spin 0.9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* Après l'envoi d'une demande : seul le message de remerciement reste affiché. */
+.demande-envoyee .offer-intro { display: none; }
+#confirmation { scroll-margin-top: 110px; }

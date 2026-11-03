@@ -40,7 +40,7 @@ export default async function PageOffre({ params }: Props) {
       <section className="section" style={{ paddingTop: 50 }}>
         <div className="container">
           {(offre.description.length > 0 || photos.length > 1) && (
-            <Reveal className="prose" >
+            <Reveal className="prose offer-intro">
               {offre.description.map((p, i) => <p key={i}>{p}</p>)}
               {photos.length > 1 && <Gallery images={photos} mode="thumbs" />}
             </Reveal>
