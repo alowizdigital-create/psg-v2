@@ -96,7 +96,7 @@ def tableau_de_bord(context):
          "icone": "money", "ton": "bordeaux", "lien": "/admin/demandes/demande/"},
         {"valeur": offres.filter(publiee=True).count(), "label": "Offres publiées", "icone": "offre",
          "ton": "bordeaux", "lien": "/admin/catalog/offre/?publiee__exact=1"},
-        {"valeur": offres.filter(publiee=False).count(), "label": "Offres en brouillon", "icone": "section",
+        {"valeur": offres.filter(publiee=False).count(), "label": "Offres en brouillon", "icone": "brouillon",
          "ton": "gris", "lien": "/admin/catalog/offre/?publiee__exact=0"},
         {"valeur": demandes.filter(statut="contactee").count(), "label": "Clients contactés",
          "icone": "check", "ton": "vert", "lien": "/admin/demandes/demande/?statut__exact=contactee"},

@@ -88,10 +88,10 @@ body.psg { background: var(--psg-bg); font-size: 14px; }
   color: #4A3D3F !important; font-size: 14px; font-weight: 500; text-decoration: none !important; background: none; border: 0;
   cursor: pointer; font-family: inherit; text-align: left; transition: background .15s, color .15s;
 }
-.psg-nav-link svg { flex: none; color: #9C8F91; transition: color .15s; }
+.psg-nav-link .psg-i { flex: none; color: #9C8F91; transition: color .15s; }
 .psg-nav-link:hover { background: var(--psg-bg); color: var(--psg-ink) !important; }
 .psg-nav-link.active { background: var(--psg-bordeaux-soft); color: var(--psg-bordeaux) !important; font-weight: 600; }
-.psg-nav-link.active svg, .psg-nav-link:hover svg { color: var(--psg-bordeaux); }
+.psg-nav-link.active .psg-i, .psg-nav-link:hover .psg-i { color: var(--psg-bordeaux); }
 .psg-count { margin-left: auto; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: var(--psg-or); color: var(--psg-ink); font-size: 12px; text-align: center; }
 .psg-nav-foot { padding: 10px 12px 16px; border-top: 1px solid var(--psg-line); }
 .psg-nav-foot form { margin: 0; }
@@ -114,7 +114,7 @@ body.psg { background: var(--psg-bg); font-size: 14px; }
 }
 .psg-burger { display: none; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--psg-line); background: #fff; color: var(--psg-ink); cursor: pointer; place-items: center; }
 .psg-chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: var(--psg-bordeaux-soft); color: var(--psg-bordeaux); font-weight: 600; font-size: 13px; }
-.psg-chip svg { width: 16px; height: 16px; }
+.psg-chip .psg-i { width: 16px; height: 16px; }
 .psg-topbar-right { margin-left: auto; display: flex; align-items: center; gap: 16px; }
 .psg-bell { position: relative; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--psg-line); display: grid; place-items: center; color: var(--psg-ink) !important; background: #fff; }
 .psg-bell b { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: var(--psg-or); color: var(--psg-ink); font-size: 11px; display: grid; place-items: center; }
@@ -177,7 +177,7 @@ body.psg { background: var(--psg-bg); font-size: 14px; }
   border: 1px solid var(--psg-line); background: #fff; color: var(--psg-ink) !important; font-weight: 600; font-size: 14px;
   text-decoration: none !important; transition: background .15s, border-color .15s;
 }
-.psg-btn svg { width: 18px; height: 18px; }
+.psg-btn .psg-i { width: 18px; height: 18px; }
 .psg-btn:hover { background: var(--psg-bg); border-color: #DCCBC6; }
 .psg-btn-primary { background: var(--psg-bordeaux); border-color: var(--psg-bordeaux); color: #fff !important; }
 .psg-btn-primary:hover { background: var(--psg-bordeaux-2); border-color: var(--psg-bordeaux-2); }
@@ -286,3 +286,9 @@ body.login.psg .main { padding-left: 0; }
 #psg-sidebar button.psg-nav-link:hover { background: var(--psg-bg); }
 .psg .changelist-form-container, .psg #changelist .results { border-radius: var(--psg-radius); }
 #psg-topbar { height: 64px !important; min-height: 64px; box-sizing: border-box; }
+
+/* Icônes Font Awesome */
+.psg-i { display: inline-block; width: 20px; text-align: center; font-size: 16px; line-height: 1; flex: none; }
+.psg-card-ico .psg-i { font-size: 19px; width: auto; }
+.psg-bell .psg-i, .psg-burger .psg-i { font-size: 17px; }
+.psg-chip .psg-i { font-size: 13px; width: auto; }

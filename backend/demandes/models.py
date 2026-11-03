@@ -5,11 +5,11 @@ from django.utils import timezone
 class Demande(models.Model):
     NOUVELLE = "nouvelle"
     STATUTS = [
-        (NOUVELLE, "🆕 Nouvelle"),
-        ("contactee", "📞 Client contacté"),
-        ("confirmee", "✅ Confirmée"),
-        ("terminee", "🏁 Terminée"),
-        ("annulee", "❌ Annulée"),
+        (NOUVELLE, "Nouvelle"),
+        ("contactee", "Client contacté"),
+        ("confirmee", "Confirmée"),
+        ("terminee", "Terminée"),
+        ("annulee", "Annulée"),
     ]
 
     reference = models.CharField("référence", max_length=20, unique=True, blank=True, editable=False)

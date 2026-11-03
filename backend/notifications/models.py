@@ -14,7 +14,7 @@ class Notification(models.Model):
     EN_ATTENTE = "en_attente"
     ENVOYE = "envoye"
     ECHEC = "echec"
-    STATUTS = [(EN_ATTENTE, "⏳ En attente"), (ENVOYE, "✅ Envoyé"), (ECHEC, "⚠️ Échec")]
+    STATUTS = [(EN_ATTENTE, "En attente"), (ENVOYE, "Envoyé"), (ECHEC, "Échec")]
 
     demande = models.ForeignKey("demandes.Demande", on_delete=models.CASCADE,
                                 related_name="notifications", verbose_name="demande")
