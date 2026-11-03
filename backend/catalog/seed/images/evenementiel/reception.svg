@@ -1,0 +1,47 @@
+<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration fictive d'une table de reception decoree pour un mariage">
+  <defs>
+    <linearGradient id="bgRec" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#45101A"/>
+      <stop offset="100%" stop-color="#9A2438"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="360" fill="url(#bgRec)"/>
+  <!-- guirlande lumineuse -->
+  <path d="M20 40 Q240 100 460 40" fill="none" stroke="#F5B800" stroke-width="2" opacity="0.6"/>
+  <g fill="#F5B800">
+    <circle cx="60" cy="52" r="4"/>
+    <circle cx="140" cy="72" r="4"/>
+    <circle cx="240" cy="82" r="4"/>
+    <circle cx="340" cy="72" r="4"/>
+    <circle cx="420" cy="52" r="4"/>
+  </g>
+  <!-- table -->
+  <ellipse cx="240" cy="300" rx="210" ry="24" fill="#150808" opacity="0.35"/>
+  <rect x="60" y="255" width="360" height="18" rx="9" fill="#F8F1EC"/>
+  <rect x="60" y="255" width="360" height="55" fill="none"/>
+  <!-- assiettes -->
+  <g fill="#F8F1EC" stroke="#C99400" stroke-width="2">
+    <circle cx="140" cy="255" r="26"/>
+    <circle cx="240" cy="255" r="26"/>
+    <circle cx="340" cy="255" r="26"/>
+  </g>
+  <!-- bougies -->
+  <g>
+    <rect x="112" y="190" width="8" height="55" rx="4" fill="#F3D9C4"/>
+    <path d="M116 190 q-6 -14 0 -22 q6 8 0 22 Z" fill="#F5B800"/>
+    <rect x="236" y="175" width="8" height="70" rx="4" fill="#F3D9C4"/>
+    <path d="M240 175 q-6 -14 0 -22 q6 8 0 22 Z" fill="#F5B800"/>
+    <rect x="360" y="190" width="8" height="55" rx="4" fill="#F3D9C4"/>
+    <path d="M364 190 q-6 -14 0 -22 q6 8 0 22 Z" fill="#F5B800"/>
+  </g>
+  <!-- centre de table fleuri -->
+  <g fill="#E8A0A8">
+    <circle cx="240" cy="235" r="10"/>
+    <circle cx="222" cy="240" r="7"/>
+    <circle cx="258" cy="240" r="7"/>
+  </g>
+  <g fill="#F3D9C4">
+    <circle cx="235" cy="228" r="5"/>
+    <circle cx="248" cy="230" r="5"/>
+  </g>
+</svg>

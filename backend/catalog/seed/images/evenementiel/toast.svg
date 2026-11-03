@@ -1,0 +1,46 @@
+<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration fictive d'un toast avec des coupes de champagne">
+  <defs>
+    <linearGradient id="bgToast" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6E1524"/>
+      <stop offset="100%" stop-color="#F5B800"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF6DE" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#F5B800" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="360" fill="url(#bgToast)"/>
+  <ellipse cx="240" cy="330" rx="200" ry="20" fill="#150808" opacity="0.2"/>
+
+  <!-- coupe gauche (inclinee) -->
+  <g transform="translate(175,235) rotate(-18)">
+    <path d="M-28 -70 C-28 -30 -8 -10 0 0 L0 60 M0 60 h-18 M0 60 h18" fill="none" stroke="#F8F1EC" stroke-width="4" stroke-linecap="round"/>
+    <path d="M28 -70 C28 -30 8 -10 0 0" fill="none" stroke="#F8F1EC" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-24 -66 C-24 -34 -7 -14 0 -4 C7 -14 24 -34 24 -66 Z" fill="url(#glass)"/>
+  </g>
+
+  <!-- coupe droite (inclinee, choc au centre) -->
+  <g transform="translate(305,235) rotate(18)">
+    <path d="M-28 -70 C-28 -30 -8 -10 0 0 L0 60 M0 60 h-18 M0 60 h18" fill="none" stroke="#F8F1EC" stroke-width="4" stroke-linecap="round"/>
+    <path d="M28 -70 C28 -30 8 -10 0 0" fill="none" stroke="#F8F1EC" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-24 -66 C-24 -34 -7 -14 0 -4 C7 -14 24 -34 24 -66 Z" fill="url(#glass)"/>
+  </g>
+
+  <!-- eclat au choc -->
+  <g stroke="#FFF6DE" stroke-width="3" stroke-linecap="round">
+    <line x1="240" y1="150" x2="240" y2="128"/>
+    <line x1="222" y1="158" x2="206" y2="146"/>
+    <line x1="258" y1="158" x2="274" y2="146"/>
+    <line x1="240" y1="172" x2="240" y2="192"/>
+  </g>
+
+  <!-- bulles -->
+  <g fill="#F8F1EC" opacity="0.85">
+    <circle cx="178" cy="200" r="3"/>
+    <circle cx="188" cy="185" r="2"/>
+    <circle cx="170" cy="215" r="2"/>
+    <circle cx="302" cy="200" r="3"/>
+    <circle cx="292" cy="185" r="2"/>
+    <circle cx="310" cy="215" r="2"/>
+  </g>
+</svg>

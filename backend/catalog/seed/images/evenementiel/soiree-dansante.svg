@@ -1,0 +1,43 @@
+<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration fictive d'une soiree dansante avec boule a facettes">
+  <defs>
+    <linearGradient id="bgDance" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#150808"/>
+      <stop offset="100%" stop-color="#2B0D14"/>
+    </linearGradient>
+    <radialGradient id="ball" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0%" stop-color="#FFE8A3"/>
+      <stop offset="100%" stop-color="#C99400"/>
+    </radialGradient>
+  </defs>
+  <rect width="480" height="360" fill="url(#bgDance)"/>
+  <!-- faisceaux -->
+  <g opacity="0.35">
+    <polygon points="240,70 40,340 130,340" fill="#F5B800"/>
+    <polygon points="240,70 240,340 330,340" fill="#9A2438"/>
+    <polygon points="240,70 350,340 440,340" fill="#F5B800"/>
+  </g>
+  <!-- boule a facettes -->
+  <circle cx="240" cy="70" r="28" fill="url(#ball)"/>
+  <g stroke="#150808" stroke-width="1" opacity="0.5">
+    <line x1="212" y1="70" x2="268" y2="70"/>
+    <line x1="240" y1="42" x2="240" y2="98"/>
+    <line x1="220" y1="50" x2="260" y2="90"/>
+    <line x1="260" y1="50" x2="220" y2="90"/>
+  </g>
+  <line x1="240" y1="0" x2="240" y2="42" stroke="#6E5F60" stroke-width="2"/>
+  <!-- sol de la piste -->
+  <ellipse cx="240" cy="330" rx="220" ry="24" fill="#000" opacity="0.3"/>
+  <!-- silhouettes dansantes -->
+  <g fill="#F5B800">
+    <circle cx="150" cy="230" r="14"/>
+    <path d="M150 245 l-22 55 M150 245 l24 50 M150 245 v40 M138 268 l-14 -18 M164 266 l16 -20" stroke="#F5B800" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+  <g fill="#F8F1EC">
+    <circle cx="240" cy="220" r="14"/>
+    <path d="M240 235 l-18 60 M240 235 l20 58 M240 235 v45 M226 255 l18 -14 M256 258 l-14 16" stroke="#F8F1EC" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+  <g fill="#E8A0A8">
+    <circle cx="330" cy="232" r="14"/>
+    <path d="M330 247 l-20 55 M330 247 l22 50 M330 247 v40 M316 268 l-16 16 M346 266 l16 -18" stroke="#E8A0A8" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

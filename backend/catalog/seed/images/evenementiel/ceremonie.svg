@@ -1,0 +1,45 @@
+<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration fictive d'une cérémonie de mariage sous une arche fleurie">
+  <defs>
+    <linearGradient id="bgCer" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2B0D14"/>
+      <stop offset="100%" stop-color="#6E1524"/>
+    </linearGradient>
+    <linearGradient id="archGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F5B800"/>
+      <stop offset="100%" stop-color="#C99400"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="360" fill="url(#bgCer)"/>
+  <ellipse cx="240" cy="330" rx="220" ry="26" fill="#000" opacity="0.18"/>
+  <!-- arche -->
+  <path d="M120 320 V150 Q120 60 240 60 Q360 60 360 150 V320" fill="none" stroke="url(#archGold)" stroke-width="10" stroke-linecap="round"/>
+  <!-- fleurs sur l'arche -->
+  <g fill="#F3D9C4">
+    <circle cx="120" cy="150" r="12"/>
+    <circle cx="360" cy="150" r="12"/>
+    <circle cx="150" cy="95" r="10"/>
+    <circle cx="330" cy="95" r="10"/>
+    <circle cx="240" cy="62" r="14"/>
+    <circle cx="195" cy="70" r="9"/>
+    <circle cx="285" cy="70" r="9"/>
+  </g>
+  <g fill="#E8A0A8">
+    <circle cx="128" cy="185" r="7"/>
+    <circle cx="352" cy="185" r="7"/>
+    <circle cx="240" cy="66" r="6"/>
+  </g>
+  <!-- silhouettes -->
+  <g fill="#150808">
+    <circle cx="205" cy="245" r="16"/>
+    <path d="M205 262 C185 262 178 300 178 320 H232 C232 300 225 262 205 262 Z"/>
+    <circle cx="275" cy="245" r="16"/>
+    <path d="M275 262 C255 262 248 300 248 320 H302 C302 300 295 262 275 262 Z"/>
+  </g>
+  <!-- allee de petales -->
+  <g fill="#F5B800" opacity="0.7">
+    <circle cx="240" cy="300" r="4"/>
+    <circle cx="222" cy="312" r="3"/>
+    <circle cx="258" cy="312" r="3"/>
+    <circle cx="240" cy="325" r="3.5"/>
+  </g>
+</svg>
