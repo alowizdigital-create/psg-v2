@@ -96,6 +96,8 @@ Sauvegardes à prévoir : le volume `pgdata` (base) et le volume `media` (images
 
 Le fournisseur se choisit dans `.env` (`SMS_PROVIDER`) :
 - `console` (défaut) : rien n'est envoyé, le SMS est écrit dans les logs. Pratique en attendant le fournisseur.
+- `techsoft` : **Techsoft SMS** (Cameroun). Renseigner `TECHSOFT_API_TOKEN` et `SMS_SENDER_ID` (nom d'expéditeur validé chez Techsoft, 11 caractères max).
+  Tester depuis le serveur : `docker compose exec backend python manage.py test_sms 6XXXXXXXX`
 - `twilio` : renseigner `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM`.
 - `http` : agrégateur local (MTN/Orange/Nexttel via un prestataire). Adapter le format de la requête dans `backend/notifications/sms.py` (`HttpProvider`) à l'API du prestataire retenu.
 

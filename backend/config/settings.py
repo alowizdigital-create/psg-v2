@@ -144,12 +144,14 @@ PUBLIC_BACKEND_URL = os.environ.get("PUBLIC_BACKEND_URL", "").rstrip("/")
 ADMIN_URL_FOR_LINKS = os.environ.get("ADMIN_PUBLIC_URL", "").rstrip("/")
 
 # --- Notifications ----------------------------------------------------------
-# Fournisseur SMS : "console" (affiche dans les logs), "twilio" ou "http" (agrégateur générique).
+# Fournisseur SMS : "console" (affiche dans les logs), "techsoft", "twilio" ou "http" (agrégateur générique).
 SMS_PROVIDER = os.environ.get("SMS_PROVIDER", "console")
 SMS_SENDER_ID = os.environ.get("SMS_SENDER_ID", "PSGROUP")
 # Envoi des notifications en arrière-plan pour répondre vite au client.
 NOTIFICATIONS_ASYNC = env_bool("NOTIFICATIONS_ASYNC", True)
 SMS_DEFAULT_COUNTRY_CODE = os.environ.get("SMS_DEFAULT_COUNTRY_CODE", "237")
+TECHSOFT_API_TOKEN = os.environ.get("TECHSOFT_API_TOKEN", "")
+TECHSOFT_API_URL = os.environ.get("TECHSOFT_API_URL", "https://app.techsoft-sms.com/api/http/sms/send")
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
 TWILIO_FROM = os.environ.get("TWILIO_FROM", "")

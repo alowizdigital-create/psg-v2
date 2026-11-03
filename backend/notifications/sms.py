@@ -6,6 +6,8 @@ Le fournisseur est choisi par la variable d'environnement SMS_PROVIDER :
   développement et en attendant l'ouverture d'un compte chez un fournisseur.
 - ``twilio`` : API Twilio (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM
   ou SMS_SENDER_ID).
+- ``techsoft`` : Techsoft SMS (Cameroun, app.techsoft-sms.com) — TECHSOFT_API_TOKEN
+  et SMS_SENDER_ID (nom d'expéditeur enregistré chez Techsoft).
 - ``http`` : agrégateur local générique. POST JSON
   ``{"to", "from", "message"}`` vers SMS_HTTP_URL avec l'en-tête
   ``Authorization: Bearer SMS_HTTP_TOKEN``. À adapter au format exact du
@@ -72,6 +74,38 @@ class TwilioProvider:
             raise SmsError(f"Twilio {reponse.status_code} : {reponse.text[:300]}")
 
 
+class TechsoftProvider:
+    """API HTTP de Techsoft SMS : POST JSON, numéro au format 237XXXXXXXXX."""
+
+    def send(self, to, message):
+        if not settings.TECHSOFT_API_TOKEN:
+            raise SmsError("TECHSOFT_API_TOKEN n'est pas configuré.")
+        try:
+            reponse = requests.post(
+                settings.TECHSOFT_API_URL,
+                json={
+                    "api_token": settings.TECHSOFT_API_TOKEN,
+                    "recipient": to.lstrip("+"),
+                    "sender_id": settings.SMS_SENDER_ID,
+                    "type": "plain",
+                    "message": message,
+                },
+                headers={"Accept": "application/json"},
+                timeout=20,
+            )
+        except requests.RequestException as exc:
+            raise SmsError(f"Techsoft injoignable : {exc}") from exc
+        if reponse.status_code >= 300:
+            raise SmsError(f"Techsoft {reponse.status_code} : {reponse.text[:300]}")
+        # Certaines API répondent 200 avec une erreur dans le corps JSON.
+        try:
+            corps = reponse.json()
+        except ValueError:
+            return
+        if isinstance(corps, dict) and str(corps.get("status", "")).lower() in ("error", "failed", "false"):
+            raise SmsError(f"Techsoft a refusé le SMS : {corps.get('message') or corps}")
+
+
 class HttpProvider:
     def send(self, to, message):
         if not settings.SMS_HTTP_URL:
@@ -86,7 +120,12 @@ class HttpProvider:
             raise SmsError(f"Fournisseur SMS {reponse.status_code} : {reponse.text[:300]}")
 
 
-PROVIDERS = {"console": ConsoleProvider, "twilio": TwilioProvider, "http": HttpProvider}
+PROVIDERS = {
+    "console": ConsoleProvider,
+    "techsoft": TechsoftProvider,
+    "twilio": TwilioProvider,
+    "http": HttpProvider,
+}
 
 
 def get_provider():
