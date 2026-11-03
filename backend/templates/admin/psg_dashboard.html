@@ -1,0 +1,71 @@
+{% load psg_admin %}
+<div class="psg-dash">
+  <div class="psg-dash-head">
+    <div>
+      <h1>Tableau de bord</h1>
+      <p>Bonjour {{ user.first_name|default:user.username }} — {{ aujourdhui|date:"l j F Y" }}</p>
+    </div>
+    <a class="psg-btn psg-btn-primary" href="/admin/catalog/offre/add/">{% icone "plus" %} Nouvelle offre</a>
+  </div>
+
+  <div class="psg-cards">
+    {% for c in cartes %}
+      <a class="psg-card psg-ton-{{ c.ton }}" href="{{ c.lien }}">
+        <span class="psg-card-ico">{% icone c.icone %}</span>
+        <span><strong>{{ c.valeur }}</strong><small>{{ c.label }}</small></span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="psg-grid">
+    <section class="psg-panel">
+      <header><h2>Dernières demandes</h2><a href="/admin/demandes/demande/">Tout voir →</a></header>
+      {% if dernieres %}
+        <div class="psg-table-wrap">
+          <table class="psg-table">
+            <thead><tr><th>Client</th><th>Référence</th><th>Offre</th><th>Statut</th><th>Total estimé</th><th>Date</th></tr></thead>
+            <tbody>
+              {% for d in dernieres %}
+                <tr>
+                  <td><strong>{{ d.nom }}</strong><small>{{ d.telephone }}</small></td>
+                  <td style="white-space:nowrap"><a href="/admin/demandes/demande/{{ d.pk }}/change/">{{ d.reference }}</a></td>
+                  <td>{{ d.offre_titre|default:"Demande de contact" }}<small>{{ d.entreprise|default:"" }}</small></td>
+                  <td><span class="psg-badge psg-statut-{{ d.statut }}">{{ d.get_statut_display }}</span></td>
+                  <td style="white-space:nowrap">{{ d.total_estime|fcfa }}</td>
+                  <td class="psg-muted">{{ d.cree_le|date:"j F Y H:i" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="psg-empty">Aucune demande pour le moment. Elles apparaîtront ici dès qu'un client enverra le formulaire d'une offre.</p>
+      {% endif %}
+    </section>
+
+    <div class="psg-side">
+      <section class="psg-panel">
+        <header><h2>Actions rapides</h2></header>
+        <div class="psg-actions">
+          <a class="psg-btn psg-btn-primary" href="/admin/catalog/offre/add/">{% icone "plus" %} Nouvelle offre</a>
+          <a class="psg-btn" href="/admin/demandes/demande/?statut__exact=nouvelle">{% icone "demande" %} Demandes à traiter</a>
+          <a class="psg-btn" href="/admin/catalog/entreprise/">{% icone "entreprise" %} {% if user.is_superuser %}Entreprises{% else %}Ma page entreprise{% endif %}</a>
+          {% if user.is_superuser %}
+            <a class="psg-btn" href="/admin/auth/user/add/">{% icone "user" %} Nouveau gestionnaire</a>
+            <a class="psg-btn" href="/admin/catalog/sitesettings/">{% icone "sitesettings" %} Réglages du site</a>
+          {% endif %}
+          {% if site_url %}<a class="psg-btn" href="{{ site_url }}" target="_blank" rel="noopener">{% icone "site" %} Voir le site</a>{% endif %}
+        </div>
+      </section>
+      <section class="psg-panel">
+        <header><h2>Demandes — 14 derniers jours</h2></header>
+        <div class="psg-bars" role="img" aria-label="Nombre de demandes par jour sur 14 jours">
+          {% for j in jours %}
+            <span class="psg-bar" style="height:{{ j.hauteur }}%" title="{{ j.date|date:'j F' }} : {{ j.n }} demande{{ j.n|pluralize }}"><i>{{ j.n }}</i></span>
+          {% endfor %}
+        </div>
+        <div class="psg-bars-legend"><span>{{ jours.0.date|date:"j M" }}</span><span>Aujourd'hui</span></div>
+      </section>
+    </div>
+  </div>
+</div>

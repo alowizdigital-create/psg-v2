@@ -1,20 +1,27 @@
 {% extends "admin/base.html" %}
+{% load static psg_admin %}
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:"PS GROUP — Admin" }}{% endblock %}
-{% block extrastyle %}{{ block.super }}
-<style>
-  /* Charte PS GROUP (bordeaux + or) appliquée à l'admin Django. */
-  :root, html[data-theme="light"] {
-    --primary: #6E1524; --secondary: #45101A; --accent: #F5B800; --primary-fg: #fff;
-    --header-color: #F5B800; --header-branding-color: #F5B800; --header-bg: #45101A; --header-link-color: #fff;
-    --breadcrumbs-bg: #6E1524; --breadcrumbs-link-fg: #ffe08a;
-    --link-fg: #6E1524; --link-hover-color: #9A2438; --link-selected-fg: #45101A;
-    --button-bg: #6E1524; --button-hover-bg: #9A2438;
-    --default-button-bg: #45101A; --default-button-hover-bg: #6E1524;
-    --selected-row: #fff6dc;
-  }
-  #branding h1, #branding h1 a:link, #branding h1 a:visited { font-weight: 700; }
-  .module h2, .module caption, .inline-group h2 { background: #6E1524; }
-</style>
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'catalog/psg-admin.css' %}">{% endblock %}
+{% block bodyclass %}{{ block.super }} psg{% endblock %}
+
+{% block header %}
+  {% if not is_popup and user.is_authenticated and is_nav_sidebar_enabled %}
+    <header id="psg-topbar">
+      <button type="button" class="psg-burger" aria-label="Ouvrir le menu" onclick="document.body.classList.toggle('psg-menu-open')">{% icone "menu" %}</button>
+      <span class="psg-chip">{% icone "entreprise" %} {% if user.is_superuser %}Toutes les entreprises{% else %}{% for e in user.profil.entreprises.all %}{{ e.nom }}{% if not forloop.last %}, {% endif %}{% empty %}Aucune entreprise{% endfor %}{% endif %}</span>
+      <div class="psg-topbar-right">
+        {% nb_nouvelles_demandes user as nb %}
+        <a class="psg-bell" href="/admin/demandes/demande/?statut__exact=nouvelle" title="Demandes à traiter">{% icone "bell" %}{% if nb %}<b>{{ nb }}</b>{% endif %}</a>
+        <span class="psg-user"><span class="psg-avatar">{{ user.get_username|slice:":1"|upper }}</span>
+          <span><strong>{{ user.get_full_name|default:user.get_username }}</strong><small>{% if user.is_superuser %}Superadmin{% else %}Gestionnaire{% endif %}</small></span>
+        </span>
+      </div>
+    </header>
+  {% else %}
+    {{ block.super }}
+  {% endif %}
 {% endblock %}
+
 {% block branding %}<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>{% endblock %}
 {% block nav-global %}{% endblock %}
+{% block footer %}<div class="psg-overlay" onclick="document.body.classList.remove('psg-menu-open')"></div>{% endblock %}

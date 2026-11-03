@@ -1,0 +1,8 @@
+{% extends "admin/index.html" %}
+{% load psg_admin %}
+{# Tableau de bord PS GROUP à la place de la liste des applications. #}
+{% block bodyclass %}{{ block.super }} psg-home{% endblock %}
+{% block nav-sidebar %}{% include "admin/nav_sidebar.html" %}{% endblock %}
+{% block content_title %}{% endblock %}
+{% block content %}{% tableau_de_bord %}{% endblock %}
+{% block sidebar %}{% endblock %}

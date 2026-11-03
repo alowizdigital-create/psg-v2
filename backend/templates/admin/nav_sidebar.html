@@ -1,0 +1,30 @@
+{% load psg_admin %}
+<nav id="psg-sidebar" aria-label="Menu de l'administration">
+  <a class="psg-brand" href="{% url 'admin:index' %}">
+    <span class="psg-brand-logo">PS</span>
+    <span><strong>PS GROUP</strong><small>Administration</small></span>
+  </a>
+  <div class="psg-nav-scroll">
+    <a class="psg-nav-link {% if request.path == '/admin/' %}active{% endif %}" href="{% url 'admin:index' %}">{% icone "dashboard" %} Tableau de bord</a>
+    {% rubriques_menu available_apps as rubriques %}
+    {% for r in rubriques %}
+      <p class="psg-nav-title">{{ r.titre }}</p>
+      {% for m in r.items %}
+        {% if m.admin_url %}
+          <a class="psg-nav-link {% if m.admin_url in request.path|urlencode %}active{% endif %}" href="{{ m.admin_url }}">
+            {% icone m.icone %} <span>{{ m.name }}</span>
+            {% if m.object_name == "Demande" %}{% nb_nouvelles_demandes request.user as nb %}{% if nb %}<b class="psg-count">{{ nb }}</b>{% endif %}{% endif %}
+          </a>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+  <div class="psg-nav-foot">
+    {% if site_url %}<a class="psg-nav-link" href="{{ site_url }}" target="_blank" rel="noopener">{% icone "site" %} Voir le site</a>{% endif %}
+    {% if user.has_usable_password %}<a class="psg-nav-link" href="{% url 'admin:password_change' %}">{% icone "key" %} Mot de passe</a>{% endif %}
+    <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="psg-nav-link">{% icone "logout" %} Déconnexion</button>
+    </form>
+  </div>
+</nav>
