@@ -16,6 +16,25 @@ export type Envoi = {
 
 type Erreurs = Partial<Record<"nom" | "telephone" | "email" | "date_evenement" | "message" | "global", string>>;
 
+/** « 20/12/2026 » → « 2026-12-20 » ; null si vide ; false si invalide. */
+function dateIso(saisie: string): string | null | false {
+  const v = saisie.trim();
+  if (!v) return null;
+  const m = v.match(/^(\d{1,2})[/.\-](\d{1,2})[/.\-](\d{4})$/);
+  if (!m) return false;
+  const [j, mo, a] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  const d = new Date(Date.UTC(a, mo - 1, j));
+  if (d.getUTCDate() !== j || d.getUTCMonth() !== mo - 1) return false;
+  return `${a}-${String(mo).padStart(2, "0")}-${String(j).padStart(2, "0")}`;
+}
+
+/** Ajoute les « / » pendant la saisie : 20122026 → 20/12/2026. */
+function masqueDate(e: React.FormEvent<HTMLInputElement>) {
+  const chiffres = e.currentTarget.value.replace(/\D/g, "").slice(0, 8);
+  const parts = [chiffres.slice(0, 2), chiffres.slice(2, 4), chiffres.slice(4)].filter(Boolean);
+  e.currentTarget.value = parts.join("/");
+}
+
 function premiereErreur(v: unknown): string | undefined {
   if (Array.isArray(v)) return String(v[0]);
   if (typeof v === "string") return v;
@@ -32,13 +51,18 @@ export default function DemandeForm({ envoi, afficherDate = false, entreprises, 
     e.preventDefault();
     if (envoi.avantEnvoi && !envoi.avantEnvoi()) return;
     const donnees = new FormData(e.currentTarget);
+    const date = dateIso(String(donnees.get("date_evenement") || ""));
+    if (date === false) {
+      setErreurs({ date_evenement: "Date invalide : utilisez le format JJ/MM/AAAA (ex. 20/12/2026)." });
+      return;
+    }
     const corps = {
       offre: envoi.offre ?? "",
       entreprise: (donnees.get("entreprise") as string) || "",
       nom: donnees.get("nom"),
       telephone: donnees.get("telephone"),
       email: donnees.get("email") || "",
-      date_evenement: donnees.get("date_evenement") || null,
+      date_evenement: date,
       lieu: donnees.get("lieu") || "",
       message: donnees.get("message") || "",
       choix: envoi.choix ?? [],
@@ -104,7 +128,8 @@ export default function DemandeForm({ envoi, afficherDate = false, entreprises, 
         {afficherDate ? (
           <div className={champ("date_evenement")}>
             <label htmlFor="date_evenement">Date souhaitée</label>
-            <input id="date_evenement" name="date_evenement" type="date" />
+            <input id="date_evenement" name="date_evenement" type="text" inputMode="numeric"
+                   placeholder="JJ/MM/AAAA" maxLength={10} autoComplete="off" onInput={masqueDate} />
             {erreurs.date_evenement && <p className="err">{erreurs.date_evenement}</p>}
           </div>
         ) : entreprises?.length ? (

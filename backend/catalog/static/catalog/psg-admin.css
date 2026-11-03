@@ -292,3 +292,10 @@ body.login.psg .main { padding-left: 0; }
 .psg-card-ico .psg-i { font-size: 19px; width: auto; }
 .psg-bell .psg-i, .psg-burger .psg-i { font-size: 17px; }
 .psg-chip .psg-i { font-size: 13px; width: auto; }
+
+/* Bouton de fichier en français */
+.psg-file { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.psg-file input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.psg-file-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 9px; border: 1px solid #DED3CF; background: #fff; color: var(--psg-ink); font-weight: 600; font-size: 13px; cursor: pointer; }
+.psg-file-btn:hover { border-color: var(--psg-bordeaux); color: var(--psg-bordeaux); }
+.psg-file-name { color: var(--psg-muted); font-size: 13px; }

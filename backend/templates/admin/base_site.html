@@ -2,6 +2,7 @@
 {% load static psg_admin %}
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:"PS GROUP — Admin" }}{% endblock %}
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'catalog/fontawesome/css/all.min.css' %}"><link rel="stylesheet" href="{% static 'catalog/psg-admin.css' %}">{% endblock %}
+{% block extrahead %}{{ block.super }}<script src="{% static 'catalog/psg-admin.js' %}" defer></script>{% endblock %}
 {% block bodyclass %}{{ block.super }} psg{% endblock %}
 
 {% block header %}

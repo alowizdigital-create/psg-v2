@@ -1,0 +1,3 @@
+{% extends "admin/change_form.html" %}
+{% block content_title %}<h1>{% if add %}Ajouter : {{ opts.verbose_name }}{% elif has_change_permission %}Modifier : {{ original|truncatechars:80 }}{% else %}Consulter : {{ original|truncatechars:80 }}{% endif %}</h1>{% endblock %}
+{% block content_subtitle %}{% endblock %}

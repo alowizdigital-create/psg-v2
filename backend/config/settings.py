@@ -51,7 +51,6 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -93,6 +92,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = "fr"
+# Une seule langue : le site et l'admin restent en français quelle que soit
+# la langue du navigateur (pas de LocaleMiddleware).
+LANGUAGES = [("fr", "Français")]
 TIME_ZONE = "Africa/Douala"
 USE_I18N = True
 USE_TZ = True

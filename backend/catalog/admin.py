@@ -20,6 +20,16 @@ from .models import (
 from .revalidation import demander_revalidation
 
 
+@admin.action(description="Supprimer la sélection", permissions=["delete"])
+def supprimer_selection(modeladmin, request, queryset):
+    """Même action que celle de Django, avec un libellé français correct."""
+    from django.contrib.admin.actions import delete_selected
+    return delete_selected(modeladmin, request, queryset)
+
+
+admin.site.add_action(supprimer_selection, "supprimer_selection")
+
+
 def apercu(image, hauteur=48):
     if not image:
         return "—"
