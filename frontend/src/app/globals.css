@@ -1,3 +1,4 @@
+@import "@fontsource/jost/300.css";
 @import "@fontsource/jost/400.css";
 @import "@fontsource/jost/500.css";
 @import "@fontsource/jost/600.css";
@@ -24,10 +25,10 @@
   --border: #e8dcd6;
   --white: #ffffff;
 
-  /* Georgia pour tout le contenu ; Jost (équivalent libre de Futura) pour le menu,
-     les boutons et les grands textes de l'accueil ; signature pour « Agence ». */
-  --font-body: Georgia, "Times New Roman", serif;
-  --font-heading: Georgia, "Times New Roman", serif;
+  /* Futura partout (Jost = équivalent libre de Futura, intégré au site) ;
+     écriture manuscrite pour « Agence » sur l'accueil. */
+  --font-body: "Jost", "Futura", "Century Gothic", sans-serif;
+  --font-heading: "Jost", "Futura", "Century Gothic", sans-serif;
   --font-display: "Jost", "Futura", "Century Gothic", sans-serif;
   --font-script: "Mrs Saint Delafield", "Brush Script MT", cursive;
 
@@ -521,3 +522,7 @@ h1, h2, h3, h4 { letter-spacing: -0.01em; }
 .hero-display .word > span { display: inline-block; }
 .hero-subtitle { font-family: var(--font-body); }
 .hero-subtitle .gradient-text { font-family: var(--font-display); letter-spacing: 0.02em; }
+
+/* Futura : titres un peu plus francs, texte courant légèrement plus grand. */
+body { font-size: 1.04rem; }
+h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }

@@ -1,3 +1,9 @@
+/* Police Futura (Jost, équivalent libre) */
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/jost-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/jost-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/jost-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/jost-latin-700-normal.woff2") format("woff2"); }
+
 /* ==========================================================================
    Administration PS GROUP — menu latéral, barre du haut, tableau de bord.
    Charte : bordeaux #6E1524 + or #F5B800.
@@ -56,11 +62,11 @@
   --message-success-bg: #E8F6EC;
   --message-warning-bg: #FFF5D6;
   --message-error-bg: #FDECEA;
-  --font-family-primary: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --font-family-primary: "Jost", "Futura", "Century Gothic", "Segoe UI", sans-serif;
   color-scheme: light;
 }
 
-body.psg { background: var(--psg-bg); font-size: 14px; }
+body.psg { background: var(--psg-bg); font-size: 15px; }
 .psg a:focus-visible, .psg button:focus-visible, .psg input:focus-visible, .psg select:focus-visible, .psg textarea:focus-visible {
   outline: 3px solid rgba(245, 184, 0, .6); outline-offset: 2px;
 }

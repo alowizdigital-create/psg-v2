@@ -49,7 +49,7 @@ export default function HeroSlider({ slides, titre, slogan }: {
       <motion.div className="container hero-content" style={reduit ? undefined : { y: yContenu, opacity: opacite }}>
         <motion.span className="eyebrow" style={{ color: "var(--accent)" }} initial={{ opacity: 0, x: -20 }}
                      animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1, duration: 0.7 }}>
-          {titre} · Yaoundé
+          {titre}
         </motion.span>
         <h1 className="hero-title" aria-label="Agence événementielle & marketing">
           {/* « Agence » apparaît comme écrit à la main, de gauche à droite. */}
