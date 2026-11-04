@@ -5,7 +5,6 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { SplitTitle } from "./Motion";
 
 const DUREE = 6000;
 
@@ -50,17 +49,36 @@ export default function HeroSlider({ slides, titre, slogan }: {
       <motion.div className="container hero-content" style={reduit ? undefined : { y: yContenu, opacity: opacite }}>
         <motion.span className="eyebrow" style={{ color: "var(--accent)" }} initial={{ opacity: 0, x: -20 }}
                      animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1, duration: 0.7 }}>
-          Groupe camerounais · Yaoundé
+          {titre} · Yaoundé
         </motion.span>
-        <SplitTitle text={titre} />
+        <h1 className="hero-title" aria-label="Agence événementielle & marketing">
+          {/* « Agence » apparaît comme écrit à la main, de gauche à droite. */}
+          <motion.span className="hero-script" aria-hidden="true"
+                       initial={reduit ? false : { clipPath: "inset(0 100% 0 0)" }}
+                       animate={{ clipPath: "inset(0 0% 0 0)" }}
+                       transition={{ duration: 1.6, delay: 0.25, ease: [0.65, 0, 0.35, 1] }}>
+            Agence
+          </motion.span>
+          <span className="hero-display" aria-hidden="true">
+            {["Événementielle", "&", "marketing"].map((mot, i) => (
+              <span className="word" key={mot}>
+                <motion.span initial={reduit ? false : { y: "110%" }} animate={{ y: 0 }}
+                             transition={{ duration: 0.8, delay: 1.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}>
+                  {mot}
+                </motion.span>
+                {"\u00a0"}
+              </span>
+            ))}
+          </span>
+        </h1>
         <motion.p className="hero-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.8 }}>
+                  transition={{ delay: 1.5, duration: 0.8 }}>
           <span className="gradient-text" style={{ fontWeight: 700 }}>{slogan}</span>
           <br />
           Audiovisuel, digital, formation, musique, concours et média : six expertises réunies pour donner vie à vos projets.
         </motion.p>
         <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.9, duration: 0.8 }}>
+                    transition={{ delay: 1.7, duration: 0.8 }}>
           <Link href="/#entreprises" className="btn btn-primary">Découvrir nos entreprises <ArrowRight size={18} /></Link>
           <Link href="/catalogue" className="btn btn-outline">Composer ma demande</Link>
         </motion.div>

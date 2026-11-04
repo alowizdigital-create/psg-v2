@@ -1,8 +1,9 @@
-@import "@fontsource-variable/inter";
-@import "@fontsource/poppins/500.css";
-@import "@fontsource/poppins/600.css";
-@import "@fontsource/poppins/700.css";
-@import "@fontsource/poppins/800.css";
+@import "@fontsource/jost/400.css";
+@import "@fontsource/jost/500.css";
+@import "@fontsource/jost/600.css";
+@import "@fontsource/jost/700.css";
+@import "@fontsource/jost/800.css";
+@import "@fontsource/mrs-saint-delafield/400.css";
 
 /* ==========================================================================
    PS GROUP SARL — charte reprise du premier site (bordeaux + or)
@@ -23,8 +24,12 @@
   --border: #e8dcd6;
   --white: #ffffff;
 
-  --font-heading: "Poppins", "Segoe UI", sans-serif;
-  --font-body: "Inter Variable", "Segoe UI", sans-serif;
+  /* Georgia pour tout le contenu ; Jost (équivalent libre de Futura) pour le menu,
+     les boutons et les grands textes de l'accueil ; signature pour « Agence ». */
+  --font-body: Georgia, "Times New Roman", serif;
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-display: "Jost", "Futura", "Century Gothic", sans-serif;
+  --font-script: "Mrs Saint Delafield", "Brush Script MT", cursive;
 
   --radius-sm: 10px;
   --radius-md: 18px;
@@ -69,7 +74,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-heading); font-weight: 600; font-size: 0.78rem;
+  font-family: var(--font-display); font-weight: 600; font-size: 0.78rem;
   letter-spacing: 0.22em; text-transform: uppercase; color: var(--primary);
   margin-bottom: 14px;
 }
@@ -93,7 +98,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 /* --- Boutons ---------------------------------------------------------------- */
 .btn {
   position: relative; display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 26px; border-radius: 999px; font-weight: 600; font-family: var(--font-heading);
+  padding: 14px 26px; border-radius: 999px; font-weight: 600; font-family: var(--font-display);
   font-size: 0.95rem; transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s;
   overflow: hidden; isolation: isolate; white-space: nowrap;
 }
@@ -124,7 +129,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
   box-shadow: 0 1px 0 rgba(245, 184, 0, 0.15); padding: 10px 0;
 }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.logo { display: flex; align-items: baseline; gap: 8px; font-family: var(--font-heading); font-weight: 800; font-size: 1.45rem; letter-spacing: -0.02em; }
+.logo { display: flex; align-items: baseline; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.45rem; letter-spacing: -0.02em; }
 .logo span.or { color: var(--accent); }
 .logo small { font-size: 0.62rem; letter-spacing: 0.3em; padding: 3px 7px; border: 1px solid rgba(245, 184, 0, 0.6); border-radius: 6px; color: var(--accent); font-weight: 600; }
 .nav-links { display: flex; align-items: center; gap: 4px; }
@@ -151,7 +156,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
   position: fixed; inset: 0; z-index: 60; background: var(--night); color: var(--white);
   padding: 90px var(--gutter) 40px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
 }
-.mobile-menu a.big { font-family: var(--font-heading); font-size: 1.9rem; font-weight: 700; padding: 8px 0; display: block; }
+.mobile-menu a.big { font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; padding: 8px 0; display: block; }
 .mobile-menu .sub { display: grid; gap: 4px; padding: 6px 0 16px 4px; }
 .mobile-menu .sub a { color: #cdbab4; padding: 6px 0; display: flex; gap: 10px; align-items: center; }
 .mobile-close { position: absolute; top: 18px; right: var(--gutter); width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.08); }
@@ -198,7 +203,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .marquee-wrap { overflow: hidden; padding: 12px 0; margin-top: -38px; position: relative; z-index: 2; }
 .marquee { background: var(--accent); color: var(--night); overflow: hidden; padding: 16px 0; transform: rotate(-1.2deg) scale(1.03); }
 .marquee-track { display: flex; gap: 48px; width: max-content; animation: marquee 32s linear infinite; }
-.marquee-item { display: flex; align-items: center; gap: 14px; font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.marquee-item { display: flex; align-items: center; gap: 14px; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* --- En-tête de page -------------------------------------------------------- */
@@ -256,7 +261,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .branch-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(18, 6, 7, 0.15) 0%, rgba(18, 6, 7, 0.55) 45%, rgba(18, 6, 7, 0.96) 100%); }
 .branch-card:hover .bg { transform: scale(1.1); filter: saturate(1.15); }
 .branch-card .inner { margin-top: auto; padding: 28px; transform: translateZ(40px); }
-.branch-card .num { position: absolute; top: 20px; right: 24px; font-family: var(--font-heading); font-weight: 800; font-size: 3.2rem; color: transparent; -webkit-text-stroke: 1px rgba(245, 184, 0, 0.55); transform: translateZ(30px); }
+.branch-card .num { position: absolute; top: 20px; right: 24px; font-family: var(--font-display); font-weight: 800; font-size: 3.2rem; color: transparent; -webkit-text-stroke: 1px rgba(245, 184, 0, 0.55); transform: translateZ(30px); }
 .branch-card .ico { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: rgba(245, 184, 0, 0.16); color: var(--accent); backdrop-filter: blur(8px); border: 1px solid rgba(245, 184, 0, 0.35); margin-bottom: 14px; }
 .branch-card h3 { font-size: 1.35rem; color: var(--white); }
 .branch-card p { color: #e2cfc9; font-size: 0.95rem; margin-top: 8px; }
@@ -274,7 +279,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 /* Chiffres */
 .stats { background: linear-gradient(120deg, var(--primary-dark), var(--primary) 50%, var(--primary-light)); color: var(--white); position: relative; overflow: hidden; }
 .stats .grid > div { text-align: center; padding: 10px; }
-.stat-num { font-family: var(--font-heading); font-weight: 800; font-size: clamp(2.6rem, 5vw, 3.8rem); color: var(--accent); line-height: 1; }
+.stat-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem, 5vw, 3.8rem); color: var(--accent); line-height: 1; }
 .stat-label { margin-top: 10px; color: #f1dcd6; font-weight: 500; }
 
 /* Galerie */
@@ -365,7 +370,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .offer-gallery button:hover img { transform: scale(1.08); }
 
 .step-title { display: flex; align-items: center; gap: 14px; margin: 44px 0 6px; }
-.step-title .n { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--primary); color: var(--accent); font-weight: 800; font-family: var(--font-heading); flex: none; }
+.step-title .n { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--primary); color: var(--accent); font-weight: 800; font-family: var(--font-display); flex: none; }
 .group { margin-top: 26px; }
 .group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
 .group-head h3 { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
@@ -399,7 +404,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .summary li span:last-child { color: var(--accent); white-space: nowrap; }
 .summary .empty { color: #b9a59f; font-size: 0.9rem; font-style: italic; padding: 12px 0; }
 .summary .total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 16px; border-top: 1px dashed rgba(255, 255, 255, 0.2); }
-.summary .total strong { font-family: var(--font-heading); font-size: 1.7rem; color: var(--accent); }
+.summary .total strong { font-family: var(--font-display); font-size: 1.7rem; color: var(--accent); }
 .summary .note { font-size: 0.78rem; color: #b9a59f; margin-top: 6px; }
 .summary .btn { width: 100%; justify-content: center; margin-top: 20px; }
 .mobile-bar { display: none; }
@@ -420,7 +425,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 
 .success { text-align: center; padding: clamp(36px, 6vw, 60px) clamp(20px, 4vw, 40px); border-radius: var(--radius-lg); background: var(--white); border: 1px solid var(--border); box-shadow: var(--shadow-card); position: relative; overflow: hidden; }
 .success .check { width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 22px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: var(--night); box-shadow: var(--shadow-glow); }
-.success .ref { display: inline-block; margin: 16px 0; padding: 10px 20px; border-radius: 999px; background: var(--bg-alt); font-family: var(--font-heading); font-weight: 800; letter-spacing: 0.08em; color: var(--primary); }
+.success .ref { display: inline-block; margin: 16px 0; padding: 10px 20px; border-radius: 999px; background: var(--bg-alt); font-family: var(--font-display); font-weight: 800; letter-spacing: 0.08em; color: var(--primary); }
 .success p { color: var(--muted); max-width: 520px; margin: 0 auto; }
 .confetti { position: absolute; width: 10px; height: 14px; border-radius: 2px; top: -20px; pointer-events: none; }
 
@@ -440,7 +445,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .socials a { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.3s; }
 .socials a:hover { background: var(--accent); color: var(--night); border-color: var(--accent); transform: translateY(-3px); }
 .footer-bottom { margin-top: 60px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; }
-.footer-big { position: absolute; bottom: -0.18em; left: 50%; translate: -50% 0; z-index: -1; font-family: var(--font-heading); font-weight: 800; font-size: clamp(5rem, 18vw, 16rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(245, 184, 0, 0.09); white-space: nowrap; pointer-events: none; }
+.footer-big { position: absolute; bottom: -0.18em; left: 50%; translate: -50% 0; z-index: -1; font-family: var(--font-display); font-weight: 800; font-size: clamp(5rem, 18vw, 16rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(245, 184, 0, 0.09); white-space: nowrap; pointer-events: none; }
 
 .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: #25d366; color: var(--white); box-shadow: 0 12px 30px -8px rgba(37, 211, 102, 0.7); }
 .whatsapp::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: ring 2.4s infinite; }
@@ -475,7 +480,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
     gap: 12px; padding: 12px 12px 12px 18px; border-radius: 999px; background: rgba(18, 6, 7, 0.92); color: var(--white);
     backdrop-filter: blur(10px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
   }
-  .mobile-bar strong { color: var(--accent); font-family: var(--font-heading); }
+  .mobile-bar strong { color: var(--accent); font-family: var(--font-display); }
   .mobile-bar small { display: block; color: #b9a59f; font-size: 0.72rem; }
   .mobile-bar .btn { padding: 10px 18px; }
   .whatsapp.lift { bottom: 92px; }
@@ -492,3 +497,27 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 /* Après l'envoi d'une demande : seul le message de remerciement reste affiché. */
 .demande-envoyee .offer-intro { display: none; }
 #confirmation { scroll-margin-top: 110px; }
+
+/* --- Polices : accueil, menu, boutons -------------------------------------------- */
+h1, h2, h3, h4 { letter-spacing: -0.01em; }
+.nav-link, .dropdown strong, .chip, .badge, .filters, .hero-dot, .scroll-hint, .footer h4 { font-family: var(--font-display); }
+.nav-link { font-weight: 400; font-size: 1.02rem; letter-spacing: 0.01em; }
+.home .section-head h2, .home .cta h2, .home .branch-card h3, .home .offer-card h3 {
+  font-family: var(--font-display); font-weight: 700; letter-spacing: 0;
+}
+.home .section-head h2 { text-transform: uppercase; letter-spacing: 0.02em; }
+
+.hero-title { color: var(--white); margin: 0 0 18px; display: flex; flex-direction: column; align-items: flex-start; }
+.hero-script {
+  font-family: var(--font-script); font-weight: 400; text-transform: none; letter-spacing: 0;
+  font-size: clamp(5rem, 15vw, 11.5rem); line-height: 0.9; margin-bottom: 0.05em; padding: 0.08em 0.3em 0.18em 0.04em;
+  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
+}
+.hero-display {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.01em;
+  font-size: clamp(1.9rem, 5.2vw, 4.6rem); line-height: 1.02;
+}
+.hero-display .word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.06em; }
+.hero-display .word > span { display: inline-block; }
+.hero-subtitle { font-family: var(--font-body); }
+.hero-subtitle .gradient-text { font-family: var(--font-display); letter-spacing: 0.02em; }
