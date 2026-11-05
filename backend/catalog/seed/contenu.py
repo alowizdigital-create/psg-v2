@@ -12,7 +12,7 @@ REGLAGES = {
     "adresse": "Petit Marché ODZA, Face école Léo, Yaoundé",
     "telephones": "653 834 302, 655 934 760",
     "email": "infos.pointsolutionsgroup@gmail.com",
-    "whatsapp": "237653834302",
+    "whatsapp": "237655334760",
     # Liens des réseaux du groupe : à compléter dans l'admin (le premier site
     # pointait vers les pages d'accueil génériques de Facebook, Instagram…).
     "facebook": "",
