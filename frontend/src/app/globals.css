@@ -613,3 +613,21 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
   .header .nav > a:first-child { margin-top: 26px; margin-bottom: -40px; }
   .header.scrolled .nav > a:first-child { margin-top: 20px; margin-bottom: -32px; }
 }
+
+/* « Agence » de l'accueil en Ginora Sans. Déposer le fichier de la police dans
+   frontend/public/fonts/ (GinoraSans-Regular.woff2, .otf ou .ttf) : il est utilisé
+   automatiquement. En attendant, Jost fin (géométrique, proche) prend le relais. */
+@font-face {
+  font-family: "Ginora Sans";
+  font-weight: 400;
+  font-display: swap;
+  src: local("Ginora Sans"), local("GinoraSans-Regular"),
+       url("/fonts/GinoraSans-Regular.woff2") format("woff2"),
+       url("/fonts/GinoraSans-Regular.otf") format("opentype"),
+       url("/fonts/GinoraSans-Regular.ttf") format("truetype");
+}
+.hero-script {
+  font-family: "Ginora Sans", "Jost", "Futura", sans-serif; font-weight: 300; letter-spacing: 0.01em;
+  font-size: clamp(4.2rem, 12vw, 9.5rem); line-height: 1; padding: 0 0.06em 0.06em; margin-bottom: 0.02em;
+}
+.hero-script { line-height: 1.15; padding-bottom: 0.14em; margin-bottom: -0.04em; }
