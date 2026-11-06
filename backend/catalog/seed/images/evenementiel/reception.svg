@@ -1,8 +1,8 @@
 <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration fictive d'une table de reception decoree pour un mariage">
   <defs>
     <linearGradient id="bgRec" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#45101A"/>
-      <stop offset="100%" stop-color="#9A2438"/>
+      <stop offset="0%" stop-color="#4A0807"/>
+      <stop offset="100%" stop-color="#8E1A17"/>
     </linearGradient>
   </defs>
   <rect width="480" height="360" fill="url(#bgRec)"/>
@@ -16,7 +16,7 @@
     <circle cx="420" cy="52" r="4"/>
   </g>
   <!-- table -->
-  <ellipse cx="240" cy="300" rx="210" ry="24" fill="#150808" opacity="0.35"/>
+  <ellipse cx="240" cy="300" rx="210" ry="24" fill="#140606" opacity="0.35"/>
   <rect x="60" y="255" width="360" height="18" rx="9" fill="#F8F1EC"/>
   <rect x="60" y="255" width="360" height="55" fill="none"/>
   <!-- assiettes -->

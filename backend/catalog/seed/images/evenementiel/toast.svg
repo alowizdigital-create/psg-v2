@@ -1,7 +1,7 @@
 <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration fictive d'un toast avec des coupes de champagne">
   <defs>
     <linearGradient id="bgToast" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#6E1524"/>
+      <stop offset="0%" stop-color="#6D0D0C"/>
       <stop offset="100%" stop-color="#F5B800"/>
     </linearGradient>
     <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
@@ -10,7 +10,7 @@
     </linearGradient>
   </defs>
   <rect width="480" height="360" fill="url(#bgToast)"/>
-  <ellipse cx="240" cy="330" rx="200" ry="20" fill="#150808" opacity="0.2"/>
+  <ellipse cx="240" cy="330" rx="200" ry="20" fill="#140606" opacity="0.2"/>
 
   <!-- coupe gauche (inclinee) -->
   <g transform="translate(175,235) rotate(-18)">

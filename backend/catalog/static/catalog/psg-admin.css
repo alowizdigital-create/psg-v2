@@ -6,12 +6,12 @@
 
 /* ==========================================================================
    Administration PS GROUP — menu latéral, barre du haut, tableau de bord.
-   Charte : bordeaux #6E1524 + or #F5B800.
+   Charte : bordeaux #6D0D0C + or #F5B800.
    ========================================================================== */
 :root, html[data-theme="light"], html[data-theme="dark"], html[data-theme="auto"] {
-  --psg-bordeaux: #6E1524;
-  --psg-bordeaux-2: #9A2438;
-  --psg-bordeaux-soft: #F7EBEE;
+  --psg-bordeaux: #6D0D0C;
+  --psg-bordeaux-2: #8E1A17;
+  --psg-bordeaux-soft: #F7ECEB;
   --psg-or: #F5B800;
   --psg-or-soft: #FFF5D6;
   --psg-ink: #1E1416;
@@ -83,7 +83,7 @@ body.psg { background: var(--psg-bg); font-size: 15px; }
 .psg-brand-logo {
   width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; font-weight: 800; font-size: 15px;
   background: linear-gradient(135deg, var(--psg-bordeaux), var(--psg-bordeaux-2)); color: var(--psg-or);
-  box-shadow: 0 6px 16px -6px rgba(110, 21, 36, .6);
+  box-shadow: 0 6px 16px -6px rgba(109, 13, 12, .6);
 }
 .psg-brand strong { display: block; color: var(--psg-ink); font-size: 16px; letter-spacing: -.01em; }
 .psg-brand small { display: block; color: var(--psg-muted); font-size: 12px; }
@@ -147,7 +147,7 @@ body.psg { background: var(--psg-bg); font-size: 15px; }
   border: 1px solid var(--psg-line); box-shadow: var(--psg-shadow); text-decoration: none !important; color: var(--psg-ink) !important;
   transition: transform .2s, box-shadow .2s, border-color .2s;
 }
-.psg-card:hover { transform: translateY(-2px); border-color: #DCCBC6; box-shadow: 0 14px 30px -18px rgba(110, 21, 36, .4); }
+.psg-card:hover { transform: translateY(-2px); border-color: #DCCBC6; box-shadow: 0 14px 30px -18px rgba(109, 13, 12, .4); }
 .psg-card-ico { width: 48px; height: 48px; flex: none; border-radius: 12px; display: grid; place-items: center; background: var(--psg-bordeaux-soft); color: var(--psg-bordeaux); }
 .psg-card strong { display: block; font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
 .psg-card small { display: block; color: var(--psg-muted); font-size: 13px; margin-top: 2px; }
@@ -213,7 +213,7 @@ body.psg { background: var(--psg-bg); font-size: 15px; }
   border: 1px solid #DED3CF; border-radius: 9px; padding: 8px 11px; background: #fff; font-size: 14px; transition: border-color .15s, box-shadow .15s;
 }
 .psg select { padding-right: 28px; height: auto; }
-.psg input:focus, .psg textarea:focus, .psg select:focus { border-color: var(--psg-bordeaux); box-shadow: 0 0 0 3px rgba(110, 21, 36, .12); outline: none; }
+.psg input:focus, .psg textarea:focus, .psg select:focus { border-color: var(--psg-bordeaux); box-shadow: 0 0 0 3px rgba(109, 13, 12, .12); outline: none; }
 .psg .button, .psg input[type=submit], .psg input[type=button], .psg .submit-row input, .psg a.button, .psg button.button {
   border-radius: 9px; padding: 10px 16px; font-weight: 600; font-size: 14px; height: auto; line-height: 1.2;
 }
@@ -249,8 +249,8 @@ body.psg { background: var(--psg-bg); font-size: 15px; }
 
 /* --- Page de connexion -------------------------------------------------------------- */
 body.login.psg { min-height: 100vh; display: grid; place-items: center; background:
-  radial-gradient(ellipse at 20% 0%, rgba(154, 36, 56, .55), transparent 55%),
-  linear-gradient(160deg, #22090F, #120607); }
+  radial-gradient(ellipse at 20% 0%, rgba(142, 26, 23, .55), transparent 55%),
+  linear-gradient(160deg, #220807, #120607); }
 body.login.psg #container { width: min(420px, calc(100vw - 32px)); border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6); border: 0; }
 body.login.psg #header { background: #fff; padding: 28px 28px 8px; }
 body.login.psg #header #site-name a { color: var(--psg-bordeaux); font-weight: 800; font-size: 20px; }

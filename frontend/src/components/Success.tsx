@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { fcfa } from "@/lib/format";
 
-const COULEURS = ["#f5b800", "#6e1524", "#ffe08a", "#9a2438", "#ffffff"];
+const COULEURS = ["#f5b800", "#6D0D0C", "#ffe08a", "#8E1A17", "#ffffff"];
 
 export default function Success({ reference, titre, choix = [], total }: {
   reference: string; titre?: string; choix?: string[]; total?: number;

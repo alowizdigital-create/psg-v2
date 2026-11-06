@@ -1,8 +1,8 @@
 <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration fictive d'une cérémonie de mariage sous une arche fleurie">
   <defs>
     <linearGradient id="bgCer" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#2B0D14"/>
-      <stop offset="100%" stop-color="#6E1524"/>
+      <stop offset="0%" stop-color="#2A0A09"/>
+      <stop offset="100%" stop-color="#6D0D0C"/>
     </linearGradient>
     <linearGradient id="archGold" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#F5B800"/>
@@ -29,7 +29,7 @@
     <circle cx="240" cy="66" r="6"/>
   </g>
   <!-- silhouettes -->
-  <g fill="#150808">
+  <g fill="#140606">
     <circle cx="205" cy="245" r="16"/>
     <path d="M205 262 C185 262 178 300 178 320 H232 C232 300 225 262 205 262 Z"/>
     <circle cx="275" cy="245" r="16"/>

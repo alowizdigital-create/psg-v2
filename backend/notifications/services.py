@@ -154,7 +154,7 @@ def email_equipe(demande):
     ) or "<tr><td style='padding:6px 10px' colspan='3'>Aucune option cochée</td></tr>"
     html = f"""
 <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;color:#1E1416">
-  <div style="background:#6E1524;color:#fff;padding:18px 22px;border-radius:12px 12px 0 0">
+  <div style="background:#6D0D0C;color:#fff;padding:18px 22px;border-radius:12px 12px 0 0">
     <div style="color:#F5B800;font-size:12px;letter-spacing:2px">NOUVELLE DEMANDE</div>
     <h2 style="margin:6px 0 0">{escape(demande.offre_titre or 'Demande de contact')}</h2>
     <div style="opacity:.85">{escape(demande.reference)} · {escape(str(demande.entreprise or ''))}</div>
