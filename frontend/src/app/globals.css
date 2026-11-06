@@ -595,3 +595,21 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 }
 
 .page-hero .eyebrow { color: var(--accent); }
+
+/* Logo posé à cheval sur le bas de la barre de menu (comme le logo officiel). */
+.header .nav > a:first-child { position: relative; z-index: 2; align-self: flex-start; margin-top: 22px; margin-bottom: -34px; transition: margin 0.3s; }
+.header.scrolled .nav > a:first-child { margin-top: 12px; margin-bottom: -22px; }
+.logo-svg { width: 176px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35)); }
+.header.scrolled .logo-svg { width: 146px; }
+@media (max-width: 900px) {
+  .header .nav > a:first-child { margin-top: 12px; margin-bottom: -24px; }
+  .logo-svg, .header.scrolled .logo-svg { width: 132px; }
+  .header.scrolled .nav > a:first-child { margin-top: 10px; margin-bottom: -18px; }
+}
+/* Logo plus bas : environ un tiers de sa hauteur sous la barre de menu. */
+.header .nav > a:first-child { margin-top: 40px; margin-bottom: -60px; }
+.header.scrolled .nav > a:first-child { margin-top: 26px; margin-bottom: -44px; }
+@media (max-width: 900px) {
+  .header .nav > a:first-child { margin-top: 26px; margin-bottom: -40px; }
+  .header.scrolled .nav > a:first-child { margin-top: 20px; margin-bottom: -32px; }
+}

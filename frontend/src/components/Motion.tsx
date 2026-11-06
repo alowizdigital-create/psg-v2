@@ -101,7 +101,8 @@ export function SplitTitle({ text, className, delay = 0.2 }: { text: string; cla
   const reduit = useReducedMotion();
   return (
     <h1 className={className} aria-label={text}>
-      {text.split(" ").map((mot, i) => (
+      {/* La ponctuation française (« ? », « ! », « : ») reste collée au mot précédent. */}
+      {text.replace(/ ([?!:;»])/g, "\u00a0$1").split(" ").map((mot, i) => (
         <span className="word" key={`${mot}-${i}`} aria-hidden="true">
           <motion.span
             initial={reduit ? false : { y: "110%", rotate: 4 }}
