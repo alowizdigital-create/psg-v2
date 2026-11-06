@@ -10,7 +10,7 @@ export default async function Accueil() {
   const vedettes = offres.length ? offres : await api.offres();
   return (
     <div className="home">
-      <HeroSlider slides={site.slides} titre={site.reglages.nom} slogan={site.reglages.slogan} />
+      <HeroSlider slides={site.slides} titre={site.reglages.nom} />
       <Marquee items={site.entreprises} />
       <Sections sections={sections} ctx={{ entreprises: site.entreprises, offres: vedettes }} />
     </div>
