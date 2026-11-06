@@ -5,6 +5,8 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import AgenceWordmark from "./AgenceWordmark";
+
 const DUREE = 6000;
 const MOTS = ["Événementielle", "&", "Marketing"];
 
@@ -56,7 +58,7 @@ export default function HeroSlider({ slides, titre }: {
                        initial={reduit ? false : { clipPath: "inset(0 100% 0 0)" }}
                        animate={{ clipPath: "inset(0 0% 0 0)" }}
                        transition={{ duration: 1.6, delay: 0.25, ease: [0.65, 0, 0.35, 1] }}>
-            Agence
+            <AgenceWordmark />
           </motion.span>
           <span className="hero-display" aria-hidden="true">
             {MOTS.map((mot, i) => (
