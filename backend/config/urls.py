@@ -7,7 +7,6 @@ from catalog import views as catalog_views
 from demandes import views as demandes_views
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER
-admin.site.disable_action("delete_selected")
 admin.site.site_title = "PS GROUP — Admin"
 admin.site.index_title = "Gestion du site et des demandes"
 admin.site.site_url = settings.FRONTEND_URL

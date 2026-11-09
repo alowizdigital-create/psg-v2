@@ -1,5 +1,6 @@
 import nested_admin
 from django.contrib import admin, messages
+from django.contrib.admin.actions import delete_selected
 from django.db import transaction
 from django.utils.html import format_html
 
@@ -20,14 +21,10 @@ from .models import (
 from .revalidation import demander_revalidation
 
 
-@admin.action(description="Supprimer la sélection", permissions=["delete"])
-def supprimer_selection(modeladmin, request, queryset):
-    """Même action que celle de Django, avec un libellé français correct."""
-    from django.contrib.admin.actions import delete_selected
-    return delete_selected(modeladmin, request, queryset)
-
-
-admin.site.add_action(supprimer_selection, "supprimer_selection")
+# Action de suppression de Django, avec un libellé français correct. On garde
+# l'action d'origine (même nom « delete_selected ») : sa page de confirmation la
+# rappelle par ce nom, une copie renommée ne serait jamais exécutée.
+delete_selected.short_description = "Supprimer la sélection"
 
 
 def apercu(image, hauteur=48):

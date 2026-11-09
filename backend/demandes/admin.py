@@ -1,13 +1,13 @@
-import csv
-
 from django.contrib import admin, messages
 from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.html import format_html, format_html_join
 
 from accounts.admin_mixins import ParEntrepriseMixin
+from catalog.models import SiteSettings
 from notifications.models import Notification
-from notifications.services import relancer
+
+from .export_pdf import demandes_pdf
 
 from .models import Demande, DemandeChoix
 
@@ -50,7 +50,7 @@ class DemandeAdmin(ParEntrepriseMixin, admin.ModelAdmin):
     search_fields = ["reference", "nom", "telephone", "email", "offre_titre", "message"]
     date_hierarchy = "cree_le"
     inlines = [ChoixInline, NotificationInline]
-    actions = ["marquer_contactee", "exporter_csv", "renvoyer_notifications"]
+    actions = ["marquer_contactee", "exporter_pdf"]
     readonly_fields = ["reference", "cree_le", "entreprise", "offre_lien", "offre_titre", "nom",
                        "telephone_lien", "email", "date_evenement", "lieu", "message", "total_affiche",
                        "ip"]
@@ -106,24 +106,9 @@ class DemandeAdmin(ParEntrepriseMixin, admin.ModelAdmin):
         n = queryset.update(statut="contactee", traitee_par=request.user)
         self.message_user(request, f"{n} demande(s) mise(s) à jour.", messages.SUCCESS)
 
-    @admin.action(description="Renvoyer les notifications en échec")
-    def renvoyer_notifications(self, request, queryset):
-        echecs = Notification.objects.filter(demande__in=queryset, statut=Notification.ECHEC)
-        ok = sum(relancer(n).statut == Notification.ENVOYE for n in echecs)
-        self.message_user(request, f"{ok}/{echecs.count() + ok} notification(s) renvoyée(s).")
-
-    @admin.action(description="Exporter en CSV (Excel)")
-    def exporter_csv(self, request, queryset):
-        reponse = HttpResponse(content_type="text/csv; charset=utf-8")
-        reponse["Content-Disposition"] = f'attachment; filename="demandes-{timezone.now():%Y%m%d}.csv"'
-        reponse.write("﻿")
-        w = csv.writer(reponse, delimiter=";")
-        w.writerow(["Référence", "Date", "Entreprise", "Offre", "Nom", "Téléphone", "E-mail",
-                    "Date événement", "Lieu", "Choix", "Total estimé", "Statut", "Message"])
-        for d in queryset.prefetch_related("choix"):
-            w.writerow([d.reference, f"{timezone.localtime(d.cree_le):%d/%m/%Y %H:%M}", d.entreprise or "",
-                        d.offre_titre, d.nom, d.telephone, d.email,
-                        d.date_evenement.strftime("%d/%m/%Y") if d.date_evenement else "", d.lieu,
-                        " | ".join(f"{c.groupe} : {c.libelle}" for c in d.choix.all()),
-                        d.total_estime or "", d.get_statut_display(), d.message])
+    @admin.action(description="Exporter en PDF")
+    def exporter_pdf(self, request, queryset):
+        contenu = demandes_pdf(queryset, SiteSettings.charger().nom)
+        reponse = HttpResponse(contenu, content_type="application/pdf")
+        reponse["Content-Disposition"] = f'attachment; filename="demandes-{timezone.localtime():%Y%m%d-%H%M}.pdf"'
         return reponse

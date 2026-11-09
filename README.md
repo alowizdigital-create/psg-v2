@@ -25,7 +25,7 @@ docker-compose.yml
    - **équipe de l'entreprise** : SMS court + e-mail détaillé (choix, total, liens d'appel et WhatsApp), envoyés aux numéros/e-mails de l'entreprise et à ses gestionnaires ;
    - **superadmin** : même récapitulatif, pour toutes les entreprises (comptes superutilisateurs + contacts de supervision des *Réglages du site*).
 
-   Un SMS ou un e-mail en échec ne fait jamais perdre la demande. On peut le relancer depuis l'admin (action « Renvoyer ») ou avec `python manage.py retry_notifications`.
+   Un SMS ou un e-mail en échec ne fait jamais perdre la demande. On peut le relancer avec `python manage.py retry_notifications`.
 
 ## Utiliser l'admin
 
@@ -51,7 +51,7 @@ Actions utiles dans la liste : **Dupliquer** une offre (pour partir d'un modèle
 - *Entreprises* : textes de la page de chaque entreprise, bannière, bandeau de contact, et ses blocs de contenu (galerie, cartes, personnes, vidéo…).
 - *Sections de pages* (superadmin) : blocs de l'Accueil, de l'À propos et du Contact.
 - *Diaporama d'accueil*, *Réglages du site* : coordonnées, WhatsApp, **liens réseaux sociaux** (vides au départ : les icônes n'apparaissent qu'une fois renseignées), texte du SMS de confirmation, contacts de supervision.
-- *Demandes clients* : statut (nouvelle → client contacté → confirmée…), notes internes, export CSV pour Excel.
+- *Demandes clients* : statut (nouvelle → client contacté → confirmée…), notes internes, export PDF des demandes sélectionnées.
 
 ## Lancer en local (développement)
 

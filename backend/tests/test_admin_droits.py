@@ -53,3 +53,25 @@ def test_superadmin_voit_tout(demandes, superadmin):
 @pytest.mark.django_db
 def test_admin_exige_une_connexion():
     assert Client().get("/admin/demandes/demande/").status_code == 302
+
+
+@pytest.mark.django_db
+def test_actions_supprimer_et_exporter_pdf(demandes, superadmin):
+    a, b = demandes
+    c = Client()
+    c.force_login(superadmin)
+    url = "/admin/demandes/demande/"
+    r = c.post(url, {"action": "exporter_pdf", "_selected_action": [a.pk, b.pk]})
+    assert r.status_code == 200 and r["Content-Type"] == "application/pdf" and r.content.startswith(b"%PDF")
+    # Suppression : page de confirmation puis confirmation (même nom d'action).
+    r = c.post(url, {"action": "delete_selected", "_selected_action": [a.pk]})
+    assert "Supprimer la sélection" in c.get(url).content.decode() and r.status_code == 200
+    r = c.post(url, {"action": "delete_selected", "_selected_action": [a.pk], "post": "yes"})
+    assert r.status_code == 302 and not Demande.objects.filter(pk=a.pk).exists()
+
+
+@pytest.mark.django_db
+def test_journal_notifications_sans_actions(superadmin):
+    c = Client()
+    c.force_login(superadmin)
+    assert 'name="action"' not in c.get("/admin/notifications/notification/").content.decode()
