@@ -97,9 +97,9 @@ Sauvegardes à prévoir : le volume `pgdata` (base) et le volume `media` (images
 Si Traefik (Dokploy) occupe déjà les ports 80/443, ne lancez pas Caddy :
 
 ```bash
-cp .env.example .env      # SITE_DOMAIN=v2.psgroupsarl.com, secrets, SMS…
+cp .env.example .env      # SITE_DOMAIN=psgroupsarl.com, secrets, SMS…
 docker compose -f docker-compose.yml -f docker-compose.vps.yml -p psgv2 up -d --build
-sudo cp deploy/traefik-psg-v2.yml /etc/dokploy/traefik/dynamic/psg-v2.yml   # adapter le domaine
+sudo cp deploy/traefik-psg-v2.yml /etc/dokploy/traefik/dynamic/psg-v2.yml   # psgroupsarl.com (+ www, v2 redirigés)
 docker compose -p psgv2 exec backend python manage.py createsuperuser
 ```
 

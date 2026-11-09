@@ -1,27 +1,49 @@
 # Routage Traefik (Dokploy) du nouveau site PS GROUP.
-# Copier dans /etc/dokploy/traefik/dynamic/psg-v2.yml après avoir remplacé
-# v2.psgroupsarl.com par le domaine voulu. Traefik le prend en compte à chaud.
+# À copier dans /etc/dokploy/traefik/dynamic/psg-v2.yml : Traefik le prend en compte à chaud.
+#
+# - psgroupsarl.com            → nouveau site (admin, API, médias → Django ; reste → Next.js)
+# - www. et v2.psgroupsarl.com → redirection permanente vers psgroupsarl.com
+# - http://                    → https:// (middleware « redirect-to-https » de Dokploy)
+#
+# Les priorités élevées font passer ces règles avant celles d'une ancienne application
+# Dokploy qui déclarerait encore psgroupsarl.com.
 http:
   routers:
     psgv2-backend:
-      rule: Host(`v2.psgroupsarl.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`) || PathPrefix(`/media`))
+      rule: Host(`psgroupsarl.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/static`) || PathPrefix(`/media`))
       service: psgv2-backend
       entryPoints: [websecure]
-      priority: 100
+      priority: 1000
       tls:
         certResolver: letsencrypt
     psgv2-frontend:
-      rule: Host(`v2.psgroupsarl.com`)
+      rule: Host(`psgroupsarl.com`)
       service: psgv2-frontend
       entryPoints: [websecure]
-      priority: 10
+      priority: 900
+      tls:
+        certResolver: letsencrypt
+    psgv2-alias:
+      rule: Host(`www.psgroupsarl.com`) || Host(`v2.psgroupsarl.com`)
+      service: psgv2-frontend
+      entryPoints: [websecure]
+      middlewares: [psgv2-vers-domaine]
+      priority: 900
       tls:
         certResolver: letsencrypt
     psgv2-http:
-      rule: Host(`v2.psgroupsarl.com`)
+      rule: Host(`psgroupsarl.com`) || Host(`www.psgroupsarl.com`) || Host(`v2.psgroupsarl.com`)
       service: psgv2-frontend
       entryPoints: [web]
       middlewares: [redirect-to-https]
+      priority: 900
+
+  middlewares:
+    psgv2-vers-domaine:
+      redirectRegex:
+        regex: "^https?://(?:www\\.|v2\\.)psgroupsarl\\.com(.*)"
+        replacement: "https://psgroupsarl.com${1}"
+        permanent: true
 
   services:
     psgv2-backend:
