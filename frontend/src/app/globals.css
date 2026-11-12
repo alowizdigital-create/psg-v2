@@ -703,3 +703,33 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 }
 .avis-verifier:hover { background: #25D366; color: #fff; border-color: #25D366; transform: translateY(-2px); }
 @media (max-width: 420px) { .avis-carte footer { flex-wrap: wrap; } .avis-verifier { margin-left: 62px; } }
+
+/* Carrousel d'avis : la marge intérieure laisse voir la bordure et l'ombre des cartes aux deux
+   extrémités ; l'alignement du défilement en tient compte (sinon la 1re et la dernière carte
+   sont rognées). */
+.avis-piste {
+  margin-inline: calc(-1 * var(--gutter)); padding: 14px var(--gutter) 30px; scroll-padding-inline: var(--gutter);
+  justify-content: flex-start;
+}
+/* Peu d'avis : centrés, sans jamais rendre une carte inaccessible. */
+.avis-piste.centre { justify-content: flex-start; }
+.avis-piste.centre > .avis-carte:first-child { margin-left: auto; }
+.avis-piste.centre > .avis-carte:last-child { margin-right: auto; }
+.avis-fleche.prev { left: 4px; }
+.avis-fleche.next { right: 4px; }
+.avis-carte footer > span:nth-child(2) { flex: 1 1 0; min-width: 0; }
+
+/* Les cartes qui dépassent s'estompent doucement sur les bords au lieu d'être coupées net. */
+.avis-piste {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
+}
+/* Bouton « Confirmer l'avis » sous le nom : les noms longs ne sont plus écrasés. */
+.avis-carte footer { flex-wrap: wrap; row-gap: 12px; }
+.avis-carte footer > span:nth-child(2) { flex: 1 1 140px; }
+.avis-verifier { margin-left: 62px; }
+
+/* Flèches du carrousel d'avis : sous les cartes, centrées (elles ne recouvrent plus le texte). */
+.avis-controles { display: flex; justify-content: center; gap: 14px; margin-top: 4px; }
+.avis-fleche { position: static; translate: none; }
+@media (max-width: 900px) { .avis-controles { display: none; } }

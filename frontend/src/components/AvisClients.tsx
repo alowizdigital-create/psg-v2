@@ -45,16 +45,6 @@ export default function AvisClients({ avis, titre = "Ce que disent nos clients",
         </Reveal>
 
         <div className="avis-piste-wrap">
-          {avis.total > 3 && (
-            <>
-              <button className="round-btn avis-fleche prev" onClick={() => defiler(-1)} aria-label="Avis précédents">
-                <ChevronLeft />
-              </button>
-              <button className="round-btn avis-fleche next" onClick={() => defiler(1)} aria-label="Avis suivants">
-                <ChevronRight />
-              </button>
-            </>
-          )}
           <div className={`avis-piste ${avis.total <= 3 ? "centre" : ""}`} ref={piste} tabIndex={0}
                aria-label="Avis des clients">
             {avis.liste.map((a, i) => (
@@ -86,6 +76,16 @@ export default function AvisClients({ avis, titre = "Ce que disent nos clients",
               </Reveal>
             ))}
           </div>
+          {avis.total > 3 && (
+            <div className="avis-controles">
+              <button className="round-btn avis-fleche" onClick={() => defiler(-1)} aria-label="Avis précédents">
+                <ChevronLeft />
+              </button>
+              <button className="round-btn avis-fleche" onClick={() => defiler(1)} aria-label="Avis suivants">
+                <ChevronRight />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
