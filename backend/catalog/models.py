@@ -382,6 +382,16 @@ class Avis(ImagesOptimiseesMixin, Ordonnable):
     )
     photo = models.ImageField("photo du client", upload_to="avis/", blank=True,
                               help_text="Facultative : sans photo, l'initiale du nom est affichée.")
+    whatsapp = models.CharField(
+        "WhatsApp du client", max_length=30, blank=True,
+        help_text="Ex. 6 55 33 47 60 (le 237 est ajouté automatiquement). Jamais affiché sur le site : "
+                  "utilisé seulement par le bouton « Confirmer l'avis ».",
+    )
+    accord_verification = models.BooleanField(
+        "le client accepte d'être contacté sur WhatsApp pour confirmer son avis", default=False,
+        help_text="Obligatoire pour afficher le bouton « Confirmer l'avis » : ne cochez que si le client vous "
+                  "a donné son accord.",
+    )
     entreprise = models.ForeignKey(
         Entreprise, verbose_name="entreprise", on_delete=models.CASCADE, null=True, blank=True,
         related_name="avis",
@@ -406,9 +416,25 @@ class Avis(ImagesOptimiseesMixin, Ordonnable):
     def __str__(self):
         return f"{self.nom} — {self.note}/5"
 
+    @property
+    def verifiable(self):
+        """Le bouton « Confirmer l'avis » n'existe que si un numéro est saisi ET que le client est d'accord."""
+        return bool(self.whatsapp and self.accord_verification)
+
+    def numero_whatsapp(self):
+        """Numéro international sans « + » (ex. 237655334760), ou chaîne vide."""
+        from notifications.sms import normaliser_numero
+        return normaliser_numero(self.whatsapp).lstrip("+") if self.whatsapp else ""
+
     def clean(self):
         if self.offre_id:
             self.entreprise = self.offre.entreprise
+        if self.whatsapp:
+            from notifications.sms import numero_valide
+            if not numero_valide(self.whatsapp):
+                raise ValidationError({"whatsapp": "Numéro invalide (ex. 6 55 33 47 60)."})
+        if self.accord_verification and not self.whatsapp:
+            raise ValidationError({"whatsapp": "Saisissez le numéro WhatsApp du client."})
 
     def save(self, *args, **kwargs):
         if self.offre_id:

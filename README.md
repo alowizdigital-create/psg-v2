@@ -50,7 +50,7 @@ Actions utiles dans la liste : **Dupliquer** une offre (pour partir d'un modèle
 ### Pages et réglages
 - *Entreprises* : textes de la page de chaque entreprise, bannière, bandeau de contact, et ses blocs de contenu (galerie, cartes, personnes, vidéo…).
 - *Sections de pages* (superadmin) : blocs de l'Accueil, de l'À propos et du Contact.
-- *Avis clients* : un avis = nom, qualité/ville, texte, note sur 5, photo facultative. Choisissez une **offre** (il s'affiche sous cette offre) ou seulement une **entreprise** (il s'affiche sous toutes ses offres), et cochez **Afficher sur la page d'accueil** pour le montrer aussi sur l'accueil. Un avis décoché « Publié » est masqué. Sans avis publié, les sections n'apparaissent pas.
+- *Avis clients* : un avis = nom, qualité/ville, texte, note sur 5, photo facultative. Choisissez une **offre** (il s'affiche sous cette offre) ou seulement une **entreprise** (il s'affiche sous toutes ses offres), et cochez **Afficher sur la page d'accueil** pour le montrer aussi sur l'accueil. Pour afficher le bouton **« Confirmer l'avis »** (qui ouvre WhatsApp vers le client avec un message déjà rédigé), saisissez le **WhatsApp du client** et cochez **l'accord du client** : sans accord, pas de bouton. Le numéro n'apparaît jamais dans le code de la page, seulement dans la redirection. Un avis décoché « Publié » est masqué. Sans avis publié, les sections n'apparaissent pas.
 - *Diaporama d'accueil*, *Réglages du site* : coordonnées, WhatsApp, **liens réseaux sociaux** (vides au départ : les icônes n'apparaissent qu'une fois renseignées), texte du SMS de confirmation, contacts de supervision.
 - *Demandes clients* : statut (nouvelle → client contacté → confirmée…), notes internes, export PDF des demandes sélectionnées.
 

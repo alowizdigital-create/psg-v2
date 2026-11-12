@@ -302,8 +302,8 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 @admin.register(Avis)
 class AvisAdmin(RevalidationMixin, ParEntrepriseMixin, admin.ModelAdmin):
-    list_display = ["miniature", "nom", "etoiles", "extrait", "offre", "entreprise", "afficher_accueil", "publie",
-                    "date"]
+    list_display = ["miniature", "nom", "etoiles", "extrait", "offre", "entreprise", "confirmable",
+                    "afficher_accueil", "publie", "date"]
     list_display_links = ["miniature", "nom"]
     list_editable = ["afficher_accueil", "publie"]
     list_filter = ["publie", "afficher_accueil", "note", "entreprise"]
@@ -312,6 +312,7 @@ class AvisAdmin(RevalidationMixin, ParEntrepriseMixin, admin.ModelAdmin):
     date_hierarchy = "date"
     fieldsets = [
         ("Le client", {"fields": [("nom", "qualite"), ("photo", "apercu_photo")]}),
+        ("Confirmation de l'avis (WhatsApp)", {"fields": ["whatsapp", "accord_verification"]}),
         ("L'avis", {"fields": ["texte", ("note", "date")]}),
         ("Où l'afficher ?", {"fields": ["offre", "entreprise", ("publie", "afficher_accueil")]}),
         ("Avancé", {"classes": ["collapse"], "fields": ["ordre"]}),
@@ -328,6 +329,10 @@ class AvisAdmin(RevalidationMixin, ParEntrepriseMixin, admin.ModelAdmin):
     @admin.display(description="note", ordering="note")
     def etoiles(self, obj):
         return "★" * obj.note + "☆" * (5 - obj.note)
+
+    @admin.display(description="confirmable", boolean=True)
+    def confirmable(self, obj):
+        return obj.verifiable
 
     @admin.display(description="avis")
     def extrait(self, obj):

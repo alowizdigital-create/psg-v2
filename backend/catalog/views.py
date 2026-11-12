@@ -1,4 +1,7 @@
+from urllib.parse import quote
+
 from django.db.models import Prefetch
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
@@ -85,3 +88,27 @@ def avis(request):
     if request.query_params.get("accueil"):
         qs = qs.filter(afficher_accueil=True)
     return Response(resume_avis(qs))
+
+
+def avis_verifier(request, pk):
+    """Redirige vers le WhatsApp du client, avec un message demandant de confirmer son avis.
+
+    Le numéro n'apparaît jamais dans la page ni dans l'API : il n'est révélé que par cette
+    redirection, et seulement si le client a donné son accord (case cochée dans l'admin).
+    """
+    if request.method != "GET":
+        raise Http404()
+    avis = get_object_or_404(Avis.objects.select_related("offre"), pk=pk, publie=True)
+    if not avis.verifiable:
+        raise Http404()
+    prenom = avis.nom.split()[0]
+    sujet = f" sur « {avis.offre.titre} »" if avis.offre_id else ""
+    message = (
+        f"Bonjour {prenom}, je viens de lire votre avis{sujet} sur le site de PS GROUP SARL. "
+        "Pouvez-vous me confirmer que cet avis est bien de vous ? Merci !"
+    )
+    reponse = HttpResponseRedirect(f"https://wa.me/{avis.numero_whatsapp()}?text={quote(message)}")
+    reponse["Cache-Control"] = "no-store"
+    reponse["X-Robots-Tag"] = "noindex, nofollow"
+    reponse["Referrer-Policy"] = "no-referrer"
+    return reponse

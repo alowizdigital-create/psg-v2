@@ -17,6 +17,7 @@ api = [
     path("entreprises/", catalog_views.entreprises),
     path("entreprises/<slug:slug>/", catalog_views.entreprise_detail),
     path("avis/", catalog_views.avis),
+    path("avis/<int:pk>/verifier/", catalog_views.avis_verifier),
     path("offres/", catalog_views.offres),
     path("offres/<slug:slug>/", catalog_views.offre_detail),
     path("demandes/", demandes_views.creer_demande),

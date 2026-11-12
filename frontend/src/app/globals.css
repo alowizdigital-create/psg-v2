@@ -694,3 +694,12 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 .avis-fleche.next { right: -14px; }
 .demande-envoyee .offer-avis { display: none; }
 @media (max-width: 900px) { .avis-fleche { display: none; } }
+
+/* Bouton « Confirmer l'avis » (WhatsApp du client) */
+.avis-verifier {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 6px; flex: none; padding: 6px 12px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 600; font-family: var(--font-display); color: #128C4A; background: #E8F8EE;
+  border: 1px solid #BFE8CF; transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+.avis-verifier:hover { background: #25D366; color: #fff; border-color: #25D366; transform: translateY(-2px); }
+@media (max-width: 420px) { .avis-carte footer { flex-wrap: wrap; } .avis-verifier { margin-left: 62px; } }

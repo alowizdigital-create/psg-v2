@@ -172,10 +172,12 @@ class SiteSettingsSerializer(serializers.ModelSerializer):
 class AvisSerializer(serializers.ModelSerializer):
     photo = ImageField()
     offre = serializers.SerializerMethodField()
+    # Le numéro WhatsApp n'est jamais exposé : seul l'indicateur l'est (voir avis_verifier).
+    verifiable = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Avis
-        fields = ["id", "nom", "qualite", "texte", "note", "photo", "date", "offre"]
+        fields = ["id", "nom", "qualite", "texte", "note", "photo", "date", "offre", "verifiable"]
 
     def get_offre(self, obj):
         return {"titre": obj.offre.titre, "slug": obj.offre.slug} if obj.offre_id else None

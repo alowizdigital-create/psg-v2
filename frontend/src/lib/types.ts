@@ -76,6 +76,7 @@ export type Avis = {
   photo: string | null;
   date: string;
   offre: { titre: string; slug: string } | null;
+  verifiable: boolean;
 };
 
 export type ResumeAvis = { total: number; moyenne: number; liste: Avis[] };

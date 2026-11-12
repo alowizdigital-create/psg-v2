@@ -52,3 +52,39 @@ def test_gestionnaire_ne_voit_que_les_avis_de_son_entreprise(avis_exemples, gest
     html = c.get("/admin/catalog/avis/").content.decode()
     assert "Awa" in html and "Paul" in html and "Jean" not in html
     assert c.get("/admin/catalog/avis/add/").status_code == 200
+
+
+@pytest.mark.django_db
+def test_bouton_verifier_redirige_vers_whatsapp_sans_exposer_le_numero(mariage):
+    a = Avis.objects.create(nom="Awa Ngono", texte="Super", offre=mariage, whatsapp="6 55 33 47 60",
+                            accord_verification=True)
+    # Le numéro n'apparaît jamais dans l'API publique.
+    d = APIClient().get(f"/api/offres/{mariage.slug}/").json()
+    assert d["avis"]["liste"][0]["verifiable"] is True
+    assert "655334760" not in str(d) and "whatsapp" not in str(d).lower()
+    r = Client().get(f"/api/avis/{a.pk}/verifier/")
+    assert r.status_code == 302
+    assert r["Location"].startswith("https://wa.me/237655334760?text=")
+    assert "Awa" in r["Location"] and "Couverture" in r["Location"] and "confirmer" in r["Location"]
+    assert r["Cache-Control"] == "no-store"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("champs", [
+    {"whatsapp": "655334760", "accord_verification": False},   # pas d'accord du client
+    {"whatsapp": "", "accord_verification": False},            # pas de numéro
+    {"whatsapp": "655334760", "accord_verification": True, "publie": False},  # masqué
+])
+def test_bouton_verifier_refuse_sans_accord_numero_ou_publication(mariage, champs):
+    a = Avis.objects.create(nom="Awa", texte="Super", offre=mariage, **champs)
+    assert Client().get(f"/api/avis/{a.pk}/verifier/").status_code == 404
+    assert Client().post(f"/api/avis/{a.pk}/verifier/").status_code == 404
+
+
+@pytest.mark.django_db
+def test_validation_du_numero_whatsapp(mariage):
+    from django.core.exceptions import ValidationError
+    with pytest.raises(ValidationError):
+        Avis(nom="X", texte="ok", offre=mariage, whatsapp="12").full_clean()
+    with pytest.raises(ValidationError):
+        Avis(nom="X", texte="ok", offre=mariage, accord_verification=True).full_clean()

@@ -7,6 +7,7 @@ import { useRef } from "react";
 import type { ResumeAvis } from "@/lib/types";
 
 import { Reveal } from "./Motion";
+import { WhatsappIcon } from "./Social";
 
 function Etoiles({ note, taille = 18 }: { note: number; taille?: number }) {
   return (
@@ -72,6 +73,15 @@ export default function AvisClients({ avis, titre = "Ce que disent nos clients",
                     <strong>{a.nom}</strong>
                     {a.qualite && <small>{a.qualite}</small>}
                   </span>
+                  {a.verifiable && (
+                    // Redirection côté serveur vers le WhatsApp du client : son numéro n'est jamais dans la page.
+                    <a className="avis-verifier" href={`/api/avis/${a.id}/verifier/`} target="_blank"
+                       rel="noopener noreferrer nofollow"
+                       title="Vérifiez auprès du client que cet avis est authentique"
+                       aria-label={`Confirmer l'avis de ${a.nom} : écrire au client sur WhatsApp (s'ouvre dans un nouvel onglet)`}>
+                      <WhatsappIcon size={15} /> Confirmer l’avis
+                    </a>
+                  )}
                 </footer>
               </Reveal>
             ))}
