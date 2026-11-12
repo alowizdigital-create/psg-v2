@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { ResumeAvis } from "@/lib/types";
 
@@ -25,11 +25,27 @@ export default function AvisClients({ avis, titre = "Ce que disent nos clients",
   avis: ResumeAvis; titre?: string; surTitre?: string; montrerOffre?: boolean; className?: string;
 }) {
   const piste = useRef<HTMLDivElement>(null);
+  const [plusieursPages, setPlusieursPages] = useState(false);
+
+  // Les flèches n'existent que si toutes les cartes ne tiennent pas dans une page.
+  const mesurer = useCallback(() => {
+    const el = piste.current;
+    if (el) setPlusieursPages(el.scrollWidth > el.clientWidth + 2);
+  }, []);
+  useEffect(() => {
+    mesurer();
+    window.addEventListener("resize", mesurer);
+    return () => window.removeEventListener("resize", mesurer);
+  }, [mesurer, avis.total]);
+
   if (!avis.total) return null;
 
+  // Une « page » = la largeur visible, gouttière comprise : les cartes restent alignées.
   const defiler = (sens: 1 | -1) => {
     const el = piste.current;
-    if (el) el.scrollBy({ left: sens * Math.min(el.clientWidth, 420), behavior: "smooth" });
+    if (!el) return;
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+    el.scrollBy({ left: sens * (el.clientWidth + gap), behavior: "smooth" });
   };
 
   return (
@@ -45,7 +61,7 @@ export default function AvisClients({ avis, titre = "Ce que disent nos clients",
         </Reveal>
 
         <div className="avis-piste-wrap">
-          <div className={`avis-piste ${avis.total <= 3 ? "centre" : ""}`} ref={piste} tabIndex={0}
+          <div className="avis-piste centre" ref={piste} tabIndex={0}
                aria-label="Avis des clients">
             {avis.liste.map((a, i) => (
               <Reveal key={a.id} delay={(i % 3) * 0.08} as="article" className="avis-carte">
@@ -76,7 +92,7 @@ export default function AvisClients({ avis, titre = "Ce que disent nos clients",
               </Reveal>
             ))}
           </div>
-          {avis.total > 3 && (
+          {plusieursPages && (
             <div className="avis-controles">
               <button className="round-btn avis-fleche" onClick={() => defiler(-1)} aria-label="Avis précédents">
                 <ChevronLeft />

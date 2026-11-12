@@ -664,24 +664,37 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 .etoiles svg.on { color: var(--accent); fill: var(--accent); }
 .avis-resume { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; color: var(--ink); }
 .avis-resume strong { font-size: 1.3rem; color: var(--primary); }
-.avis-piste-wrap { position: relative; }
+
+/* Carrousel par « pages » : 3 cartes ENTIÈRES sur ordinateur, 2 sur tablette, 1 sur mobile.
+   Jamais de carte coupée sur un bord ; les flèches (et le glissement) passent à la page suivante. */
 .avis-piste {
-  display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 12px 6px 26px;
+  --avis-par-page: 3; --avis-gap: 22px;
+  display: flex; gap: var(--avis-gap); overflow-x: auto; scroll-snap-type: x mandatory;
+  /* 2 px de marge de chaque côté : la bordure des cartes extrêmes n'est jamais rognée par le cadre
+     (la gouttière de 22 px empêche toute carte voisine d'apparaître). */
+  margin-inline: -2px; padding: 14px 2px 30px; scroll-padding-inline: 2px;
   scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .avis-piste::-webkit-scrollbar { display: none; }
-.avis-piste.centre { justify-content: center; }
 .avis-carte {
-  position: relative; flex: 0 0 min(380px, 86%); scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px;
+  position: relative; flex: 0 0 calc((100% - (var(--avis-par-page) - 1) * var(--avis-gap)) / var(--avis-par-page));
+  scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; min-width: 0;
   background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px 28px 24px;
   box-shadow: var(--shadow-card); overflow: hidden; transition: transform 0.4s var(--ease), border-color 0.4s;
 }
 .avis-carte:hover { transform: translateY(-6px); border-color: rgba(245, 184, 0, 0.7); }
+/* Peu d'avis : centrés, sans jamais rendre une carte inaccessible. */
+.avis-piste.centre > .avis-carte:first-child { margin-left: auto; }
+.avis-piste.centre > .avis-carte:last-child { margin-right: auto; }
+@media (max-width: 1000px) { .avis-piste { --avis-par-page: 2; } }
+@media (max-width: 640px) { .avis-piste { --avis-par-page: 1; } }
+
 .avis-guillemets { position: absolute; top: 18px; right: 20px; color: var(--primary); opacity: 0.1; }
 .avis-carte blockquote { color: var(--ink); font-size: 1.05rem; line-height: 1.65; flex: 1; }
 .avis-offre { align-self: flex-start; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; background: var(--bg-alt); color: var(--primary); }
 .avis-offre:hover { background: var(--accent); color: var(--night); }
-.avis-carte footer { display: flex; align-items: center; gap: 14px; padding-top: 16px; border-top: 1px dashed var(--border); }
+.avis-carte footer { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 14px; padding-top: 16px; border-top: 1px dashed var(--border); }
+.avis-carte footer > span:nth-child(2) { flex: 1 1 140px; min-width: 0; }
 .avis-carte footer strong { display: block; font-family: var(--font-heading); }
 .avis-carte footer small { display: block; color: var(--muted); font-size: 0.85rem; }
 .avis-avatar {
@@ -689,47 +702,16 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
   background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--accent); font-weight: 800; font-size: 1.15rem;
 }
 .avis-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.avis-fleche { position: absolute; top: 45%; z-index: 2; background: var(--white); border-color: var(--border); color: var(--primary); box-shadow: var(--shadow-card); }
-.avis-fleche.prev { left: -14px; }
-.avis-fleche.next { right: -14px; }
-.demande-envoyee .offer-avis { display: none; }
-@media (max-width: 900px) { .avis-fleche { display: none; } }
 
-/* Bouton « Confirmer l'avis » (WhatsApp du client) */
+/* Bouton « Confirmer l'avis » (WhatsApp du client), sous le nom */
 .avis-verifier {
-  margin-left: auto; display: inline-flex; align-items: center; gap: 6px; flex: none; padding: 6px 12px; border-radius: 999px;
+  margin-left: 62px; display: inline-flex; align-items: center; gap: 6px; flex: none; padding: 6px 12px; border-radius: 999px;
   font-size: 0.78rem; font-weight: 600; font-family: var(--font-display); color: #128C4A; background: #E8F8EE;
   border: 1px solid #BFE8CF; transition: background 0.25s, color 0.25s, transform 0.25s;
 }
 .avis-verifier:hover { background: #25D366; color: #fff; border-color: #25D366; transform: translateY(-2px); }
-@media (max-width: 420px) { .avis-carte footer { flex-wrap: wrap; } .avis-verifier { margin-left: 62px; } }
 
-/* Carrousel d'avis : la marge intérieure laisse voir la bordure et l'ombre des cartes aux deux
-   extrémités ; l'alignement du défilement en tient compte (sinon la 1re et la dernière carte
-   sont rognées). */
-.avis-piste {
-  margin-inline: calc(-1 * var(--gutter)); padding: 14px var(--gutter) 30px; scroll-padding-inline: var(--gutter);
-  justify-content: flex-start;
-}
-/* Peu d'avis : centrés, sans jamais rendre une carte inaccessible. */
-.avis-piste.centre { justify-content: flex-start; }
-.avis-piste.centre > .avis-carte:first-child { margin-left: auto; }
-.avis-piste.centre > .avis-carte:last-child { margin-right: auto; }
-.avis-fleche.prev { left: 4px; }
-.avis-fleche.next { right: 4px; }
-.avis-carte footer > span:nth-child(2) { flex: 1 1 0; min-width: 0; }
-
-/* Les cartes qui dépassent s'estompent doucement sur les bords au lieu d'être coupées net. */
-.avis-piste {
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent 100%);
-}
-/* Bouton « Confirmer l'avis » sous le nom : les noms longs ne sont plus écrasés. */
-.avis-carte footer { flex-wrap: wrap; row-gap: 12px; }
-.avis-carte footer > span:nth-child(2) { flex: 1 1 140px; }
-.avis-verifier { margin-left: 62px; }
-
-/* Flèches du carrousel d'avis : sous les cartes, centrées (elles ne recouvrent plus le texte). */
+/* Flèches : sous les cartes, centrées, visibles seulement s'il y a plusieurs pages. */
 .avis-controles { display: flex; justify-content: center; gap: 14px; margin-top: 4px; }
-.avis-fleche { position: static; translate: none; }
-@media (max-width: 900px) { .avis-controles { display: none; } }
+.avis-fleche { position: static; translate: none; background: var(--white); border-color: var(--border); color: var(--primary); box-shadow: var(--shadow-card); }
+.demande-envoyee .offer-avis { display: none; }
