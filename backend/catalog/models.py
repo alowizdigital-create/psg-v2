@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 
 from .images import ImagesOptimiseesMixin
@@ -362,3 +364,53 @@ class SiteSettings(models.Model):
     def charger(cls):
         obj, _ = cls.objects.get_or_create(pk=1)
         return obj
+
+
+class Avis(ImagesOptimiseesMixin, Ordonnable):
+    """Avis d'un client, affiché sur l'accueil et/ou sous une offre du catalogue."""
+
+    IMAGES_A_OPTIMISER = {"photo": 400}
+
+    nom = models.CharField("nom du client", max_length=120)
+    qualite = models.CharField(
+        "qualité / ville", max_length=120, blank=True,
+        help_text="Ex. « Mariée, Yaoundé » ou « Directrice, Société X ».",
+    )
+    texte = models.TextField("avis", max_length=1200)
+    note = models.PositiveSmallIntegerField(
+        "note sur 5", default=5, validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
+    photo = models.ImageField("photo du client", upload_to="avis/", blank=True,
+                              help_text="Facultative : sans photo, l'initiale du nom est affichée.")
+    entreprise = models.ForeignKey(
+        Entreprise, verbose_name="entreprise", on_delete=models.CASCADE, null=True, blank=True,
+        related_name="avis",
+        help_text="Rempli automatiquement si vous choisissez une offre.",
+    )
+    offre = models.ForeignKey(
+        Offre, verbose_name="offre concernée", on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="avis",
+        help_text="L'avis s'affiche sous cette offre. Sans offre, il s'affiche sous toutes les offres "
+                  "de l'entreprise.",
+    )
+    afficher_accueil = models.BooleanField("afficher sur la page d'accueil", default=False)
+    publie = models.BooleanField("publié", default=True,
+                                 help_text="Décoché = masqué sur le site.")
+    date = models.DateField("date", default=timezone.localdate)
+
+    class Meta:
+        verbose_name = "avis client"
+        verbose_name_plural = "avis clients"
+        ordering = ["ordre", "-date", "-id"]
+
+    def __str__(self):
+        return f"{self.nom} — {self.note}/5"
+
+    def clean(self):
+        if self.offre_id:
+            self.entreprise = self.offre.entreprise
+
+    def save(self, *args, **kwargs):
+        if self.offre_id:
+            self.entreprise_id = self.offre.entreprise_id
+        super().save(*args, **kwargs)

@@ -19,13 +19,13 @@ register = template.Library()
 ICONE_MODELE = {
     "demande": "demande", "offre": "offre", "entreprise": "entreprise", "section": "section",
     "heroslide": "heroslide", "sitesettings": "sitesettings", "notification": "notification",
-    "user": "user", "group": "group",
+    "user": "user", "group": "group", "avis": "avis",
 }
 
 # Ordre et intitulés des rubriques du menu.
 RUBRIQUES = [
     ("Activité", ["demandes.demande", "notifications.notification"]),
-    ("Catalogue", ["catalog.offre", "catalog.entreprise"]),
+    ("Catalogue", ["catalog.offre", "catalog.avis", "catalog.entreprise"]),
     ("Site", ["catalog.section", "catalog.heroslide", "catalog.sitesettings"]),
     ("Accès", ["auth.user", "auth.group"]),
 ]

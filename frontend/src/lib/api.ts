@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { EntrepriseDetail, OffreDetail, OffreResume, Section, Site } from "./types";
+import type { EntrepriseDetail, ResumeAvis, OffreDetail, OffreResume, Section, Site } from "./types";
 
 const BACKEND = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8000";
 
@@ -29,5 +29,7 @@ export const api = {
     (await get<{ sections: Section[] }>(`pages/${page}/`))?.sections ?? [],
   entreprise: (slug: string) => get<EntrepriseDetail>(`entreprises/${encodeURIComponent(slug)}/`),
   offres: async (params = "") => (await get<OffreResume[]>(`offres/${params}`)) ?? [],
+  avis: async (params = "") =>
+    (await get<ResumeAvis>(`avis/${params}`)) ?? { total: 0, moyenne: 0, liste: [] },
   offre: (slug: string) => get<OffreDetail>(`offres/${encodeURIComponent(slug)}/`),
 };

@@ -1,0 +1,54 @@
+import pytest
+from django.test import Client
+from rest_framework.test import APIClient
+
+from catalog.models import Avis
+
+
+@pytest.fixture
+def avis_exemples(mariage, studio, digital):
+    return {
+        "offre": Avis.objects.create(nom="Awa", texte="Superbe couverture", note=5, offre=mariage),
+        "general": Avis.objects.create(nom="Paul", texte="Équipe pro", note=4, entreprise=studio),
+        "autre_entreprise": Avis.objects.create(nom="Jean", texte="Bon site", note=3, entreprise=digital),
+        "masque": Avis.objects.create(nom="Spam", texte="Caché", note=1, offre=mariage, publie=False),
+        "accueil": Avis.objects.create(nom="Marie", texte="Je recommande", note=5, entreprise=studio,
+                                       afficher_accueil=True),
+    }
+
+
+@pytest.mark.django_db
+def test_offre_affiche_ses_avis_puis_ceux_de_l_entreprise(mariage, avis_exemples):
+    d = APIClient().get(f"/api/offres/{mariage.slug}/").json()["avis"]
+    noms = [a["nom"] for a in d["liste"]]
+    assert noms[0] == "Awa" and set(noms) == {"Awa", "Paul", "Marie"}  # offre d'abord ; ni masqué ni autre entreprise
+    assert d["total"] == 3 and d["moyenne"] == pytest.approx(4.7, abs=0.05)
+
+
+@pytest.mark.django_db
+def test_avis_accueil_uniquement_publies_et_coches(avis_exemples):
+    d = APIClient().get("/api/avis/?accueil=1").json()
+    assert [a["nom"] for a in d["liste"]] == ["Marie"] and d["total"] == 1
+    assert APIClient().get("/api/avis/").json()["total"] == 4  # sans les non publiés
+
+
+@pytest.mark.django_db
+def test_entreprise_deduite_de_l_offre(mariage):
+    a = Avis.objects.create(nom="X", texte="ok", offre=mariage)
+    assert a.entreprise_id == mariage.entreprise_id
+
+
+@pytest.mark.django_db
+def test_aucun_avis(mariage):
+    d = APIClient().get(f"/api/offres/{mariage.slug}/").json()["avis"]
+    assert d == {"total": 0, "moyenne": 0, "liste": []}
+
+
+@pytest.mark.django_db
+def test_gestionnaire_ne_voit_que_les_avis_de_son_entreprise(avis_exemples, gestionnaire_factory, studio):
+    chef = gestionnaire_factory("chef", studio)
+    c = Client()
+    c.force_login(chef)
+    html = c.get("/admin/catalog/avis/").content.decode()
+    assert "Awa" in html and "Paul" in html and "Jean" not in html
+    assert c.get("/admin/catalog/avis/add/").status_code == 200

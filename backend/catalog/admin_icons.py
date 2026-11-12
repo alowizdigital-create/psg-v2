@@ -22,6 +22,7 @@ _FA = {
     "alert": "fa-solid fa-triangle-exclamation",
     "today": "fa-regular fa-clock",
     "check": "fa-solid fa-phone",
+    "avis": "fa-solid fa-star",
     "brouillon": "fa-regular fa-file-lines",
     "default": "fa-solid fa-circle",
 }

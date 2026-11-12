@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
-from .models import Entreprise, GroupeOptions, HeroSlide, Offre, Option, Section, SiteSettings
+from .models import Avis, Entreprise, GroupeOptions, HeroSlide, Offre, Option, Section, SiteSettings
 from .serializers import (
     EntrepriseDetailSerializer,
     EntrepriseResumeSerializer,
@@ -13,6 +13,7 @@ from .serializers import (
     OffreResumeSerializer,
     SectionSerializer,
     SiteSettingsSerializer,
+    resume_avis,
 )
 
 PAGES_PUBLIQUES = {Section.PAGE_ACCUEIL, Section.PAGE_A_PROPOS, Section.PAGE_CONTACT}
@@ -75,3 +76,12 @@ def offres(request):
 def offre_detail(request, slug):
     qs = offres_publiees().prefetch_related("galerie")
     return Response(OffreDetailSerializer(get_object_or_404(qs, slug=slug)).data)
+
+
+@api_view(["GET"])
+def avis(request):
+    """Avis publiés : ?accueil=1 pour ceux de la page d'accueil."""
+    qs = Avis.objects.filter(publie=True).select_related("offre")
+    if request.query_params.get("accueil"):
+        qs = qs.filter(afficher_accueil=True)
+    return Response(resume_avis(qs))

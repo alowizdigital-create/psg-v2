@@ -8,6 +8,7 @@ from accounts.admin_mixins import ParEntrepriseMixin
 from accounts.permissions import entreprises_autorisees
 
 from .models import (
+    Avis,
     ElementSection,
     Entreprise,
     GroupeOptions,
@@ -295,3 +296,52 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         transaction.on_commit(demander_revalidation)
+
+
+# --- Avis des clients ---------------------------------------------------------------
+
+@admin.register(Avis)
+class AvisAdmin(RevalidationMixin, ParEntrepriseMixin, admin.ModelAdmin):
+    list_display = ["miniature", "nom", "etoiles", "extrait", "offre", "entreprise", "afficher_accueil", "publie",
+                    "date"]
+    list_display_links = ["miniature", "nom"]
+    list_editable = ["afficher_accueil", "publie"]
+    list_filter = ["publie", "afficher_accueil", "note", "entreprise"]
+    search_fields = ["nom", "texte", "qualite"]
+    readonly_fields = ["apercu_photo"]
+    date_hierarchy = "date"
+    fieldsets = [
+        ("Le client", {"fields": [("nom", "qualite"), ("photo", "apercu_photo")]}),
+        ("L'avis", {"fields": ["texte", ("note", "date")]}),
+        ("Où l'afficher ?", {"fields": ["offre", "entreprise", ("publie", "afficher_accueil")]}),
+        ("Avancé", {"classes": ["collapse"], "fields": ["ordre"]}),
+    ]
+
+    @admin.display(description="")
+    def miniature(self, obj):
+        return apercu(obj.photo)
+
+    @admin.display(description="aperçu")
+    def apercu_photo(self, obj):
+        return apercu(obj.photo, 90)
+
+    @admin.display(description="note", ordering="note")
+    def etoiles(self, obj):
+        return "★" * obj.note + "☆" * (5 - obj.note)
+
+    @admin.display(description="avis")
+    def extrait(self, obj):
+        return obj.texte if len(obj.texte) <= 70 else obj.texte[:67] + "…"
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "offre" and not request.user.is_superuser:
+            kwargs["queryset"] = Offre.objects.filter(entreprise__in=entreprises_autorisees(request.user))
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_changeform_initial_data(self, request):
+        initial = super().get_changeform_initial_data(request)
+        if not request.user.is_superuser:
+            premiere = entreprises_autorisees(request.user).first()
+            if premiere:
+                initial.setdefault("entreprise", premiere.pk)
+        return initial

@@ -16,6 +16,7 @@ PERMISSIONS_GESTIONNAIRE = {
         "entreprise": ["change", "view"],
         "section": ["add", "change", "delete", "view"],
         "elementsection": ["add", "change", "delete", "view"],
+        "avis": ["add", "change", "delete", "view"],
     },
     "demandes": {"demande": ["change", "view"], "demandechoix": ["view"]},
     "notifications": {"notification": ["view"]},

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import AvisClients from "@/components/AvisClients";
 import Gallery from "@/components/Gallery";
 import { Reveal } from "@/components/Motion";
 import OfferConfigurator from "@/components/OfferConfigurator";
@@ -48,6 +49,9 @@ export default async function PageOffre({ params }: Props) {
           <OfferConfigurator offre={offre} />
         </div>
       </section>
+      {/* Après l'offre : avis des clients (masqués une fois la demande envoyée). */}
+      <AvisClients avis={offre.avis} titre="Avis sur cette offre" surTitre={offre.entreprise.nom}
+                   className="section-alt offer-avis" />
     </>
   );
 }

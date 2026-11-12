@@ -2,6 +2,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from .models import (
+    Avis,
     ElementSection,
     Entreprise,
     GroupeOptions,
@@ -112,9 +113,16 @@ class OffreDetailSerializer(OffreResumeSerializer):
     galerie = OffreImageSerializer(many=True, read_only=True)
     groupes = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
+    avis = serializers.SerializerMethodField()
 
     class Meta(OffreResumeSerializer.Meta):
-        fields = OffreResumeSerializer.Meta.fields + ["description", "galerie", "groupes"]
+        fields = OffreResumeSerializer.Meta.fields + ["description", "galerie", "groupes", "avis"]
+
+    def get_avis(self, obj):
+        # Avis de cette offre d'abord, puis avis généraux de l'entreprise (sans offre).
+        propres = Avis.objects.filter(publie=True, offre=obj)
+        generaux = Avis.objects.filter(publie=True, offre__isnull=True, entreprise_id=obj.entreprise_id)
+        return resume_avis([*propres, *generaux])
 
     def get_description(self, obj):
         return paragraphes(obj.description)
@@ -159,3 +167,23 @@ class SiteSettingsSerializer(serializers.ModelSerializer):
 
     def get_telephones(self, obj):
         return [t.strip() for t in obj.telephones.split(",") if t.strip()]
+
+
+class AvisSerializer(serializers.ModelSerializer):
+    photo = ImageField()
+    offre = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Avis
+        fields = ["id", "nom", "qualite", "texte", "note", "photo", "date", "offre"]
+
+    def get_offre(self, obj):
+        return {"titre": obj.offre.titre, "slug": obj.offre.slug} if obj.offre_id else None
+
+
+def resume_avis(avis):
+    """Liste d'avis + moyenne et nombre, au format attendu par le site."""
+    avis = list(avis)
+    total = len(avis)
+    moyenne = round(sum(a.note for a in avis) / total, 1) if total else 0
+    return {"total": total, "moyenne": moyenne, "liste": AvisSerializer(avis, many=True).data}

@@ -67,7 +67,21 @@ export type Groupe = {
   options: Option[];
 };
 
+export type Avis = {
+  id: number;
+  nom: string;
+  qualite: string;
+  texte: string;
+  note: number;
+  photo: string | null;
+  date: string;
+  offre: { titre: string; slug: string } | null;
+};
+
+export type ResumeAvis = { total: number; moyenne: number; liste: Avis[] };
+
 export type OffreDetail = OffreResume & {
+  avis: ResumeAvis;
   description: string[];
   galerie: { id: number; image: string | null; legende: string }[];
   groupes: Groupe[];
