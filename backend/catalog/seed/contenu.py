@@ -22,6 +22,8 @@ REGLAGES = {
 }
 
 # Diaporamas d'ouverture des pages d'entreprises (image, légende).
+LOGOS_ENTREPRISES = {"concours": "concours/logo.webp"}
+
 SLIDES_ENTREPRISES = {
     "concours": [
         ("concours/slide-1.webp", "Miss Afrijeune"),

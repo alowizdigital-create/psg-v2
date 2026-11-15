@@ -73,7 +73,7 @@ def slug_unique(instance, valeur, champ="slug"):
 
 
 class Entreprise(ImagesOptimiseesMixin, Ordonnable):
-    IMAGES_A_OPTIMISER = {"banniere": 1920}
+    IMAGES_A_OPTIMISER = {"banniere": 1920, "logo": 600}
 
     nom = models.CharField("nom", max_length=120)
     slug = models.SlugField(
@@ -90,6 +90,8 @@ class Entreprise(ImagesOptimiseesMixin, Ordonnable):
                               help_text="Texte court affiché sur la carte de l'entreprise en page d'accueil.")
     icone = models.CharField("icône", max_length=40, choices=ICONES, default="sparkles")
     banniere = models.ImageField("image bannière", upload_to="entreprises/", blank=True)
+    logo = models.ImageField("logo (facultatif)", upload_to="entreprises/logos/", blank=True,
+                             help_text="Affiché en haut à droite du diaporama d'ouverture (fond transparent conseillé).")
     cta_titre = models.CharField("titre de l'appel à l'action", max_length=160, blank=True)
     cta_texte = models.CharField("texte de l'appel à l'action", max_length=255, blank=True)
     telephone_equipe = models.CharField(

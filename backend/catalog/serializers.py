@@ -136,10 +136,11 @@ class EntrepriseDetailSerializer(EntrepriseResumeSerializer):
     sections = serializers.SerializerMethodField()
     offres = serializers.SerializerMethodField()
     slides = serializers.SerializerMethodField()
+    logo = ImageField()
 
     class Meta(EntrepriseResumeSerializer.Meta):
         fields = EntrepriseResumeSerializer.Meta.fields + [
-            "sur_titre", "cta_titre", "cta_texte", "slides", "sections", "offres",
+            "logo", "sur_titre", "cta_titre", "cta_texte", "slides", "sections", "offres",
         ]
 
     def get_slides(self, obj):

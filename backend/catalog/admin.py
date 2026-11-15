@@ -199,7 +199,7 @@ class EntrepriseAdmin(RevalidationMixin, ParEntrepriseMixin, nested_admin.Nested
     inlines = [SlideInline, SectionInline]
     fieldsets = [
         ("Présentation", {"fields": ["nom", ("sur_titre", "icone"), "accroche", "resume",
-                                     ("banniere", "apercu")]}),
+                                     ("banniere", "apercu"), "logo"]}),
         ("Bandeau « Nous contacter » en bas de page", {"fields": ["cta_titre", "cta_texte"]}),
         ("Notifications des demandes", {"fields": ["telephone_equipe", "email_equipe"]}),
         ("Avancé", {"classes": ["collapse"], "fields": ["slug", "active", "ordre"]}),

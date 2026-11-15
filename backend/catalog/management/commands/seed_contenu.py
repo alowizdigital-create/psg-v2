@@ -35,6 +35,11 @@ def affecter_image(obj, champ, chemin):
 def ajouter_diaporamas():
     """Ajoute les diaporamas d'ouverture des entreprises qui n'en ont pas encore (idempotent)."""
     ajoutes = 0
+    for slug, chemin in contenu.LOGOS_ENTREPRISES.items():
+        e = Entreprise.objects.filter(slug=slug).first()
+        if e and not e.logo:
+            affecter_image(e, "logo", chemin)
+            e.save()
     for slug, images in contenu.SLIDES_ENTREPRISES.items():
         e = Entreprise.objects.filter(slug=slug).first()
         if not e or e.slides.exists():

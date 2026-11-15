@@ -745,23 +745,19 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 .coverflow-legende small { font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; color: var(--muted); }
 .coverflow + .coverflow { margin-top: 10px; }
 
-/* --- Ouverture plein écran d'une page d'entreprise (ex. Miss Afrijeune) -------------- */
-.hero-entreprise { align-items: end; }
+/* --- Ouverture plein écran d'une page d'entreprise (ex. Miss Afrijeune) : photos seules ---- */
+.hero-entreprise { min-height: 100svh; }
 .hero-entreprise .hero-slide { background-position: center 30%; }
-.hero-entreprise::before {
-  background:
-    linear-gradient(180deg, rgba(18, 6, 7, 0.28) 0%, rgba(18, 6, 7, 0) 35%, rgba(18, 6, 7, 0.55) 68%, rgba(18, 6, 7, 0.92) 100%);
+.hero-entreprise::before { background: linear-gradient(180deg, rgba(18, 6, 7, 0.18) 0%, rgba(18, 6, 7, 0) 30%, rgba(18, 6, 7, 0) 80%, rgba(18, 6, 7, 0.4) 100%); }
+.hero-entreprise-logo {
+  position: absolute; z-index: 2; top: 120px; right: clamp(16px, 3vw, 44px);
+  width: clamp(64px, 8vw, 110px); height: auto; filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.4));
 }
-.hero-entreprise-contenu {
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-  padding-top: 120px; padding-bottom: 84px;
-}
-.hero-entreprise-nom { font-size: clamp(2rem, 5.4vw, 4.6rem); }
-.hero-entreprise-accroche { color: #f1e3dd; font-size: clamp(1rem, 2vw, 1.3rem); margin: 14px 0 0; max-width: 640px; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
-.hero-entreprise .hero-actions { margin-top: 18px; }
-.hero-entreprise .hero-dots { bottom: 30px; }
+.hero-entreprise-bas { position: absolute; z-index: 3; left: 50%; translate: -50% 0; bottom: 26px; color: #fff; animation: rebond 2s ease-in-out infinite; }
+.hero-entreprise .hero-dots { bottom: 70px; }
+@keyframes rebond { 50% { transform: translateY(6px); } }
 @media (max-width: 720px) {
   .hero-entreprise { min-height: 88svh; }
   .hero-entreprise .hero-slide { background-position: center 22%; }
-  .hero-entreprise-contenu { padding-bottom: 92px; }
+  .hero-entreprise-logo { top: 96px; }
 }
