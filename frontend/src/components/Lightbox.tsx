@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect } from "react";
 
-export type Img = { image: string | null; legende: string };
+export type Img = { image: string | null; legende: string; sous?: string };
 
 /** Visionneuse plein écran (Échap pour fermer, flèches du clavier pour naviguer). */
 export default function Lightbox({ images, index, onClose, onChange }: {
@@ -44,7 +44,9 @@ export default function Lightbox({ images, index, onClose, onChange }: {
           <motion.div key={index} initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.35 }} onClick={(e) => e.stopPropagation()}>
             <img src={images[index].image!} alt={images[index].legende} />
-            {images[index].legende && <p>{images[index].legende}</p>}
+            {images[index].legende && (
+              <p>{images[index].legende}{images[index].sous ? ` — ${images[index].sous}` : ""}</p>
+            )}
           </motion.div>
         </motion.div>
       )}

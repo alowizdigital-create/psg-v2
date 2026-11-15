@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import AvisClients from "@/components/AvisClients";
-import Gallery from "@/components/Gallery";
+import Coverflow from "@/components/Coverflow";
 import { Reveal } from "@/components/Motion";
 import OfferConfigurator from "@/components/OfferConfigurator";
 import PageHero from "@/components/PageHero";
@@ -43,7 +43,7 @@ export default async function PageOffre({ params }: Props) {
           {(offre.description.length > 0 || photos.length > 1) && (
             <Reveal className="prose offer-intro">
               {offre.description.map((p, i) => <p key={i}>{p}</p>)}
-              {photos.length > 1 && <Gallery images={photos} mode="thumbs" />}
+              {photos.length > 1 && <Coverflow images={photos} label={`Photos — ${offre.titre}`} />}
             </Reveal>
           )}
           <OfferConfigurator offre={offre} />

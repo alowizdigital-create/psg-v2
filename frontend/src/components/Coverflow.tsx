@@ -113,7 +113,7 @@ export default function Coverflow({ images, label = "Galerie photo" }: { images:
               transition={reduit ? { duration: 0 } : { duration: 0.85, ease: EASE, opacity: { duration: 0.35 } }}
               onTap={() => (d === 0 ? setOuvert(i) : aller(i))}
               aria-hidden={montre ? undefined : true}
-              aria-label={img.legende || `Réalisation ${i + 1}`}
+              aria-label={[img.legende, img.sous].filter(Boolean).join(", ") || `Photo ${i + 1}`}
               aria-current={d === 0 ? "true" : undefined}
               data-actif={d === 0}
             >
@@ -128,7 +128,8 @@ export default function Coverflow({ images, label = "Galerie photo" }: { images:
         <AnimatePresence mode="wait">
           <motion.p key={actif} className="coverflow-legende" initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
-            {liste[actif].legende || " "}
+            {liste[actif].legende || "\u00a0"}
+            {liste[actif].sous && <small>{liste[actif].sous}</small>}
           </motion.p>
         </AnimatePresence>
         {n > 1 && (

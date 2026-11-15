@@ -142,30 +142,17 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
         </section>
       );
 
-    case "personnes": {
-      const lead = s.elements.filter((e) => e.en_avant);
-      const autres = s.elements.filter((e) => !e.en_avant);
-      const Personne = ({ e, i }: { e: (typeof s.elements)[number]; i: number }) => (
-        <Reveal delay={(i % 4) * 0.1}>
-          <Tilt className="person" max={6}>
-            <div className="photo">{e.image && <img src={e.image} alt={e.titre} loading="lazy" />}</div>
-            <h3>{e.titre}</h3>
-            {e.sous_titre && <p>{e.sous_titre}</p>}
-          </Tilt>
-        </Reveal>
-      );
+    case "personnes":
+      // Même slide 3D que les galeries : nom en légende, rôle / session dessous.
       return (
         <section className={`section ${s.fond_alterne ? "section-alt" : ""}`}>
           <div className="container">
             <Entete s={s} />
-            {lead.map((e, i) => <div className="person-lead" key={e.id}><Personne e={e} i={i} /></div>)}
-            <div className={grille(s.colonnes)}>
-              {autres.map((e, i) => <Personne key={e.id} e={e} i={i} />)}
-            </div>
+            <Coverflow images={s.elements.map((e) => ({ image: e.image, legende: e.titre, sous: e.sous_titre }))}
+                       label={s.titre || "Photos"} />
           </div>
         </section>
       );
-    }
 
     case "texte":
     case "liste": {

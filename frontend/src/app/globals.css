@@ -284,12 +284,6 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .stat-label { margin-top: 10px; color: #f1dcd6; font-weight: 500; }
 
 /* Galerie */
-.masonry { columns: 4 240px; column-gap: 16px; }
-.masonry figure { break-inside: avoid; margin-bottom: 16px; position: relative; border-radius: var(--radius-md); overflow: hidden; cursor: zoom-in; }
-.masonry img { width: 100%; transition: transform 0.9s var(--ease); }
-.masonry figure:hover img { transform: scale(1.06); }
-.masonry figcaption { position: absolute; inset: auto 0 0 0; padding: 40px 16px 14px; color: var(--white); font-weight: 600; background: linear-gradient(transparent, rgba(18, 6, 7, 0.85)); transform: translateY(30%); opacity: 0; transition: all 0.45s var(--ease); }
-.masonry figure:hover figcaption { transform: none; opacity: 1; }
 .lightbox { position: fixed; inset: 0; z-index: 80; background: rgba(10, 3, 4, 0.94); display: grid; place-items: center; padding: 24px; }
 .lightbox img { max-height: 82vh; width: auto; border-radius: var(--radius-md); }
 .lightbox p { color: var(--white); text-align: center; margin-top: 14px; font-weight: 600; }
@@ -365,10 +359,6 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .offer-card .go { display: inline-flex; gap: 6px; align-items: center; font-weight: 600; color: var(--ink); }
 
 .offer-layout { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: clamp(24px, 4vw, 48px); align-items: start; }
-.offer-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 28px; }
-.offer-gallery button { border-radius: var(--radius-sm); overflow: hidden; aspect-ratio: 1; }
-.offer-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
-.offer-gallery button:hover img { transform: scale(1.08); }
 
 .step-title { display: flex; align-items: center; gap: 14px; margin: 44px 0 6px; }
 .step-title .n { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--primary); color: var(--accent); font-weight: 800; font-family: var(--font-display); flex: none; }
@@ -750,3 +740,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
   transition: background 0.3s, transform 0.3s;
 }
 .coverflow-points button.actif { background: var(--accent); transform: scale(1.2); }
+
+.coverflow-legende { display: grid; justify-items: center; gap: 2px; }
+.coverflow-legende small { font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; color: var(--muted); }
+.coverflow + .coverflow { margin-top: 10px; }
