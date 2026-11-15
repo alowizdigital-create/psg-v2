@@ -3,13 +3,16 @@ import Link from "next/link";
 
 import type { EntrepriseResume, OffreResume, Section } from "@/lib/types";
 
-import Gallery from "./Gallery";
+import Coverflow from "./Coverflow";
 import Icon from "./Icon";
 import { Counter, Reveal, Spotlight, Tilt } from "./Motion";
 import OfferCard from "./OfferCard";
 import VideoCard from "./VideoCard";
 
 type Contexte = { entreprises?: EntrepriseResume[]; offres?: OffreResume[] };
+
+/** Typographie française : la ponctuation double (? ! : ; »)  reste collée au mot précédent. */
+const fr = (t: string) => t.replace(/ ([?!:;»])/g, "\u00a0$1");
 
 function Paragraphes({ texte }: { texte: string[] }) {
   return <>{texte.map((p, i) => <p key={i}>{p}</p>)}</>;
@@ -20,7 +23,7 @@ function Entete({ s, center = true }: { s: Section; center?: boolean }) {
   return (
     <Reveal className={`section-head ${center ? "center" : ""}`}>
       {s.sur_titre && <span className="eyebrow">{s.sur_titre}</span>}
-      {s.titre && <h2>{s.titre}</h2>}
+      {s.titre && <h2>{fr(s.titre)}</h2>}
       <Paragraphes texte={s.texte} />
     </Reveal>
   );
@@ -134,7 +137,7 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
         <section className={`section ${s.fond_alterne ? "section-alt" : ""}`}>
           <div className="container">
             <Entete s={s} />
-            <Gallery images={s.elements.map((e) => ({ image: e.image, legende: e.titre }))} />
+            <Coverflow images={s.elements.map((e) => ({ image: e.image, legende: e.titre }))} label={s.titre || "Galerie photo"} />
           </div>
         </section>
       );
@@ -286,7 +289,7 @@ export function CtaBanniere({ titre, texte, label = "Nous contacter", lien = "/c
           <div className="cta grain">
             <div className="orb" style={{ width: 300, height: 300, background: "rgba(245,184,0,.25)", right: -60, top: -80 }} />
             <div>
-              <h2>{titre}</h2>
+              <h2>{fr(titre)}</h2>
               {texte && <p>{texte}</p>}
             </div>
             <Link href={lien || "/contact"} className="btn btn-primary">{label || "Nous contacter"} <ArrowRight size={18} /></Link>

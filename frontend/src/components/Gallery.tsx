@@ -1,25 +1,13 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import { useState } from "react";
 
-type Img = { image: string | null; legende: string };
+import Lightbox, { type Img } from "./Lightbox";
 
 export default function Gallery({ images, mode = "masonry" }: { images: Img[]; mode?: "masonry" | "thumbs" }) {
   const liste = images.filter((i) => i.image);
   const [ouvert, setOuvert] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (ouvert === null) return;
-    const touche = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOuvert(null);
-      if (e.key === "ArrowRight") setOuvert((o) => (o! + 1) % liste.length);
-      if (e.key === "ArrowLeft") setOuvert((o) => (o! - 1 + liste.length) % liste.length);
-    };
-    window.addEventListener("keydown", touche);
-    return () => window.removeEventListener("keydown", touche);
-  }, [ouvert, liste.length]);
 
   return (
     <>
@@ -43,31 +31,7 @@ export default function Gallery({ images, mode = "masonry" }: { images: Img[]; m
           ))}
         </div>
       )}
-      <AnimatePresence>
-        {ouvert !== null && (
-          <motion.div className="lightbox" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      onClick={() => setOuvert(null)} role="dialog" aria-modal="true">
-            <button className="round-btn" style={{ top: 20, right: 20 }} aria-label="Fermer"><X /></button>
-            {liste.length > 1 && (
-              <>
-                <button className="round-btn" style={{ left: 20, top: "50%" }} aria-label="Précédente"
-                        onClick={(e) => { e.stopPropagation(); setOuvert((ouvert - 1 + liste.length) % liste.length); }}>
-                  <ChevronLeft />
-                </button>
-                <button className="round-btn" style={{ right: 20, top: "50%" }} aria-label="Suivante"
-                        onClick={(e) => { e.stopPropagation(); setOuvert((ouvert + 1) % liste.length); }}>
-                  <ChevronRight />
-                </button>
-              </>
-            )}
-            <motion.div key={ouvert} initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.35 }} onClick={(e) => e.stopPropagation()}>
-              <img src={liste[ouvert].image!} alt={liste[ouvert].legende} />
-              {liste[ouvert].legende && <p>{liste[ouvert].legende}</p>}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox images={liste} index={ouvert} onClose={() => setOuvert(null)} onChange={setOuvert} />
     </>
   );
 }
