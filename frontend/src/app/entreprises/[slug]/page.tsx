@@ -27,7 +27,7 @@ export default async function PageEntreprise({ params }: Props) {
           <div className="container">
             <Reveal className="section-head center">
               <span className="eyebrow">Catalogue {e.nom}</span>
-              <h2>Composez votre demande</h2>
+              <h2>Demander un devis</h2>
               <p>Choisissez une offre, cochez les options qui vous intéressent : notre équipe vous rappelle.</p>
             </Reveal>
             <div className="grid grid-3">
