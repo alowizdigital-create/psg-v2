@@ -39,7 +39,7 @@ def site(request):
     return Response({
         "reglages": SiteSettingsSerializer(SiteSettings.charger()).data,
         "entreprises": EntrepriseResumeSerializer(Entreprise.objects.filter(active=True), many=True).data,
-        "slides": HeroSlideSerializer(HeroSlide.objects.filter(visible=True), many=True).data,
+        "slides": HeroSlideSerializer(HeroSlide.objects.filter(visible=True, entreprise__isnull=True), many=True).data,
     })
 
 

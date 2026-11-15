@@ -92,6 +92,7 @@ export type EntrepriseDetail = EntrepriseResume & {
   sur_titre: string;
   cta_titre: string;
   cta_texte: string;
+  slides: { id: number; image: string | null; legende: string }[];
   sections: Section[];
   offres: OffreResume[];
 };

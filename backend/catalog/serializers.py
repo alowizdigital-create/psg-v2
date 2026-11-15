@@ -135,11 +135,15 @@ class OffreDetailSerializer(OffreResumeSerializer):
 class EntrepriseDetailSerializer(EntrepriseResumeSerializer):
     sections = serializers.SerializerMethodField()
     offres = serializers.SerializerMethodField()
+    slides = serializers.SerializerMethodField()
 
     class Meta(EntrepriseResumeSerializer.Meta):
         fields = EntrepriseResumeSerializer.Meta.fields + [
-            "sur_titre", "cta_titre", "cta_texte", "sections", "offres",
+            "sur_titre", "cta_titre", "cta_texte", "slides", "sections", "offres",
         ]
+
+    def get_slides(self, obj):
+        return HeroSlideSerializer([s for s in obj.slides.all() if s.visible], many=True).data
 
     def get_sections(self, obj):
         return SectionSerializer([s for s in obj.sections.all() if s.visible], many=True).data

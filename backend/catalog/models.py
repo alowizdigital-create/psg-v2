@@ -301,13 +301,16 @@ class Option(ImagesOptimiseesMixin, Ordonnable):
 class HeroSlide(ImagesOptimiseesMixin, Ordonnable):
     IMAGES_A_OPTIMISER = {"image": 2200}
 
+    entreprise = models.ForeignKey("Entreprise", verbose_name="entreprise", null=True, blank=True,
+                                   on_delete=models.CASCADE, related_name="slides",
+                                   help_text="Laisser vide pour le diaporama de la page d'accueil.")
     image = models.ImageField("image", upload_to="slides/")
     legende = models.CharField("légende (facultative)", max_length=160, blank=True)
     visible = models.BooleanField("visible", default=True)
 
     class Meta(Ordonnable.Meta):
-        verbose_name = "image du diaporama d'accueil"
-        verbose_name_plural = "diaporama d'accueil"
+        verbose_name = "image de diaporama"
+        verbose_name_plural = "diaporamas (accueil et entreprises)"
 
     def __str__(self):
         return self.legende or f"Image {self.pk}"

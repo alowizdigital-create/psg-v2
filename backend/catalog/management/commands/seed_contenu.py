@@ -32,6 +32,21 @@ def affecter_image(obj, champ, chemin):
             getattr(obj, champ).save(Path(chemin).name, f, save=False)
 
 
+def ajouter_diaporamas():
+    """Ajoute les diaporamas d'ouverture des entreprises qui n'en ont pas encore (idempotent)."""
+    ajoutes = 0
+    for slug, images in contenu.SLIDES_ENTREPRISES.items():
+        e = Entreprise.objects.filter(slug=slug).first()
+        if not e or e.slides.exists():
+            continue
+        for i, (chemin, legende) in enumerate(images):
+            slide = HeroSlide(entreprise=e, legende=legende, ordre=i)
+            affecter_image(slide, "image", chemin)
+            slide.save()
+            ajoutes += 1
+    return ajoutes
+
+
 class Command(BaseCommand):
     help = "Importe le contenu du premier site (pages, entreprises, équipe, images) et des offres d'exemple."
 
@@ -79,6 +94,8 @@ class Command(BaseCommand):
         if not options["sans_offres"]:
             for i, data in enumerate(contenu.OFFRES):
                 self.creer_offre(i, dict(data), entreprises)
+
+        ajouter_diaporamas()
 
         self.stdout.write(self.style.SUCCESS(
             f"{Entreprise.objects.count()} entreprises, {Section.objects.count()} sections, "

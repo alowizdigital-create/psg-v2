@@ -24,3 +24,22 @@ def test_site_et_pages(studio):
     assert c.get("/api/pages/accueil/").status_code == 200
     assert c.get("/api/pages/entreprise/").status_code == 404
     assert c.get(f"/api/entreprises/{studio.slug}/").json()["nom"] == "PS Studio Créative"
+
+
+@pytest.mark.django_db
+def test_diaporama_propre_a_chaque_entreprise(studio):
+    import io
+    from django.core.files.base import ContentFile
+    from PIL import Image
+    from catalog.models import HeroSlide
+
+    def img():
+        b = io.BytesIO(); Image.new("RGB", (40, 20), "teal").save(b, "PNG")
+        return ContentFile(b.getvalue(), name="s.png")
+
+    HeroSlide.objects.create(image=img(), legende="Accueil")
+    HeroSlide.objects.create(entreprise=studio, image=img(), legende="Studio")
+    HeroSlide.objects.create(entreprise=studio, image=img(), legende="Caché", visible=False)
+    c = APIClient()
+    assert [s["legende"] for s in c.get("/api/site/").json()["slides"]] == ["Accueil"]
+    assert [s["legende"] for s in c.get(f"/api/entreprises/{studio.slug}/").json()["slides"]] == ["Studio"]

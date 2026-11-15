@@ -21,6 +21,15 @@ REGLAGES = {
     "youtube": "",
 }
 
+# Diaporamas d'ouverture des pages d'entreprises (image, légende).
+SLIDES_ENTREPRISES = {
+    "concours": [
+        ("concours/slide-1.webp", "Miss Afrijeune"),
+        ("pscreative/misstiv.webp", "Miss Afrijeune — la cour"),
+        ("pscreative/missafri.webp", "Miss Afrijeune — l'élection"),
+    ],
+}
+
 SLIDES = ["slides/slide-1.webp", "slides/slide-2.webp", "slides/slide-3.webp", "slides/slide-4.webp"]
 
 

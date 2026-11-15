@@ -164,6 +164,15 @@ class ElementInline(nested_admin.NestedStackedInline):
     fields = [("titre", "sous_titre"), "texte", ("icone", "image", "lien", "en_avant"), "ordre"]
 
 
+class SlideInline(nested_admin.NestedTabularInline):
+    model = HeroSlide
+    extra = 0
+    sortable_field_name = "ordre"
+    fields = ["image", "legende", "visible", "ordre"]
+    verbose_name = "image du diaporama d'ouverture"
+    verbose_name_plural = "Diaporama d'ouverture de la page (grandes images plein écran)"
+
+
 class SectionInline(nested_admin.NestedStackedInline):
     model = Section
     extra = 0
@@ -187,7 +196,7 @@ class EntrepriseAdmin(RevalidationMixin, ParEntrepriseMixin, nested_admin.Nested
     list_display_links = ["miniature", "nom"]
     list_editable = ["active", "ordre"]
     readonly_fields = ["apercu"]
-    inlines = [SectionInline]
+    inlines = [SlideInline, SectionInline]
     fieldsets = [
         ("Présentation", {"fields": ["nom", ("sur_titre", "icone"), "accroche", "resume",
                                      ("banniere", "apercu")]}),
@@ -266,6 +275,10 @@ class SectionPageAdmin(RevalidationMixin, admin.ModelAdmin):
 class HeroSlideAdmin(RevalidationMixin, admin.ModelAdmin):
     list_display = ["miniature", "legende", "ordre", "visible"]
     list_editable = ["ordre", "visible"]
+    exclude = ["entreprise"]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(entreprise__isnull=True)
 
     @admin.display(description="")
     def miniature(self, obj):

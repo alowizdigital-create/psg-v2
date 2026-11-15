@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Reveal } from "@/components/Motion";
 import OfferCard from "@/components/OfferCard";
+import HeroEntreprise from "@/components/HeroEntreprise";
 import PageHero from "@/components/PageHero";
 import Sections, { CtaBanniere } from "@/components/Sections";
 import { api } from "@/lib/api";
@@ -19,8 +20,14 @@ export default async function PageEntreprise({ params }: Props) {
   if (!e) notFound();
   return (
     <>
-      <PageHero surTitre={e.sur_titre} titre={e.nom} texte={e.accroche} image={e.banniere} icone={e.icone}
-                fil={[{ href: "/#entreprises", label: "Nos entreprises" }]} />
+      {(e.slides?.length ?? 0) > 0 ? (
+        <HeroEntreprise slides={e.slides} surTitre={e.sur_titre} nom={e.nom} accroche={e.accroche}
+                        cta={e.offres[0] && { href: `/catalogue/${e.offres[0].slug}`, label: e.offres[0].titre }} />
+      ) : (
+        <PageHero surTitre={e.sur_titre} titre={e.nom} texte={e.accroche} image={e.banniere} icone={e.icone}
+                  fil={[{ href: "/#entreprises", label: "Nos entreprises" }]} />
+      )}
+      <div id="contenu" />
       <Sections sections={e.sections} />
       {e.offres.length > 0 && (
         <section className="section section-alt">
