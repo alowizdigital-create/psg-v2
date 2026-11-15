@@ -74,8 +74,8 @@ export default function HeroSlider({ slides, titre }: {
         </h1>
         <motion.div className="hero-actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.6, duration: 0.8 }}>
-          <Link href="/#entreprises" className="btn btn-primary">Découvrir nos entreprises <ArrowRight size={18} /></Link>
-          <Link href="/catalogue" className="btn btn-outline">Composer ma demande</Link>
+          <Link href="/#entreprises" className="btn btn-primary">Découvrir nos expertises <ArrowRight size={18} /></Link>
+          <Link href="/catalogue" className="btn btn-outline">Demander un devis</Link>
         </motion.div>
       </motion.div>
 
