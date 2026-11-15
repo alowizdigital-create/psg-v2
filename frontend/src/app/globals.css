@@ -426,7 +426,7 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .contact-list a:hover { color: var(--primary); }
 
 /* --- Pied de page ------------------------------------------------------------ */
-.footer { background: var(--night); color: #cdbab4; padding: 90px 0 30px; position: relative; overflow: hidden; isolation: isolate; }
+.footer { background: var(--primary); color: #f1dcd8; padding: 90px 0 30px; position: relative; overflow: hidden; isolation: isolate; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 40px; }
 .footer h4 { color: var(--white); font-size: 1rem; margin-bottom: 18px; }
 .footer li { padding: 5px 0; }
@@ -435,7 +435,10 @@ h3 { font-size: 1.2rem; font-weight: 700; }
 .socials { display: flex; gap: 10px; margin-top: 22px; }
 .socials a { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.3s; }
 .socials a:hover { background: var(--accent); color: var(--night); border-color: var(--accent); transform: translateY(-3px); }
-.footer-bottom { margin-top: 60px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; }
+.footer-bottom { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--accent); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 0.9rem; color: #fff; }
+.footer-bottom .socials { margin-top: 0; gap: 18px; }
+.footer-bottom .socials a { background: #000; border-color: #000; color: #fff; width: 40px; height: 40px; border-radius: 10px; }
+.footer-bottom .socials a:hover { background: var(--accent); border-color: var(--accent); color: #000; }
 .footer-big { position: absolute; bottom: -0.18em; left: 50%; translate: -50% 0; z-index: -1; font-family: var(--font-display); font-weight: 800; font-size: clamp(5rem, 18vw, 16rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(245, 184, 0, 0.09); white-space: nowrap; pointer-events: none; }
 
 .whatsapp { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: #25d366; color: var(--white); box-shadow: 0 12px 30px -8px rgba(37, 211, 102, 0.7); }

@@ -5,11 +5,12 @@ import { telLien } from "@/lib/format";
 import type { Site } from "@/lib/types";
 
 import { Logo } from "./Logo";
-import { FacebookIcon, InstagramIcon, TiktokIcon, YoutubeIcon } from "./Social";
+import { FacebookIcon, InstagramIcon, TiktokIcon, WhatsappIcon, YoutubeIcon } from "./Social";
 
-export function Socials({ reglages }: { reglages: Site["reglages"] }) {
+export function Socials({ reglages, whatsapp = false }: { reglages: Site["reglages"]; whatsapp?: boolean }) {
   const reseaux = [
     { url: reglages.facebook, label: "Facebook", Icone: FacebookIcon },
+    { url: whatsapp && reglages.whatsapp ? `https://wa.me/${reglages.whatsapp.replace(/\D/g, "")}` : "", label: "WhatsApp", Icone: WhatsappIcon },
     { url: reglages.instagram, label: "Instagram", Icone: InstagramIcon },
     { url: reglages.tiktok, label: "TikTok", Icone: TiktokIcon },
     { url: reglages.youtube, label: "YouTube", Icone: YoutubeIcon },
@@ -18,7 +19,7 @@ export function Socials({ reglages }: { reglages: Site["reglages"] }) {
   return (
     <div className="socials">
       {reseaux.map(({ url, label, Icone }) => (
-        <a key={label} href={url} target="_blank" rel="noopener noreferrer" aria-label={label}><Icone /></a>
+        <a key={label} href={url} target="_blank" rel="noopener noreferrer" aria-label={label}><Icone size={20} /></a>
       ))}
     </div>
   );
@@ -33,7 +34,6 @@ export default function Footer({ site }: { site: Site }) {
           <div>
             <Link href="/"><Logo /></Link>
             <p style={{ marginTop: 16 }}>{reglages.devise_pied}</p>
-            <Socials reglages={reglages} />
           </div>
           <div>
             <h4>Nos entreprises</h4>
@@ -69,7 +69,7 @@ export default function Footer({ site }: { site: Site }) {
         </div>
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} {reglages.nom}. Tous droits réservés.</span>
-          <span>{reglages.slogan}</span>
+          <Socials reglages={reglages} whatsapp />
         </div>
       </div>
       <div className="footer-big" aria-hidden="true">PS GROUP</div>
