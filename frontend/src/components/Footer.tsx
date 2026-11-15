@@ -72,7 +72,7 @@ export default function Footer({ site }: { site: Site }) {
           <Socials reglages={reglages} whatsapp />
         </div>
       </div>
-      <div className="footer-big" aria-hidden="true">PS GROUP</div>
+      <div className="footer-big" aria-hidden="true"></div>
     </footer>
   );
 }
