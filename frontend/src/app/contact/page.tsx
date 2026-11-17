@@ -1,4 +1,4 @@
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Mail, MapPin, Navigation, MessageCircle, Phone } from "lucide-react";
 import type { Metadata } from "next";
 
 import ContactForm from "@/components/ContactForm";
@@ -8,6 +8,10 @@ import PageHero from "@/components/PageHero";
 import Sections from "@/components/Sections";
 import { api } from "@/lib/api";
 import { telLien } from "@/lib/format";
+
+const LIEU = "Tropicana, Mvan, Yaoundé, Cameroun";
+const CARTE = `https://www.google.com/maps?q=${encodeURIComponent(LIEU)}&z=16&output=embed`;
+const ITINERAIRE = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(LIEU)}`;
 
 export const metadata: Metadata = { title: "Contact" };
 
@@ -52,6 +56,19 @@ export default async function Contact() {
               <ContactForm entreprises={site.entreprises} />
             </div>
           </Reveal>
+        </div>
+      </section>
+      <section className="carte-section">
+        <iframe className="carte-iframe" src={CARTE} title="Carte : Yaoundé, Mvan - Tropicana" loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+        <div className="carte-bulle">
+          <span className="icon-badge"><MapPin /></span>
+          <div>
+            <strong>Yaoundé, Mvan - Tropicana</strong>
+            <a href={ITINERAIRE} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              Suivre l&apos;itinéraire <Navigation size={18} />
+            </a>
+          </div>
         </div>
       </section>
       <Sections sections={sections} ctx={{ entreprises: site.entreprises }} />
