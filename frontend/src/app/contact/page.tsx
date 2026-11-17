@@ -9,9 +9,10 @@ import Sections from "@/components/Sections";
 import { api } from "@/lib/api";
 import { telLien } from "@/lib/format";
 
-const LIEU = "Tropicana, Mvan, Yaoundé, Cameroun";
+// Code plus de PS GROUP Sarl (Google Maps) : emplacement exact de l'entreprise.
+const LIEU = "RG7F+GQ Yaoundé";
 const CARTE = `https://www.google.com/maps?q=${encodeURIComponent(LIEU)}&z=16&output=embed`;
-const ITINERAIRE = "https://maps.app.goo.gl/F16HedGe1dUk32UR7";
+const ITINERAIRE = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(LIEU)}`;
 
 export const metadata: Metadata = { title: "Contact" };
 
