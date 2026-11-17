@@ -11,7 +11,7 @@ import { telLien } from "@/lib/format";
 
 const LIEU = "Tropicana, Mvan, Yaoundé, Cameroun";
 const CARTE = `https://www.google.com/maps?q=${encodeURIComponent(LIEU)}&z=16&output=embed`;
-const ITINERAIRE = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(LIEU)}`;
+const ITINERAIRE = "https://maps.app.goo.gl/F16HedGe1dUk32UR7";
 
 export const metadata: Metadata = { title: "Contact" };
 
