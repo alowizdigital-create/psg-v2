@@ -307,7 +307,7 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
           id: e.id, titre: e.titre || "Sans titre", artiste: e.sous_titre, pochette: e.image, audio: e.audio,
           spotify: e.lien.includes("open.spotify.com") ? e.lien : null,
         }));
-      if (!chansons.length) return null;
+      // Sans chanson enregistrée : 3 cartes « Bientôt disponible » pour garder le bloc visible.
       return (
         <section className="section section-musique grain">
           <div className="container">

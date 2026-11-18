@@ -140,6 +140,27 @@ export default function LecteurMusique({ chansons }: { chansons: Chanson[] }) {
     a.play().catch(() => {});
   };
 
+  if (!chansons.length) {
+    return (
+      <div className="lecteur">
+        {[1, 2, 3].map((k) => (
+          <article key={k} className="chanson bientot" aria-label="Chanson bientôt disponible">
+            <div className="chanson-pochette"><Music size={38} /></div>
+            <div className="chanson-corps">
+              <span className="chanson-marque" aria-hidden="true">PS ZIK</span>
+              <h3>Nouveau titre</h3>
+              <p className="chanson-artiste"><span className="chanson-badge">Bientôt</span>Bientôt disponible</p>
+              <div className="chanson-bas">
+                <div className="chanson-piste"><span className="chanson-ligne" /></div>
+                <span className="chanson-bouton" aria-hidden="true"><Play size={22} fill="currentColor" /></span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="lecteur">
       <audio ref={audio} preload="none" />
