@@ -249,19 +249,6 @@ ENTREPRISES = [
             DIGITAL_PANNEAUX,
             DIGITAL_LOSANGES,
             DIGITAL_OUVERTURE,
-            S("tuiles", "Services de marketing digital", "Développer votre visibilité en ligne",
-              "Une gamme complète de services de marketing digital pour aider votre entreprise à prospérer "
-              "dans le monde numérique d'aujourd'hui : de la gestion des médias sociaux à la création de "
-              "campagnes publicitaires percutantes.", colonnes=4, elements=[
-                  E("Création et gestion des pages réseaux sociaux", icone="users"),
-                  E("Validation et monétisation de comptes", icone="badge-check"),
-                  E("Sponsoring & boost", icone="megaphone"),
-                  E("Développement web", icone="code"),
-                  E("Infographie & print", icone="chart-column"),
-                  E("Hébergement web", icone="server"),
-                  E("Filtres Snapchat", icone="ghost"),
-                  E("Modélisation 2D & 3D", icone="box"),
-              ]),
             DIGITAL_DEFILANT,
             S("survol", **DIGITAL_SURVOL, elements=[
                 E("Création et gestion des pages réseaux sociaux", texte=(
