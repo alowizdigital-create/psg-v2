@@ -1073,3 +1073,9 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 @media (prefers-reduced-motion: reduce) {
   .glitch > span, .glitch::before, .glitch::after, .egaliseur span { animation: none; }
 }
+
+/* Panneaux du catalogue : étiquette de l'entreprise, prix, offre sans photo */
+.panneau.sans-image { background: radial-gradient(circle at 30% 20%, var(--primary-light), var(--primary-dark) 60%, var(--night)); }
+.panneau-etiquette { margin-left: 12px; padding: 3px 10px; border-radius: 999px; background: rgba(245, 184, 0, 0.16); color: var(--accent); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.panneau-prix { display: block; margin: -6px 0 16px; color: var(--accent); font-family: var(--font-display); font-size: 1.05rem; }
+.panneaux-bouton { text-align: center; padding: 40px 16px clamp(56px, 8vw, 96px); }

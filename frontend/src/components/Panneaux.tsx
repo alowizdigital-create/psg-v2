@@ -5,7 +5,10 @@ import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 
-export type Panneau = { id: number | string; titre: string; texte: string; image: string | null; lien: string };
+export type Panneau = {
+  id: number | string; titre: string; texte: string; image: string | null; lien: string;
+  etiquette?: string; prix?: string; bouton?: string;
+};
 
 /**
  * Panneaux d'images côte à côte (inspirés de derin15.com) : photos en noir et blanc avec le titre
@@ -25,7 +28,7 @@ export default function Panneaux({ panneaux }: { panneaux: Panneau[] }) {
         return (
           <motion.div
             key={p.id}
-            className={`panneau ${ouvert ? "ouvert" : ""} ${actif !== null && !ouvert ? "replie" : ""}`}
+            className={`panneau ${p.image ? "" : "sans-image"} ${ouvert ? "ouvert" : ""} ${actif !== null && !ouvert ? "replie" : ""}`}
             onMouseEnter={() => setActif(i)}
             onClick={() => setActif(i)}
             initial={reduit ? false : { opacity: 0, y: 60 }}
@@ -36,13 +39,16 @@ export default function Panneaux({ panneaux }: { panneaux: Panneau[] }) {
             {p.image && <img src={p.image} alt="" loading="lazy" draggable={false} />}
             <span className="panneau-vertical" aria-hidden={ouvert}>{p.titre}</span>
             <div className="panneau-contenu" aria-hidden={!ouvert}>
-              <span className="panneau-num">{String(i + 1).padStart(2, "0")}</span>
+              <span className="panneau-num">
+                {String(i + 1).padStart(2, "0")}{p.etiquette && <span className="panneau-etiquette">{p.etiquette}</span>}
+              </span>
               <h3>{p.titre}</h3>
               {p.texte && <p>{p.texte}</p>}
+              {p.prix && <strong className="panneau-prix">{p.prix}</strong>}
               {p.lien && (
                 <Link href={p.lien} className="btn btn-primary" tabIndex={ouvert ? 0 : -1}
                       onFocus={() => setActif(i)} {...(externe ? { target: "_blank", rel: "noopener" } : {})}>
-                  Découvrir <ArrowRight size={18} />
+                  {p.bouton || "Découvrir"} <ArrowRight size={18} />
                 </Link>
               )}
             </div>

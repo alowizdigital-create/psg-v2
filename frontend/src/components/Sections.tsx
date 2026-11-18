@@ -1,6 +1,7 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
+import { fcfa } from "@/lib/format";
 import type { EntrepriseResume, OffreResume, Section } from "@/lib/types";
 
 import BlocOuverture from "./BlocOuverture";
@@ -12,7 +13,6 @@ import Losanges from "./Losanges";
 import TexteGeant from "./TexteGeant";
 import Panneaux from "./Panneaux";
 import { Counter, Reveal, Spotlight, Tilt } from "./Motion";
-import OfferCard from "./OfferCard";
 import VideoCard from "./VideoCard";
 
 type Contexte = { entreprises?: EntrepriseResume[]; offres?: OffreResume[] };
@@ -246,70 +246,21 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
       );
 
     case "offres": {
-      const offres = ctx.offres ?? [];
+      // Catalogue en panneaux d'images qui s'ouvrent au survol (8 offres au plus).
+      const offres = (ctx.offres ?? []).slice(0, 8);
       if (!offres.length) return null;
       return (
-        <section className={`section ${s.fond_alterne ? "section-alt" : ""}`}>
-          <div className="container">
-            <Entete s={s} />
-            <div className="grid grid-3">
-              {offres.slice(0, offres.length >= 6 ? 6 : 3).map((o, i) => (
-                <Reveal key={o.slug} delay={(i % 3) * 0.12}><OfferCard offre={o} /></Reveal>
-              ))}
-            </div>
-            {s.bouton_label && <div style={{ textAlign: "center", marginTop: 44 }}><Bouton s={s} variante="btn-dark" /></div>}
-          </div>
-        </section>
-      );
-    }
-
-    case "ouverture": {
-      const mots = s.elements.map((e) => e.titre).filter(Boolean);
-      return (
-        <BlocOuverture mot={s.titre || s.sur_titre} titre={s.sur_titre} texte={s.texte} mots={mots}
-                       image={s.elements.find((e) => e.image)?.image}
-                       bouton={{ label: s.bouton_label, lien: s.bouton_lien }}
-                       badge={`${[s.sur_titre || "PS GROUP", "Yaoundé", ...mots].join(" • ")} • `} />
-      );
-    }
-
-    case "defilant":
-      return <Defilant mots={s.elements.map((e) => e.titre)} titre={s.titre} />;
-
-    case "survol":
-      return (
-        <section className={`section ${s.fond_alterne ? "section-alt" : ""}`}>
-          <div className="container">
-            <Entete s={s} />
-            <ListeSurvol elements={s.elements} />
-          </div>
-        </section>
-      );
-
-    case "panneaux": {
-      // Les éléments du bloc ; à défaut, les offres du catalogue de l'entreprise.
-      const panneaux = s.elements.length
-        ? s.elements.map((e) => ({ id: e.id, titre: e.titre, texte: e.texte.join(" "), image: e.image, lien: e.lien }))
-        : (ctx.offres ?? []).map((o) => ({ id: o.slug, titre: o.titre, texte: o.resume, image: o.image,
-                                             lien: `/catalogue/${o.slug}` }));
-      return (
-        <section className={`section section-panneaux ${s.titre || s.sur_titre ? "" : "sans-titre"} ${s.fond_alterne ? "section-alt" : ""}`}>
+        <section className={`section section-panneaux ${s.fond_alterne ? "section-alt" : ""}`}>
           <Entete s={s} />
-          <Panneaux panneaux={panneaux} />
+          <Panneaux panneaux={offres.map((o) => ({
+            id: o.slug, titre: o.titre, texte: o.resume, image: o.image, lien: `/catalogue/${o.slug}`,
+            etiquette: o.entreprise?.nom, prix: o.prix_a_partir_de ? `Dès ${fcfa(o.prix_a_partir_de)}` : "",
+            bouton: "Composer",
+          }))} />
+          {s.bouton_label && <div className="panneaux-bouton"><Bouton s={s} variante="btn-dark" /></div>}
         </section>
       );
     }
-
-    case "texte_geant":
-      return s.titre ? <TexteGeant texte={s.titre} second={s.sur_titre} /> : null;
-
-    case "losanges":
-      return (
-        <section className="section section-losanges">
-          <div className="container"><Entete s={s} /></div>
-          <Losanges logos={s.elements.map((e) => ({ id: e.id, titre: e.titre, image: e.image, lien: e.lien, en_avant: e.en_avant }))} />
-        </section>
-      );
 
     case "cta":
       return <CtaBanniere titre={s.titre} texte={s.texte.join(" ")} label={s.bouton_label} lien={s.bouton_lien} />;
