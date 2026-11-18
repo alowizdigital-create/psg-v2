@@ -1,4 +1,5 @@
 import nested_admin
+from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin.actions import delete_selected
 from django.db import transaction
@@ -157,11 +158,32 @@ class OffreAdmin(RevalidationMixin, ParEntrepriseMixin, nested_admin.NestedModel
 
 # --- Entreprises et pages -----------------------------------------------------------
 
+MAX_CHANSONS = 3
+
+
+class ElementFormSet(nested_admin.formsets.NestedInlineFormSet):
+    """Un bloc « Lecteur de chansons » accepte 3 chansons au maximum."""
+
+    def clean(self):
+        super().clean()
+        # self.instance porte déjà le type choisi dans le formulaire de la section.
+        if getattr(self.instance, "type", "") != "musique":
+            return
+        restants = [f for f in self.forms
+                    if f.cleaned_data and not f.cleaned_data.get("DELETE", False)]
+        if len(restants) > MAX_CHANSONS:
+            raise forms.ValidationError(f"{MAX_CHANSONS} chansons au maximum dans le lecteur.")
+        for f in restants:
+            if not f.cleaned_data.get("audio"):
+                raise forms.ValidationError("Chaque chanson doit avoir son fichier audio.")
+
+
 class ElementInline(nested_admin.NestedStackedInline):
     model = ElementSection
+    formset = ElementFormSet
     extra = 0
     sortable_field_name = "ordre"
-    fields = [("titre", "sous_titre"), "texte", ("icone", "image", "lien", "en_avant"), "ordre"]
+    fields = [("titre", "sous_titre"), "texte", ("icone", "image", "lien", "en_avant"), "audio", "ordre"]
 
 
 class SlideInline(nested_admin.NestedTabularInline):

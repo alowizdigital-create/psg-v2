@@ -37,11 +37,12 @@ def paragraphes(texte):
 
 class ElementSerializer(serializers.ModelSerializer):
     image = ImageField()
+    audio = ImageField()  # même rendu : URL du fichier ou null
     texte = serializers.SerializerMethodField()
 
     class Meta:
         model = ElementSection
-        fields = ["id", "titre", "sous_titre", "texte", "icone", "image", "lien", "en_avant"]
+        fields = ["id", "titre", "sous_titre", "texte", "icone", "image", "lien", "en_avant", "audio"]
 
     def get_texte(self, obj):
         return paragraphes(obj.texte)

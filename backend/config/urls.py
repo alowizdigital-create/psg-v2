@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-from django.views.static import serve
 
 from catalog import views as catalog_views
+from config.media import media
 from demandes import views as demandes_views
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER
@@ -26,7 +26,6 @@ api = [
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(api)),
-    # Les médias sont servis par Django (volume Docker). Derrière Caddy, ils
-    # pourront être servis directement par le proxy.
-    path("media/<path:path>", serve, {"document_root": settings.MEDIA_ROOT}),
+    # Les médias sont servis par Django (volume Docker), avec les requêtes partielles pour l'audio.
+    path("media/<path:path>", media),
 ]

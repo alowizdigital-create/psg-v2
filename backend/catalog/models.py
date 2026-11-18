@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import FileExtensionValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
@@ -161,6 +161,7 @@ class Section(Ordonnable):
         ("panneaux", "Panneaux d'images qui s'ouvrent au survol"),
         ("losanges", "Grille de logos en losanges (réseaux sociaux, partenaires)"),
         ("texte_geant", "Texte géant qui défile au défilement de la page"),
+        ("musique", "Lecteur de chansons (3 au maximum)"),
     ]
 
     page = models.CharField("page", max_length=20, choices=PAGES, db_index=True)
@@ -201,6 +202,14 @@ class Section(Ordonnable):
             self.entreprise = None
 
 
+AUDIO_MAX_MO = 20
+
+
+def taille_audio(fichier):
+    if fichier and fichier.size > AUDIO_MAX_MO * 1024 * 1024:
+        raise ValidationError(f"Fichier trop lourd : {AUDIO_MAX_MO} Mo au maximum.")
+
+
 class ElementSection(ImagesOptimiseesMixin, Ordonnable):
     IMAGES_A_OPTIMISER = {"image": 1600}
 
@@ -213,6 +222,12 @@ class ElementSection(ImagesOptimiseesMixin, Ordonnable):
     lien = models.CharField("lien", max_length=255, blank=True)
     en_avant = models.BooleanField("mis en avant", default=False,
                                    help_text="Ex. le dirigeant dans un bloc « Personnes ».")
+    audio = models.FileField(
+        "fichier audio (chanson)", upload_to="audio/", blank=True,
+        validators=[FileExtensionValidator(["mp3", "m4a", "aac", "ogg", "wav"]), taille_audio],
+        help_text=f"Bloc « Lecteur de chansons » : MP3 conseillé, {AUDIO_MAX_MO} Mo maximum. "
+                  "Titre = nom de la chanson, sous-titre = artiste, image = pochette.",
+    )
 
     class Meta(Ordonnable.Meta):
         verbose_name = "élément"

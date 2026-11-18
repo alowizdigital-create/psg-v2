@@ -9,6 +9,7 @@ import Coverflow from "./Coverflow";
 import Defilant from "./Defilant";
 import Icon from "./Icon";
 import ListeSurvol from "./ListeSurvol";
+import LecteurMusique from "./LecteurMusique";
 import Losanges from "./Losanges";
 import TexteGeant from "./TexteGeant";
 import Panneaux from "./Panneaux";
@@ -295,6 +296,22 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
         <section className={`section section-panneaux ${s.titre || s.sur_titre ? "" : "sans-titre"} ${s.fond_alterne ? "section-alt" : ""}`}>
           <Entete s={s} />
           <Panneaux panneaux={panneaux} />
+        </section>
+      );
+    }
+
+    case "musique": {
+      // Chansons des artistes : 3 au maximum, seulement celles qui ont un fichier audio.
+      const chansons = s.elements.filter((e) => e.audio).slice(0, 3).map((e) => ({
+        id: e.id, titre: e.titre || "Sans titre", artiste: e.sous_titre, pochette: e.image, audio: e.audio!,
+      }));
+      if (!chansons.length) return null;
+      return (
+        <section className="section section-musique grain">
+          <div className="container">
+            <Entete s={s} />
+            <LecteurMusique chansons={chansons} />
+          </div>
         </section>
       );
     }

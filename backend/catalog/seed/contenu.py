@@ -90,6 +90,9 @@ DIGITAL_LOSANGES = S(
     elements=[E(nom, en_avant=(nom == "Facebook")) for nom in RESEAUX],  # en avant = au centre
 )
 DIGITAL_TEXTE_GEANT = S("texte_geant", titre="PS DIGITAL")
+# Lecteur des chansons des artistes (les fichiers audio s'ajoutent dans l'admin, 3 au maximum).
+ZIK_MUSIQUE = S("musique", "PS ZIK — Nos sons", "Écoutez nos artistes",
+                "Les derniers titres produits au studio PS ZIK.")
 DIGITAL_SURVOL = {"sur_titre": "Nos expertises", "titre": "Ce que nous faisons pour vous"}
 
 PAGES = {
@@ -353,6 +356,7 @@ ENTREPRISES = [
         "cta_titre": "Un projet musical à concrétiser ?",
         "cta_texte": "Parlons de votre carrière ou de votre production musicale.",
         "sections": [
+            ZIK_MUSIQUE,
             S("personnes", "Inspiration", "Icônes de la musique camerounaise",
               "Des artistes qui ont marqué et font rayonner la musique camerounaise, toutes générations et "
               "tous genres confondus — une richesse qui inspire notre travail chez PSG ZIK.",

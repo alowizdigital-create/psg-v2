@@ -55,3 +55,41 @@ def test_seed_page_ps_digital_avec_blocs_animes(settings, tmp_path):
     assert types == ["panneaux", "losanges", "ouverture", "defilant", "survol", "texte_geant"]
     ouverture = page["sections"][2]
     assert ouverture["titre"] == "Êtes-vous prêt ?" and [e["titre"] for e in ouverture["elements"]][0] == "Digital"
+
+
+@pytest.mark.django_db
+def test_lecteur_musique_audio_et_lecture_partielle(settings, tmp_path, client):
+    from django.core.files.base import ContentFile
+    from catalog.models import Entreprise, ElementSection, Section
+    settings.MEDIA_ROOT = tmp_path
+    e = Entreprise.objects.create(nom="PS ZIK", slug="zik")
+    s = Section.objects.create(page="entreprise", entreprise=e, type="musique", titre="Écoutez")
+    el = ElementSection(section=s, titre="Chanson", sous_titre="Artiste")
+    el.audio.save("son.mp3", ContentFile(b"0123456789" * 10), save=True)
+    page = APIClient().get("/api/entreprises/zik/").json()
+    audio = page["sections"][0]["elements"][0]["audio"]
+    assert audio.endswith(".mp3")
+    r = client.get(audio, HTTP_RANGE="bytes=10-19")
+    assert r.status_code == 206 and r["Content-Range"] == "bytes 10-19/100"
+    assert b"".join(r.streaming_content) == b"0123456789"
+    assert client.get(audio).status_code == 200
+
+
+@pytest.mark.django_db
+def test_lecteur_musique_trois_chansons_maximum(admin_client):
+    from catalog.models import Entreprise, Section
+    e = Entreprise.objects.create(nom="PS ZIK", slug="zik")
+    s = Section.objects.create(page="entreprise", entreprise=e, type="musique", titre="Écoutez")
+    from catalog.admin import ElementFormSet  # noqa: F401  (le formset existe)
+    from django.forms.models import inlineformset_factory
+    from catalog.models import ElementSection
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    FS = inlineformset_factory(Section, ElementSection, formset=ElementFormSet, fields=["titre", "audio"], extra=0)
+    data = {"elements-TOTAL_FORMS": "4", "elements-INITIAL_FORMS": "0"}
+    fichiers = {}
+    for i in range(4):
+        data[f"elements-{i}-titre"] = f"Chanson {i}"
+        fichiers[f"elements-{i}-audio"] = SimpleUploadedFile(f"s{i}.mp3", b"abc", content_type="audio/mpeg")
+    fs = FS(data, fichiers, instance=s, prefix="elements")
+    assert not fs.is_valid()
+    assert "3 chansons au maximum" in str(fs.non_form_errors())

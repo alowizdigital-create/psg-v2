@@ -7,12 +7,13 @@ export type Element = {
   image: string | null;
   lien: string;
   en_avant: boolean;
+  audio: string | null;
 };
 
 export type SectionType =
   | "entete" | "texte" | "cartes" | "tuiles" | "lignes" | "galerie" | "personnes"
   | "chiffres" | "liste" | "video" | "liens" | "entreprises" | "offres" | "cta"
-  | "ouverture" | "defilant" | "survol" | "panneaux" | "losanges" | "texte_geant";
+  | "ouverture" | "defilant" | "survol" | "panneaux" | "losanges" | "texte_geant" | "musique";
 
 export type Section = {
   id: number;
