@@ -262,11 +262,63 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
       );
     }
 
+    case "ouverture": {
+      const mots = s.elements.map((e) => e.titre).filter(Boolean);
+      return (
+        <BlocOuverture mot={s.titre || s.sur_titre} titre={s.sur_titre} texte={s.texte} mots={mots}
+                       image={s.elements.find((e) => e.image)?.image}
+                       bouton={{ label: s.bouton_label, lien: s.bouton_lien }}
+                       badge={`${[s.sur_titre || "PS GROUP", "Yaoundé", ...mots].join(" • ")} • `} />
+      );
+    }
+
+    case "defilant":
+      return <Defilant mots={s.elements.map((e) => e.titre)} titre={s.titre} />;
+
+    case "survol":
+      return (
+        <section className={`section ${s.fond_alterne ? "section-alt" : ""}`}>
+          <div className="container">
+            <Entete s={s} />
+            <ListeSurvol elements={s.elements} />
+          </div>
+        </section>
+      );
+
+    case "panneaux": {
+      // Les éléments du bloc ; à défaut, les offres du catalogue de l'entreprise.
+      const panneaux = s.elements.length
+        ? s.elements.map((e) => ({ id: e.id, titre: e.titre, texte: e.texte.join(" "), image: e.image, lien: e.lien }))
+        : (ctx.offres ?? []).map((o) => ({ id: o.slug, titre: o.titre, texte: o.resume, image: o.image,
+                                             lien: `/catalogue/${o.slug}` }));
+      return (
+        <section className={`section section-panneaux ${s.titre || s.sur_titre ? "" : "sans-titre"} ${s.fond_alterne ? "section-alt" : ""}`}>
+          <Entete s={s} />
+          <Panneaux panneaux={panneaux} />
+        </section>
+      );
+    }
+
+    case "texte_geant":
+      return s.titre ? <TexteGeant texte={s.titre} second={s.sur_titre} /> : null;
+
+    case "losanges":
+      return (
+        <section className="section section-losanges">
+          <div className="container"><Entete s={s} /></div>
+          <Losanges logos={s.elements.map((e) => ({ id: e.id, titre: e.titre, image: e.image, lien: e.lien, en_avant: e.en_avant }))} />
+        </section>
+      );
+
     case "cta":
       return <CtaBanniere titre={s.titre} texte={s.texte.join(" ")} label={s.bouton_label} lien={s.bouton_lien} />;
 
-    default:
+    default: {
+      // Garde-fou : la compilation échoue si un type de bloc n'est pas géré ci-dessus.
+      const nonGere: never = s.type;
+      void nonGere;
       return null;
+    }
   }
 }
 
