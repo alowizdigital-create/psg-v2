@@ -899,3 +899,56 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
   .survol-liste li.actif .survol-corps { grid-template-rows: 1fr; }
   .survol-liste li.actif .survol-corps > div { padding-bottom: 18px; color: #f1e3dd; }
 }
+
+/* --- Panneaux d'images qui s'ouvrent au survol (inspirés de derin15.com) ------------- */
+.section-panneaux { padding-bottom: 0; }
+.panneaux { display: flex; height: clamp(420px, 66vh, 640px); background: var(--night); overflow: hidden; }
+.panneau {
+  position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; cursor: pointer; isolation: isolate;
+  transition: flex-grow 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.panneau + .panneau { border-left: 1px solid rgba(255, 255, 255, 0.08); }
+.panneau.ouvert { flex-grow: 4.5; }
+.panneau img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;
+  filter: grayscale(1) brightness(0.72); transform: scale(1.08);
+  transition: filter 0.8s, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.panneau.ouvert img { filter: grayscale(0) brightness(0.85); transform: scale(1); }
+.panneau.replie img { filter: grayscale(1) brightness(0.45); }
+.panneau::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(18, 6, 7, 0) 40%, rgba(18, 6, 7, 0.85) 100%);
+  opacity: 0; transition: opacity 0.6s;
+}
+.panneau.ouvert::after { opacity: 1; }
+.panneau::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; z-index: 2;
+  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.6s 0.15s;
+}
+.panneau.ouvert::before { transform: scaleX(1); }
+.panneau-vertical {
+  position: absolute; left: 50%; bottom: 28px; translate: -50% 0; writing-mode: vertical-rl; transform: rotate(180deg);
+  white-space: nowrap; color: var(--white); font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.06em; font-size: clamp(0.85rem, 1.15vw, 1.1rem); text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  transition: opacity 0.35s, bottom 0.5s;
+}
+.panneau.ouvert .panneau-vertical { opacity: 0; bottom: -40px; }
+.panneau-contenu {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(20px, 2.6vw, 36px); color: #f1e3dd;
+  width: min(100%, 520px); opacity: 0; transform: translateY(30px); pointer-events: none;
+  transition: opacity 0.35s, transform 0.5s;
+}
+.panneau.ouvert .panneau-contenu { opacity: 1; transform: none; pointer-events: auto; transition: opacity 0.5s 0.3s, transform 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.panneau-num { font-family: var(--font-display); font-weight: 700; color: var(--accent); letter-spacing: 0.1em; }
+.panneau-contenu h3 { color: var(--white); font-size: clamp(1.5rem, 2.6vw, 2.3rem); text-transform: uppercase; margin: 6px 0 10px; white-space: nowrap; }
+.panneau-contenu p { margin: 0 0 18px; max-width: 420px; }
+@media (max-width: 800px) {
+  .panneaux { flex-direction: column; height: auto; }
+  .panneau { flex: none; height: 84px; transition: height 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+  .panneau + .panneau { border-left: 0; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+  .panneau.ouvert { height: 400px; }
+  .panneau-vertical { writing-mode: horizontal-tb; transform: none; left: 20px; bottom: 50%; translate: 0 50%; }
+  .panneau.ouvert .panneau-vertical { bottom: 50%; }
+  .panneau-contenu h3 { white-space: normal; }
+}

@@ -28,7 +28,7 @@ export default async function PageEntreprise({ params }: Props) {
                   fil={[{ href: "/#entreprises", label: "Nos entreprises" }]} />
       )}
       <div id="contenu" />
-      <Sections sections={e.sections} />
+      <Sections sections={e.sections} ctx={{ offres: e.offres.map((o) => ({ ...o, entreprise: e })) }} />
       {e.offres.length > 0 && (
         <section className="section section-alt">
           <div className="container">

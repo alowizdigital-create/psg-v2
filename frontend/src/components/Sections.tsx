@@ -8,6 +8,7 @@ import Coverflow from "./Coverflow";
 import Defilant from "./Defilant";
 import Icon from "./Icon";
 import ListeSurvol from "./ListeSurvol";
+import Panneaux from "./Panneaux";
 import { Counter, Reveal, Spotlight, Tilt } from "./Motion";
 import OfferCard from "./OfferCard";
 import VideoCard from "./VideoCard";
@@ -282,6 +283,20 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
           </div>
         </section>
       );
+
+    case "panneaux": {
+      // Les éléments du bloc ; à défaut, les offres du catalogue de l'entreprise.
+      const panneaux = s.elements.length
+        ? s.elements.map((e) => ({ id: e.id, titre: e.titre, texte: e.texte.join(" "), image: e.image, lien: e.lien }))
+        : (ctx.offres ?? []).map((o) => ({ id: o.slug, titre: o.titre, texte: o.resume, image: o.image,
+                                             lien: `/catalogue/${o.slug}` }));
+      return (
+        <section className={`section section-panneaux ${s.fond_alterne ? "section-alt" : ""}`}>
+          <div className="container"><Entete s={s} /></div>
+          <Panneaux panneaux={panneaux} />
+        </section>
+      );
+    }
 
     case "cta":
       return <CtaBanniere titre={s.titre} texte={s.texte.join(" ")} label={s.bouton_label} lien={s.bouton_lien} />;

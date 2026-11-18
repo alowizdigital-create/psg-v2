@@ -149,6 +149,7 @@ class Section(Ordonnable):
         ("ouverture", "Bloc qui s'ouvre au défilement (grand texte + panneau animé)"),
         ("defilant", "Bandeau de mots défilants"),
         ("survol", "Liste interactive (s'anime au survol)"),
+        ("panneaux", "Panneaux d'images qui s'ouvrent au survol"),
     ]
 
     page = models.CharField("page", max_length=20, choices=PAGES, db_index=True)

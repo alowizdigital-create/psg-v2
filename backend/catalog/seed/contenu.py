@@ -57,6 +57,28 @@ DIGITAL_DEFILANT = S(
     "defilant", elements=[E("Réseaux sociaux"), E("Développement web"), E("Infographie"), E("Sponsoring"),
                           E("Hébergement"), E("Modélisation 3D"), E("Filtres Snapchat")],
 )
+DIGITAL_PANNEAUX = S(
+    "panneaux", "Catalogue PS Digital", "Nos services digitaux",
+    "Survolez ou touchez un service pour le découvrir.",
+    elements=[
+        E("Réseaux sociaux", texte="Création, animation et gestion de vos pages pour développer votre audience.",
+          image="pscreative/dimanche.webp", lien="/catalogue/gestion-de-pages-reseaux-sociaux"),
+        E("Validation & monétisation", texte="Badge de certification et monétisation de vos comptes.",
+          image="pscreative/interview.webp", lien="/contact"),
+        E("Sponsoring & boost", texte="Des campagnes publicitaires ciblées pour toucher plus de monde.",
+          image="pscreative/pub.webp", lien="/contact"),
+        E("Développement web", texte="Sites vitrines et catalogues rapides, adaptés au mobile.",
+          image="pscreative/psdigit.webp", lien="/catalogue/site-web-sur-mesure"),
+        E("Infographie & print", texte="Affiches, flyers, logos et supports imprimés qui marquent.",
+          image="pscreative/afritiv.webp", lien="/contact"),
+        E("Hébergement web", texte="Un hébergement sécurisé et rapide pour votre site.",
+          image="pscreative/televise.webp", lien="/contact"),
+        E("Filtres Snapchat", texte="Des filtres personnalisés pour votre marque ou votre événement.",
+          image="pscreative/lady.webp", lien="/contact"),
+        E("Modélisation 2D & 3D", texte="Illustrations, animations et visuels en 2D et 3D.",
+          image="pscreative/creative.webp", lien="/contact"),
+    ],
+)
 DIGITAL_SURVOL = {"sur_titre": "Nos expertises", "titre": "Ce que nous faisons pour vous"}
 
 PAGES = {
@@ -219,6 +241,7 @@ ENTREPRISES = [
         "cta_titre": "Prêt à développer votre présence digitale ?",
         "cta_texte": "Parlons de votre stratégie de communication.",
         "sections": [
+            DIGITAL_PANNEAUX,
             DIGITAL_OUVERTURE,
             S("tuiles", "Services de marketing digital", "Développer votre visibilité en ligne",
               "Une gamme complète de services de marketing digital pour aider votre entreprise à prospérer "
