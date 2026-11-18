@@ -174,8 +174,9 @@ class ElementFormSet(nested_admin.formsets.NestedInlineFormSet):
         if len(restants) > MAX_CHANSONS:
             raise forms.ValidationError(f"{MAX_CHANSONS} chansons au maximum dans le lecteur.")
         for f in restants:
-            if not f.cleaned_data.get("audio"):
-                raise forms.ValidationError("Chaque chanson doit avoir son fichier audio.")
+            if not f.cleaned_data.get("audio") and "open.spotify.com" not in (f.cleaned_data.get("lien") or ""):
+                raise forms.ValidationError(
+                    "Chaque chanson doit avoir son fichier audio ou un lien Spotify (open.spotify.com/…) dans « lien ».")
 
 
 class ElementInline(nested_admin.NestedStackedInline):

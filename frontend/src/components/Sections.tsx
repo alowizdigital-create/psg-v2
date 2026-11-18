@@ -302,9 +302,11 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
 
     case "musique": {
       // Chansons des artistes : 3 au maximum, seulement celles qui ont un fichier audio.
-      const chansons = s.elements.filter((e) => e.audio).slice(0, 3).map((e) => ({
-        id: e.id, titre: e.titre || "Sans titre", artiste: e.sous_titre, pochette: e.image, audio: e.audio!,
-      }));
+      const chansons = s.elements.filter((e) => e.audio || e.lien.includes("open.spotify.com")).slice(0, 3)
+        .map((e) => ({
+          id: e.id, titre: e.titre || "Sans titre", artiste: e.sous_titre, pochette: e.image, audio: e.audio,
+          spotify: e.lien.includes("open.spotify.com") ? e.lien : null,
+        }));
       if (!chansons.length) return null;
       return (
         <section className="section section-musique grain">

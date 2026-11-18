@@ -84,7 +84,7 @@ def test_lecteur_musique_trois_chansons_maximum(admin_client):
     from django.forms.models import inlineformset_factory
     from catalog.models import ElementSection
     from django.core.files.uploadedfile import SimpleUploadedFile
-    FS = inlineformset_factory(Section, ElementSection, formset=ElementFormSet, fields=["titre", "audio"], extra=0)
+    FS = inlineformset_factory(Section, ElementSection, formset=ElementFormSet, fields=["titre", "audio", "lien"], extra=0)
     data = {"elements-TOTAL_FORMS": "4", "elements-INITIAL_FORMS": "0"}
     fichiers = {}
     for i in range(4):
@@ -93,3 +93,16 @@ def test_lecteur_musique_trois_chansons_maximum(admin_client):
     fs = FS(data, fichiers, instance=s, prefix="elements")
     assert not fs.is_valid()
     assert "3 chansons au maximum" in str(fs.non_form_errors())
+
+
+@pytest.mark.django_db
+def test_lecteur_musique_lien_spotify_accepte_sans_fichier():
+    from django.forms.models import inlineformset_factory
+    from catalog.admin import ElementFormSet
+    from catalog.models import ElementSection, Entreprise, Section
+    e = Entreprise.objects.create(nom="PS ZIK", slug="zik")
+    s = Section.objects.create(page="entreprise", entreprise=e, type="musique", titre="Écoutez")
+    FS = inlineformset_factory(Section, ElementSection, formset=ElementFormSet, fields=["titre", "audio", "lien"], extra=0)
+    base = {"elements-TOTAL_FORMS": "1", "elements-INITIAL_FORMS": "0", "elements-0-titre": "Chanson"}
+    assert FS({**base, "elements-0-lien": "https://open.spotify.com/track/abc"}, instance=s, prefix="elements").is_valid()
+    assert not FS({**base, "elements-0-lien": ""}, instance=s, prefix="elements").is_valid()

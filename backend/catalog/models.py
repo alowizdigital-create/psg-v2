@@ -226,7 +226,8 @@ class ElementSection(ImagesOptimiseesMixin, Ordonnable):
         "fichier audio (chanson)", upload_to="audio/", blank=True,
         validators=[FileExtensionValidator(["mp3", "m4a", "aac", "ogg", "wav"]), taille_audio],
         help_text=f"Bloc « Lecteur de chansons » : MP3 conseillé, {AUDIO_MAX_MO} Mo maximum. "
-                  "Titre = nom de la chanson, sous-titre = artiste, image = pochette.",
+                  "Titre = nom de la chanson, sous-titre = artiste, image = pochette. "
+                  "Ou, à la place du fichier, un lien Spotify (open.spotify.com/track/…) dans « lien ».",
     )
 
     class Meta(Ordonnable.Meta):
