@@ -19,7 +19,25 @@ const RESEAUX: Record<string, Icone> = Object.fromEntries(
 );
 RESEAUX.twitter = siX;
 
-export type Logo = { id: number; titre: string; image: string | null; lien: string };
+export type Logo = { id: number; titre: string; image: string | null; lien: string; en_avant?: boolean };
+
+/** Place le logo « mis en avant » au centre de la grille (rangée du milieu ayant une tuile centrale). */
+function auCentre<T extends { en_avant?: boolean }>(liste: T[], large: number): T[] {
+  const i = liste.findIndex((l) => l.en_avant);
+  if (i < 0) return liste;
+  const reste = [...liste.slice(0, i), ...liste.slice(i + 1)];
+  const tailles: number[] = [];
+  for (let n = 0, k = 0; n < liste.length; k++) { const t = k % 2 ? large - 1 : large; tailles.push(Math.min(t, liste.length - n)); n += t; }
+  const milieu = (tailles.length - 1) / 2;
+  let meilleure = -1;
+  tailles.forEach((t, r) => {
+    if (t % 2 === 1 && (meilleure < 0 || Math.abs(r - milieu) < Math.abs(meilleure - milieu))) meilleure = r;
+  });
+  if (meilleure < 0) return liste;
+  const position = tailles.slice(0, meilleure).reduce((a, b) => a + b, 0) + (tailles[meilleure] - 1) / 2;
+  reste.splice(position, 0, liste[i]);
+  return reste;
+}
 
 /** Découpe en rangées alternées (ex. 5, 4, 5, 4…) pour l'effet « nid d'abeille » en losanges. */
 function rangees<T>(liste: T[], large: number): T[][] {
@@ -47,7 +65,7 @@ export default function Losanges({ logos }: { logos: Logo[] }) {
     return () => window.removeEventListener("resize", mesure);
   }, []);
 
-  const lignes = rangees(logos, large);
+  const lignes = rangees(auCentre(logos, large), large);
   let rang = 0;
 
   return (

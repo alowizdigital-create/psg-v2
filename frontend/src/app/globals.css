@@ -902,6 +902,8 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 
 /* --- Panneaux d'images qui s'ouvrent au survol (inspirés de derin15.com) ------------- */
 .section-panneaux { padding-bottom: 0; }
+.section-panneaux.sans-titre { padding-top: 0; }
+.section-panneaux .section-head { padding: 0 16px; }
 .panneaux { display: flex; height: clamp(420px, 66vh, 640px); background: var(--night); overflow: hidden; }
 .panneau {
   position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; cursor: pointer; isolation: isolate;

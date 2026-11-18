@@ -58,8 +58,7 @@ DIGITAL_DEFILANT = S(
                           E("Hébergement"), E("Modélisation 3D"), E("Filtres Snapchat")],
 )
 DIGITAL_PANNEAUX = S(
-    "panneaux", "Catalogue PS Digital", "Nos services digitaux",
-    "Survolez ou touchez un service pour le découvrir.",
+    "panneaux",
     elements=[
         E("Réseaux sociaux", texte="Création, animation et gestion de vos pages pour développer votre audience.",
           image="pscreative/dimanche.webp", lien="/catalogue/gestion-de-pages-reseaux-sociaux"),
@@ -83,7 +82,7 @@ RESEAUX = ["Facebook", "Instagram", "TikTok", "YouTube", "WhatsApp", "Snapchat",
            "Threads", "Messenger", "Twitch", "Discord", "Spotify", "Google", "Reddit", "Behance", "Bluesky"]
 DIGITAL_LOSANGES = S(
     "losanges", "Présence en ligne", "Nous faisons vivre votre marque sur tous les réseaux",
-    elements=[E(nom) for nom in RESEAUX],
+    elements=[E(nom, en_avant=(nom == "Facebook")) for nom in RESEAUX],  # en avant = au centre
 )
 DIGITAL_SURVOL = {"sur_titre": "Nos expertises", "titre": "Ce que nous faisons pour vous"}
 

@@ -292,8 +292,8 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
         : (ctx.offres ?? []).map((o) => ({ id: o.slug, titre: o.titre, texte: o.resume, image: o.image,
                                              lien: `/catalogue/${o.slug}` }));
       return (
-        <section className={`section section-panneaux ${s.fond_alterne ? "section-alt" : ""}`}>
-          <div className="container"><Entete s={s} /></div>
+        <section className={`section section-panneaux ${s.titre || s.sur_titre ? "" : "sans-titre"} ${s.fond_alterne ? "section-alt" : ""}`}>
+          <Entete s={s} />
           <Panneaux panneaux={panneaux} />
         </section>
       );
@@ -303,7 +303,7 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
       return (
         <section className="section section-losanges">
           <div className="container"><Entete s={s} /></div>
-          <Losanges logos={s.elements.map((e) => ({ id: e.id, titre: e.titre, image: e.image, lien: e.lien }))} />
+          <Losanges logos={s.elements.map((e) => ({ id: e.id, titre: e.titre, image: e.image, lien: e.lien, en_avant: e.en_avant }))} />
         </section>
       );
 
