@@ -308,7 +308,7 @@ ENTREPRISES = [
         "slug": "formation",
         "nom": "Formation — Class of Week",
         "sur_titre": "Nos entreprises — Formation",
-        "accroche": "Apprenez les métiers de la création avec nos experts.",
+        "accroche": "Une formation adaptée pour une insertion plus rapide dans le monde professionnel.",
         "resume": "Des formations animées par des spécialistes, par secteur d'activité.",
         "icone": "graduation-cap",
         "banniere": "pscreative/creative.webp",
