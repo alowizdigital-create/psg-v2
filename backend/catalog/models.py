@@ -146,6 +146,9 @@ class Section(Ordonnable):
         ("entreprises", "Grille des entreprises du groupe"),
         ("offres", "Offres du catalogue mises en avant"),
         ("cta", "Bandeau d'appel à l'action"),
+        ("ouverture", "Bloc qui s'ouvre au défilement (grand texte + panneau animé)"),
+        ("defilant", "Bandeau de mots défilants"),
+        ("survol", "Liste interactive (s'anime au survol)"),
     ]
 
     page = models.CharField("page", max_length=20, choices=PAGES, db_index=True)

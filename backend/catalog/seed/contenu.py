@@ -45,6 +45,20 @@ def E(titre="", sous_titre="", texte="", icone="", image="", lien="", en_avant=F
             "image": image, "lien": lien, "en_avant": en_avant}
 
 
+# Blocs animés de la page PS Digital (inspirés de derin15.com). Aussi ajoutés par la migration 0008
+# sur un site déjà installé.
+DIGITAL_OUVERTURE = S(
+    "ouverture", "PS DIGITAL", "Êtes-vous prêt ?",
+    "Des solutions digitales créatives pour le web, les réseaux sociaux et votre image de marque.",
+    bouton_label="Lancer mon projet", bouton_lien="/contact",
+    elements=[E("Digital"), E("Créatif"), E("Solutions")],
+)
+DIGITAL_DEFILANT = S(
+    "defilant", elements=[E("Réseaux sociaux"), E("Développement web"), E("Infographie"), E("Sponsoring"),
+                          E("Hébergement"), E("Modélisation 3D"), E("Filtres Snapchat")],
+)
+DIGITAL_SURVOL = {"sur_titre": "Nos expertises", "titre": "Ce que nous faisons pour vous"}
+
 PAGES = {
     "accueil": [
         S("chiffres", elements=[
@@ -205,6 +219,7 @@ ENTREPRISES = [
         "cta_titre": "Prêt à développer votre présence digitale ?",
         "cta_texte": "Parlons de votre stratégie de communication.",
         "sections": [
+            DIGITAL_OUVERTURE,
             S("tuiles", "Services de marketing digital", "Développer votre visibilité en ligne",
               "Une gamme complète de services de marketing digital pour aider votre entreprise à prospérer "
               "dans le monde numérique d'aujourd'hui : de la gestion des médias sociaux à la création de "
@@ -218,7 +233,8 @@ ENTREPRISES = [
                   E("Filtres Snapchat", icone="ghost"),
                   E("Modélisation 2D & 3D", icone="box"),
               ]),
-            S("cartes", elements=[
+            DIGITAL_DEFILANT,
+            S("survol", **DIGITAL_SURVOL, elements=[
                 E("Création et gestion des pages réseaux sociaux", texte=(
                     "Nous créons et gérons des pages professionnelles sur les réseaux sociaux pour renforcer "
                     "votre présence en ligne. De la conception de contenu à l'interaction avec les abonnés, "

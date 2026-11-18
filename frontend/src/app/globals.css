@@ -779,3 +779,123 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 .carte-bulle > div { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .carte-bulle strong { display: block; font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 12px; color: var(--primary); }
 .carte-bulle .btn { padding: 10px 18px; font-size: 0.9rem; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* --- Bloc qui s'ouvre au défilement (inspiré de derin15.com) ------------------------- */
+.ouverture { position: relative; height: 270vh; background: var(--bg); }
+.ouverture.fixe { height: auto; }
+.ouverture-sticky {
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  font-size: clamp(1.8rem, calc(150vw / var(--n)), 17rem);
+}
+.ouverture.fixe .ouverture-sticky { position: relative; }
+.ouverture-moitie {
+  flex: none; height: 0.6em; overflow: hidden; text-align: center; white-space: nowrap;
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ouverture-moitie span { display: block; line-height: 1.2; }
+.ouverture-moitie.bas span { margin-top: -0.6em; }
+.ouverture-moitie.haut span { background: linear-gradient(90deg, var(--ink), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ouverture-moitie.bas span { background: linear-gradient(90deg, var(--primary), var(--ink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ouverture-panneau { position: relative; flex: none; overflow: hidden; background: var(--night); color: var(--white); font-size: 1rem; isolation: isolate; }
+.ouverture-fond { position: absolute; inset: 0; z-index: -2; }
+.ouverture-fond img { width: 100%; height: 100%; object-fit: cover; }
+.ouverture-panneau::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(18, 6, 7, 0.55) 0%, rgba(18, 6, 7, 0.2) 55%, rgba(18, 6, 7, 0.65) 100%);
+}
+.ouverture-contenu {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 24px; text-align: center;
+}
+.ouverture-titre {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase; line-height: 1;
+  font-size: clamp(2.6rem, 8vw, 7rem); text-shadow: 0 8px 40px rgba(0, 0, 0, 0.6); white-space: nowrap;
+}
+.ouverture-contenu p { margin: 0; max-width: 640px; font-size: clamp(1rem, 1.8vw, 1.35rem); color: #f1e3dd; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7); }
+.ouverture-contenu .btn { margin-top: 10px; }
+
+/* Typographie animée en perspective */
+.cinetique {
+  position: absolute; inset: -30% -10%; display: flex; justify-content: center; gap: 2vw;
+  perspective: 900px; transform: rotate(-16deg);
+}
+.cinetique-col { transform: rotateY(calc(var(--i) * 32deg)) translateZ(calc(var(--i) * var(--i) * -60px)); }
+.cinetique-piste { display: flex; flex-direction: column; animation: cinetique-monte 26s linear infinite; }
+.cinetique-piste.inverse { animation-direction: reverse; animation-duration: 32s; }
+.cinetique-piste span {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase; line-height: 0.92;
+  font-size: clamp(2.6rem, 6.5vw, 6rem); letter-spacing: -0.01em;
+  background: linear-gradient(100deg, var(--accent) 0%, #ff8a5c 45%, #c0262a 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0.85;
+}
+.cinetique-piste span:nth-child(3n) { background: none; color: var(--night); text-shadow: 1px 0 0 rgba(245,184,0,.8), -1px 0 0 rgba(245,184,0,.8), 0 1px 0 rgba(245,184,0,.8), 0 -1px 0 rgba(245,184,0,.8); }
+@keyframes cinetique-monte { to { transform: translateY(-50%); } }
+
+/* Texte circulaire qui tourne */
+.badge-rotatif { position: absolute; left: clamp(14px, 3vw, 44px); bottom: clamp(14px, 3vw, 40px); width: clamp(92px, 9vw, 130px); aspect-ratio: 1; display: grid; place-items: center; }
+.badge-rotatif svg { position: absolute; inset: 0; animation: badge-tourne 16s linear infinite; }
+.badge-rotatif text { fill: var(--white); font-family: var(--font-display); font-weight: 600; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; }
+.badge-rotatif span { color: var(--accent); font-size: 1.4rem; }
+@keyframes badge-tourne { to { transform: rotate(360deg); } }
+
+/* --- Bandeau de mots défilants ------------------------------------------------------- */
+.defilant { position: relative; background: var(--night); padding: clamp(28px, 5vw, 56px) 0; overflow: hidden; isolation: isolate; }
+.defilant-rangee { overflow: hidden; white-space: nowrap; }
+.defilant-piste { display: inline-flex; will-change: transform; }
+.defilant-bloc { display: inline-flex; flex: none; }
+.defilant-bloc > span { display: inline-flex; align-items: center; }
+.defilant-mot {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase; line-height: 1.1;
+  font-size: clamp(2.2rem, 6.5vw, 5.6rem); color: var(--accent); padding: 0 0.3em;
+}
+.defilant-piste.contour .defilant-mot { color: var(--night); text-shadow: 1.5px 0 0 #fff, -1.5px 0 0 #fff, 0 1.5px 0 #fff, 0 -1.5px 0 #fff, 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; }
+.defilant-etoile { display: inline-block; color: var(--primary-light); font-size: clamp(1.4rem, 3.5vw, 3rem); line-height: 1; padding: 0 0.2em; animation: badge-tourne 6s linear infinite; }
+.defilant-piste.contour .defilant-etoile { color: var(--accent); }
+
+/* --- Liste interactive --------------------------------------------------------------- */
+.survol { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.survol-liste { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.survol-liste li { position: relative; border-bottom: 1px solid var(--border); isolation: isolate; }
+.survol-liste li::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--primary);
+  transform: scaleY(0); transform-origin: bottom; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.survol-liste li.actif::before { transform: scaleY(1); }
+.survol-tete {
+  width: 100%; display: flex; align-items: center; gap: 18px; padding: 20px 16px; background: none; border: 0;
+  text-align: left; cursor: pointer; color: var(--ink); font: inherit; transition: color 0.3s;
+}
+.survol-num { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; color: var(--primary); transition: color 0.3s; }
+.survol-titre {
+  flex: 1; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; line-height: 1.1;
+  font-size: clamp(1.15rem, 2.3vw, 1.9rem); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.survol-fleche { flex: none; opacity: 0.35; transition: transform 0.45s, opacity 0.3s, color 0.3s; }
+.survol-liste li.actif .survol-tete { color: var(--white); }
+.survol-liste li.actif .survol-num, .survol-liste li.actif .survol-fleche { color: var(--accent); opacity: 1; }
+.survol-liste li.actif .survol-titre { transform: translateX(12px); }
+.survol-liste li.actif .survol-fleche { transform: rotate(45deg); }
+.survol-corps { display: none; }
+.survol-panneau {
+  position: sticky; top: 120px; min-height: 340px; padding: clamp(26px, 3.5vw, 44px); border-radius: var(--radius-lg);
+  background: var(--night); color: #f1e3dd; overflow: hidden; isolation: isolate;
+}
+.survol-panneau-num {
+  position: absolute; right: 18px; top: -10px; z-index: -1; font-family: var(--font-display); font-weight: 800;
+  font-size: 9rem; line-height: 1; color: var(--night); text-shadow: 1px 0 0 rgba(245,184,0,.4), -1px 0 0 rgba(245,184,0,.4), 0 1px 0 rgba(245,184,0,.4), 0 -1px 0 rgba(245,184,0,.4);
+}
+.survol-panneau h3 { color: var(--white); font-size: clamp(1.4rem, 2.4vw, 2rem); margin: 70px 0 16px; }
+.survol-panneau-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: var(--radius-md); margin-top: 60px; }
+.survol-panneau-img + h3 { margin-top: 20px; }
+@media (max-width: 900px) {
+  .survol { grid-template-columns: 1fr; }
+  .survol-panneau { display: none; }
+  .survol-corps { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+  .survol-corps > div { overflow: hidden; padding: 0 16px; }
+  .survol-liste li.actif .survol-corps { grid-template-rows: 1fr; }
+  .survol-liste li.actif .survol-corps > div { padding-bottom: 18px; color: #f1e3dd; }
+}

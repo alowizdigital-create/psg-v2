@@ -43,3 +43,15 @@ def test_diaporama_propre_a_chaque_entreprise(studio):
     c = APIClient()
     assert [s["legende"] for s in c.get("/api/site/").json()["slides"]] == ["Accueil"]
     assert [s["legende"] for s in c.get(f"/api/entreprises/{studio.slug}/").json()["slides"]] == ["Studio"]
+
+
+@pytest.mark.django_db
+def test_seed_page_ps_digital_avec_blocs_animes(settings, tmp_path):
+    from django.core.management import call_command
+    settings.MEDIA_ROOT = tmp_path
+    call_command("seed_contenu", "--sans-offres", verbosity=0)
+    page = APIClient().get("/api/entreprises/psdigital/").json()
+    types = [s["type"] for s in page["sections"]]
+    assert types == ["ouverture", "tuiles", "defilant", "survol"]
+    ouverture = page["sections"][0]
+    assert ouverture["titre"] == "Êtes-vous prêt ?" and [e["titre"] for e in ouverture["elements"]][0] == "Digital"

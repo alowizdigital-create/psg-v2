@@ -11,7 +11,8 @@ export type Element = {
 
 export type SectionType =
   | "entete" | "texte" | "cartes" | "tuiles" | "lignes" | "galerie" | "personnes"
-  | "chiffres" | "liste" | "video" | "liens" | "entreprises" | "offres" | "cta";
+  | "chiffres" | "liste" | "video" | "liens" | "entreprises" | "offres" | "cta"
+  | "ouverture" | "defilant" | "survol";
 
 export type Section = {
   id: number;

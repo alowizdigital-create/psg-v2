@@ -3,8 +3,11 @@ import Link from "next/link";
 
 import type { EntrepriseResume, OffreResume, Section } from "@/lib/types";
 
+import BlocOuverture from "./BlocOuverture";
 import Coverflow from "./Coverflow";
+import Defilant from "./Defilant";
 import Icon from "./Icon";
+import ListeSurvol from "./ListeSurvol";
 import { Counter, Reveal, Spotlight, Tilt } from "./Motion";
 import OfferCard from "./OfferCard";
 import VideoCard from "./VideoCard";
@@ -256,6 +259,29 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
         </section>
       );
     }
+
+    case "ouverture": {
+      const mots = s.elements.map((e) => e.titre).filter(Boolean);
+      return (
+        <BlocOuverture mot={s.titre || s.sur_titre} titre={s.sur_titre} texte={s.texte} mots={mots}
+                       image={s.elements.find((e) => e.image)?.image}
+                       bouton={{ label: s.bouton_label, lien: s.bouton_lien }}
+                       badge={`${[s.sur_titre || "PS GROUP", "Yaoundé", ...mots].join(" • ")} • `} />
+      );
+    }
+
+    case "defilant":
+      return <Defilant mots={s.elements.map((e) => e.titre)} titre={s.titre} />;
+
+    case "survol":
+      return (
+        <section className={`section ${s.fond_alterne ? "section-alt" : ""}`}>
+          <div className="container">
+            <Entete s={s} />
+            <ListeSurvol elements={s.elements} />
+          </div>
+        </section>
+      );
 
     case "cta":
       return <CtaBanniere titre={s.titre} texte={s.texte.join(" ")} label={s.bouton_label} lien={s.bouton_lien} />;
