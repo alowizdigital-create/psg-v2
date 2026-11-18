@@ -1079,3 +1079,5 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 .panneau-etiquette { margin-left: 12px; padding: 3px 10px; border-radius: 999px; background: rgba(245, 184, 0, 0.16); color: var(--accent); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .panneau-prix { display: block; margin: -6px 0 16px; color: var(--accent); font-family: var(--font-display); font-size: 1.05rem; }
 .panneaux-bouton { text-align: center; padding: 40px 16px clamp(56px, 8vw, 96px); }
+.survol-panneau-ico { display: grid; place-items: center; width: 56px; height: 56px; margin-top: 40px; border-radius: 16px; background: var(--accent); color: var(--night); }
+.survol-panneau-ico + h3 { margin-top: 22px; }

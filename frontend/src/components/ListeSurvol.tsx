@@ -6,6 +6,8 @@ import { useState } from "react";
 
 import type { Element } from "@/lib/types";
 
+import Icon from "./Icon";
+
 /**
  * Liste interactive : de grands titres numérotés ; au survol (ou au toucher sur mobile), la ligne se
  * remplit de bordeaux et le détail s'affiche dans le panneau de droite (sous la ligne sur mobile).
@@ -38,7 +40,8 @@ export default function ListeSurvol({ elements }: { elements: Element[] }) {
           <motion.div key={actif} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
             <span className="survol-panneau-num">{String(actif + 1).padStart(2, "0")}</span>
-            {courant.image && <img src={courant.image} alt="" className="survol-panneau-img" />}
+            {courant.image ? <img src={courant.image} alt="" className="survol-panneau-img" />
+              : courant.icone && <span className="survol-panneau-ico"><Icon name={courant.icone} size={26} /></span>}
             <h3>{courant.titre}</h3>
             {courant.texte.map((t, j) => <p key={j}>{t}</p>)}
           </motion.div>

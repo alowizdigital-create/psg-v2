@@ -214,7 +214,7 @@ ENTREPRISES = [
                   E("Préparatifs de mariage", image="pscreative/shootongmariage2.webp"),
                   E("Shooting homme", image="pscreative/shootinhomm.webp"),
               ]),
-            S("cartes", "Services de photographie & audiovisuel", "Des images qui marquent",
+            S("survol", "Services de photographie & audiovisuel", "Des images qui marquent",
               "Notre studio créatif offre une gamme complète de services de photographie et d'audiovisuel "
               "pour capturer vos moments spéciaux avec éclat. Que ce soit pour des portraits, des événements "
               "ou des projets commerciaux, notre équipe expérimentée garantit des résultats exceptionnels.",
