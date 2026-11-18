@@ -25,6 +25,11 @@ REGLAGES = {
 LOGOS_ENTREPRISES = {"concours": "concours/logo.webp"}
 
 SLIDES_ENTREPRISES = {
+    "pszik": [
+        ("pscreative/micro.webp", "Studio PS ZIK"),
+        ("pssik/manudibango.webp", "Manu Dibango"),
+        ("pssik/tenor.webp", "Tenor"),
+    ],
     "concours": [
         ("concours/slide-1.webp", "Miss Afrijeune"),
         ("pscreative/misstiv.webp", "Miss Afrijeune — la cour"),
@@ -339,6 +344,7 @@ ENTREPRISES = [
     {
         "slug": "pszik",
         "nom": "PSG ZIK",
+        "hero_style": "musique", "hero_titre": "PS ZIK", "hero_sous_titre": "Production musicale",
         "sur_titre": "Nos entreprises — PSG ZIK",
         "accroche": "Découvrez nos services dédiés à l'industrie musicale.",
         "resume": "Production et management d'artistes, enregistrement, mastering et distribution musicale.",

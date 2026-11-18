@@ -1007,3 +1007,69 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 .geant-etoile { font-size: 0.35em; color: var(--accent); padding-left: 0.5em; }
 .texte-geant-rangee.evide .geant-etoile { color: var(--primary-light); text-shadow: none; }
 @media (max-width: 640px) { .texte-geant { padding-bottom: 130px; } }
+
+/* --- Ouverture « musique » (PS ZIK) : titre qui vibre, égaliseur, bas en biais ------- */
+.hero-musique { clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%); min-height: 100svh; }
+.hero-musique::before { background: linear-gradient(180deg, rgba(10, 4, 6, 0.55), rgba(10, 4, 6, 0.35) 45%, rgba(10, 4, 6, 0.75)); }
+.hero-musique .hero-slide::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.28) 0 1px, transparent 1px 3px);
+}
+.hero-musique-contenu { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; padding: 120px 16px 150px; }
+.glitch {
+  position: relative; margin: 0; color: var(--white); font-family: var(--font-display); font-weight: 800;
+  text-transform: uppercase; line-height: 1; letter-spacing: 0.02em; white-space: nowrap;
+  font-size: clamp(4.2rem, 17vw, 15rem);
+}
+.glitch > span {
+  display: inline-block; text-shadow: 4px 0 0 rgba(255, 45, 85, 0.75), -4px 0 0 rgba(45, 226, 255, 0.75);
+  animation: battement 0.5s infinite; transform-origin: center;
+}
+.glitch::before, .glitch::after {
+  content: attr(data-text); position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen;
+}
+.glitch::before { color: #ff2d55; animation: glitch-a 2.4s infinite steps(1); }
+.glitch::after { color: #2de2ff; animation: glitch-b 1.8s infinite steps(1); }
+@keyframes battement {
+  0% { transform: scale(1.045); } 14% { transform: scale(1); } 50% { transform: scale(1.022); } 62% { transform: scale(1); } 100% { transform: scale(1); }
+}
+@keyframes glitch-a {
+  0% { clip-path: inset(0 0 100% 0); transform: none; }
+  8% { clip-path: inset(12% 0 70% 0); transform: translate(-8px, -2px); }
+  12% { clip-path: inset(55% 0 25% 0); transform: translate(6px, 2px); }
+  16% { clip-path: inset(0 0 100% 0); transform: none; }
+  52% { clip-path: inset(30% 0 50% 0); transform: translate(10px, 0); }
+  56% { clip-path: inset(75% 0 8% 0); transform: translate(-6px, 1px); }
+  60% { clip-path: inset(0 0 100% 0); transform: none; }
+}
+@keyframes glitch-b {
+  0% { clip-path: inset(0 0 100% 0); transform: none; }
+  20% { clip-path: inset(62% 0 18% 0); transform: translate(8px, 1px); }
+  24% { clip-path: inset(8% 0 78% 0); transform: translate(-10px, -1px); }
+  28% { clip-path: inset(0 0 100% 0); transform: none; }
+  74% { clip-path: inset(40% 0 40% 0); transform: translate(-8px, 2px); }
+  78% { clip-path: inset(0 0 100% 0); transform: none; }
+}
+.hero-musique-sous {
+  margin: 18px 0 0; color: #f1e3dd; font-family: var(--font-display); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(0.85rem, 2.2vw, 1.6rem); letter-spacing: 0.45em; padding-left: 0.45em; text-align: center;
+}
+.egaliseur { display: flex; align-items: flex-end; gap: 5px; height: 46px; margin-top: 30px; }
+.egaliseur span {
+  width: 5px; height: 100%; border-radius: 3px; background: linear-gradient(0deg, var(--primary-light), var(--accent));
+  transform-origin: bottom; transform: scaleY(var(--h)); animation: egaliseur var(--d) ease-in-out var(--r) infinite alternate;
+}
+@keyframes egaliseur { 0% { transform: scaleY(calc(var(--h) * 0.25)); } 100% { transform: scaleY(var(--h)); } }
+.souris { position: absolute; z-index: 3; left: 50%; translate: -50% 0; bottom: calc(14% + 24px); width: 30px; height: 50px; border: 2px solid rgba(255, 255, 255, 0.8); border-radius: 16px; }
+.souris span { position: absolute; left: 50%; top: 9px; width: 4px; height: 9px; margin-left: -2px; border-radius: 2px; background: #fff; animation: souris 1.6s ease-in-out infinite; }
+@keyframes souris { 0% { opacity: 0; transform: translateY(-4px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+.hero-musique .badge-rotatif { z-index: 3; bottom: calc(14% + 10px); }
+@media (max-width: 720px) {
+  .hero-musique { clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%); }
+  .glitch { font-size: 23vw; }
+  .souris { bottom: calc(7% + 20px); }
+  .hero-musique .badge-rotatif { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glitch > span, .glitch::before, .glitch::after, .egaliseur span { animation: none; }
+}

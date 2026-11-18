@@ -200,6 +200,8 @@ class EntrepriseAdmin(RevalidationMixin, ParEntrepriseMixin, nested_admin.Nested
     fieldsets = [
         ("Présentation", {"fields": ["nom", ("sur_titre", "icone"), "accroche", "resume",
                                      ("banniere", "apercu"), "logo"]}),
+        ("Diaporama d'ouverture (les images se gèrent plus bas)", {"fields": [
+            "hero_style", ("hero_titre", "hero_sous_titre")]}),
         ("Bandeau « Nous contacter » en bas de page", {"fields": ["cta_titre", "cta_texte"]}),
         ("Notifications des demandes", {"fields": ["telephone_equipe", "email_equipe"]}),
         ("Avancé", {"classes": ["collapse"], "fields": ["slug", "active", "ordre"]}),

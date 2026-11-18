@@ -90,6 +90,15 @@ class Entreprise(ImagesOptimiseesMixin, Ordonnable):
                               help_text="Texte court affiché sur la carte de l'entreprise en page d'accueil.")
     icone = models.CharField("icône", max_length=40, choices=ICONES, default="sparkles")
     banniere = models.ImageField("image bannière", upload_to="entreprises/", blank=True)
+    hero_style = models.CharField(
+        "style du diaporama d'ouverture", max_length=20, default="photos",
+        choices=[("photos", "Photos seules (logo, bouton et slogan)"),
+                 ("musique", "Grand titre animé qui « vibre » comme de la musique")],
+    )
+    hero_titre = models.CharField("grand titre du diaporama", max_length=60, blank=True,
+                                  help_text="Style « musique » : ex. PS ZIK (vide = nom de l'entreprise).")
+    hero_sous_titre = models.CharField("sous-titre du diaporama", max_length=120, blank=True,
+                                       help_text="Style « musique » : ex. Production musicale.")
     logo = models.ImageField("logo (facultatif)", upload_to="entreprises/logos/", blank=True,
                              help_text="Affiché en haut à droite du diaporama d'ouverture (fond transparent conseillé).")
     cta_titre = models.CharField("titre de l'appel à l'action", max_length=160, blank=True)

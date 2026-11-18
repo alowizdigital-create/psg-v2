@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/Motion";
 import OfferCard from "@/components/OfferCard";
 import HeroEntreprise from "@/components/HeroEntreprise";
+import HeroMusique from "@/components/HeroMusique";
 import PageHero from "@/components/PageHero";
 import Sections, { CtaBanniere } from "@/components/Sections";
 import { api } from "@/lib/api";
@@ -20,7 +21,9 @@ export default async function PageEntreprise({ params }: Props) {
   if (!e) notFound();
   return (
     <>
-      {(e.slides?.length ?? 0) > 0 ? (
+      {(e.slides?.length ?? 0) > 0 && e.hero_style === "musique" ? (
+        <HeroMusique slides={e.slides} titre={e.hero_titre || e.nom} sousTitre={e.hero_sous_titre} />
+      ) : (e.slides?.length ?? 0) > 0 ? (
         <HeroEntreprise slides={e.slides} nom={e.nom} logo={e.logo} slogan={e.accroche}
                         cta={{ href: e.offres[0] ? `/catalogue/${e.offres[0].slug}` : "/contact", label: "S'inscrire" }} />
       ) : (
