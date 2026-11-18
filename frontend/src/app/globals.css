@@ -751,13 +751,16 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 /* --- Ouverture plein écran d'une page d'entreprise (ex. Miss Afrijeune) : photos seules ---- */
 .hero-entreprise { min-height: 100svh; }
 .hero-entreprise .hero-slide { background-position: center 30%; }
-.hero-entreprise::before { background: linear-gradient(180deg, rgba(18, 6, 7, 0.18) 0%, rgba(18, 6, 7, 0) 30%, rgba(18, 6, 7, 0) 80%, rgba(18, 6, 7, 0.4) 100%); }
+.hero-entreprise::before { background: linear-gradient(180deg, rgba(18, 6, 7, 0.18) 0%, rgba(18, 6, 7, 0) 30%, rgba(18, 6, 7, 0.1) 60%, rgba(18, 6, 7, 0.75) 100%); }
 .hero-entreprise-logo {
   position: absolute; z-index: 2; top: 120px; right: clamp(16px, 3vw, 44px);
   width: clamp(64px, 8vw, 110px); height: auto; filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.4));
 }
 .hero-entreprise-bas { position: absolute; z-index: 3; left: 50%; translate: -50% 0; bottom: 26px; color: #fff; animation: rebond 2s ease-in-out infinite; }
-.hero-entreprise .hero-dots { bottom: 70px; }
+.hero-entreprise .hero-dots { bottom: 36px; }
+.hero-entreprise-cta { position: absolute; z-index: 3; left: 0; right: 0; bottom: 84px; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 16px; text-align: center; }
+.hero-entreprise-cta p { margin: 0; color: #fff; font-size: clamp(1rem, 2vw, 1.35rem); text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7); }
+.hero-entreprise-bas { display: none; }
 @keyframes rebond { 50% { transform: translateY(6px); } }
 @media (max-width: 720px) {
   .hero-entreprise { min-height: 88svh; }

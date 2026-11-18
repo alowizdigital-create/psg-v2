@@ -358,7 +358,7 @@ ENTREPRISES = [
         "slug": "concours",
         "nom": "Concours Miss Afrijeune",
         "sur_titre": "Nos entreprises — Concours",
-        "accroche": "Une plateforme au service de la jeunesse africaine.",
+        "accroche": "Une Jeunesse qui s'informe, une Afrique qui avance.",
         "resume": "Miss Afrijeune : une plateforme de valorisation de la jeunesse africaine sur 8 semaines.",
         "icone": "crown",
         "banniere": "pscreative/misstiv.webp",

@@ -1,15 +1,16 @@
 "use client";
 
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 const DUREE = 6500;
 
 /** Ouverture plein écran d'une page d'entreprise : photos seules (fondu + zoom lent), logo en haut à droite. */
-export default function HeroEntreprise({ slides, nom, logo }: {
+export default function HeroEntreprise({ slides, nom, logo, slogan, cta }: {
   slides: { id: number; image: string | null; legende: string }[];
-  nom: string; logo?: string | null;
+  nom: string; logo?: string | null; slogan?: string; cta?: { href: string; label: string };
 }) {
   const images = slides.filter((s) => s.image);
   const n = images.length;
@@ -50,6 +51,13 @@ export default function HeroEntreprise({ slides, nom, logo }: {
         <motion.img src={logo} alt={`Logo ${nom}`} className="hero-entreprise-logo"
                     initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.9 }} />
+      )}
+      {(cta || slogan) && (
+        <motion.div className="hero-entreprise-cta" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9, duration: 0.8 }}>
+          {cta && <Link href={cta.href} className="btn btn-primary">{cta.label} <ArrowRight size={18} /></Link>}
+          {slogan && <p>{slogan}</p>}
+        </motion.div>
       )}
       <a href="#contenu" className="hero-entreprise-bas" aria-label="Voir la suite">
         <ChevronDown size={30} strokeWidth={1.5} />

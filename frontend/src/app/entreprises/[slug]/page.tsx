@@ -21,7 +21,8 @@ export default async function PageEntreprise({ params }: Props) {
   return (
     <>
       {(e.slides?.length ?? 0) > 0 ? (
-        <HeroEntreprise slides={e.slides} nom={e.nom} logo={e.logo} />
+        <HeroEntreprise slides={e.slides} nom={e.nom} logo={e.logo} slogan={e.accroche}
+                        cta={{ href: e.offres[0] ? `/catalogue/${e.offres[0].slug}` : "/contact", label: "S'inscrire" }} />
       ) : (
         <PageHero surTitre={e.sur_titre} titre={e.nom} texte={e.accroche} image={e.banniere} icone={e.icone}
                   fil={[{ href: "/#entreprises", label: "Nos entreprises" }]} />

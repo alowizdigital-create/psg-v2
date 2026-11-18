@@ -35,6 +35,9 @@ def affecter_image(obj, champ, chemin):
 def ajouter_diaporamas():
     """Ajoute les diaporamas d'ouverture des entreprises qui n'en ont pas encore (idempotent)."""
     ajoutes = 0
+    # Slogan du concours (remplace l'ancienne accroche par défaut sur un site déjà installé).
+    Entreprise.objects.filter(slug="concours", accroche="Une plateforme au service de la jeunesse africaine.") \
+        .update(accroche="Une Jeunesse qui s'informe, une Afrique qui avance.")
     for slug, chemin in contenu.LOGOS_ENTREPRISES.items():
         e = Entreprise.objects.filter(slug=slug).first()
         if e and not e.logo:
