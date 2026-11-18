@@ -8,6 +8,7 @@ import Coverflow from "./Coverflow";
 import Defilant from "./Defilant";
 import Icon from "./Icon";
 import ListeSurvol from "./ListeSurvol";
+import Losanges from "./Losanges";
 import Panneaux from "./Panneaux";
 import { Counter, Reveal, Spotlight, Tilt } from "./Motion";
 import OfferCard from "./OfferCard";
@@ -297,6 +298,14 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
         </section>
       );
     }
+
+    case "losanges":
+      return (
+        <section className="section section-losanges">
+          <div className="container"><Entete s={s} /></div>
+          <Losanges logos={s.elements.map((e) => ({ id: e.id, titre: e.titre, image: e.image, lien: e.lien }))} />
+        </section>
+      );
 
     case "cta":
       return <CtaBanniere titre={s.titre} texte={s.texte.join(" ")} label={s.bouton_label} lien={s.bouton_lien} />;

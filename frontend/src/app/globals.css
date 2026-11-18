@@ -952,3 +952,40 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
   .panneau.ouvert .panneau-vertical { bottom: 50%; }
   .panneau-contenu h3 { white-space: normal; }
 }
+
+/* --- Grille de logos en losanges (inspirée de derin15.com) --------------------------- */
+.section-losanges { background: #000; color: var(--white); position: relative; overflow: hidden; isolation: isolate; }
+.section-losanges .section-head h2 { color: var(--white); }
+.section-losanges .section-head p { color: #cdbab4; }
+.losanges { --t: clamp(48px, calc(min(100vw - 40px, 1040px) / (var(--large) * 1.414 + (var(--large) - 1) * 0.3)), 132px); --d: calc(var(--t) * 1.414); --g: calc(var(--t) * 0.3); position: relative; padding: 10px 0 calc(var(--d) / 2 + 30px); }
+.losanges-grille { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+.losanges-rangee { display: flex; gap: var(--g); height: calc((var(--d) + var(--g)) / 2); }
+.losange-place { position: relative; width: var(--d); height: var(--d); }
+.losange {
+  position: absolute; left: 50%; top: 50%; width: var(--t); height: var(--t); margin: calc(var(--t) / -2) 0 0 calc(var(--t) / -2);
+  border-radius: 16%; background: #ececec; transform: rotate(45deg);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); transition: background 0.4s, box-shadow 0.4s;
+}
+.losange:hover { background: #fff; box-shadow: 0 0 0 3px var(--accent), 0 18px 40px rgba(245, 184, 0, 0.25); z-index: 2; }
+.losange-contenu {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  transform: rotate(-45deg); color: #2a2a2a; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.4s;
+}
+.losange:hover .losange-contenu { transform: rotate(-45deg) scale(1.12); color: var(--couleur); }
+.losange-contenu svg { width: 46%; height: 46%; fill: currentColor; }
+.losange-contenu img { max-width: 62%; max-height: 50%; object-fit: contain; filter: grayscale(1); transition: filter 0.4s; }
+.losange:hover .losange-contenu img { filter: none; }
+.losange-contenu strong { font-family: var(--font-display); font-size: 0.8rem; text-align: center; }
+.losange-contenu small {
+  font-family: var(--font-display); font-weight: 600; font-size: clamp(0.5rem, calc(var(--t) * 0.085), 0.72rem);
+  letter-spacing: 0.04em; text-transform: uppercase; color: #555; opacity: 0; transform: translateY(4px); transition: opacity 0.3s, transform 0.3s;
+}
+.losange:hover .losange-contenu small { opacity: 1; transform: none; }
+.losanges-forme { position: absolute; z-index: 0; border-radius: 30%; filter: blur(2px); opacity: 0.55; animation: forme-flotte 14s ease-in-out infinite alternate; }
+.losanges-forme.f1 { width: 230px; height: 230px; background: #0f3d3a; left: 4%; top: 6%; }
+.losanges-forme.f2 { width: 280px; height: 260px; background: #4a3a1a; right: 4%; top: -4%; animation-duration: 18s; }
+.losanges-forme.f3 { width: 90px; height: 90px; background: #3a3d12; left: 2%; bottom: 30%; animation-duration: 11s; }
+.losanges-forme.f4 { width: 200px; height: 210px; background: var(--primary-dark); right: 2%; bottom: 10%; animation-duration: 16s; }
+@keyframes forme-flotte { 0% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(20px, -30px) rotate(12deg); } 100% { transform: translate(-15px, 20px) rotate(-8deg); } }
+.losanges .badge-rotatif { z-index: 1; }
+@media (max-width: 640px) { .losanges-forme { opacity: 0.35; } .losanges .badge-rotatif { display: none; } }

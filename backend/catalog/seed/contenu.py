@@ -79,6 +79,12 @@ DIGITAL_PANNEAUX = S(
           image="pscreative/creative.webp", lien="/contact"),
     ],
 )
+RESEAUX = ["Facebook", "Instagram", "TikTok", "YouTube", "WhatsApp", "Snapchat", "X", "Telegram", "Pinterest",
+           "Threads", "Messenger", "Twitch", "Discord", "Spotify", "Google", "Reddit", "Behance", "Bluesky"]
+DIGITAL_LOSANGES = S(
+    "losanges", "Présence en ligne", "Nous faisons vivre votre marque sur tous les réseaux",
+    elements=[E(nom) for nom in RESEAUX],
+)
 DIGITAL_SURVOL = {"sur_titre": "Nos expertises", "titre": "Ce que nous faisons pour vous"}
 
 PAGES = {
@@ -242,6 +248,7 @@ ENTREPRISES = [
         "cta_texte": "Parlons de votre stratégie de communication.",
         "sections": [
             DIGITAL_PANNEAUX,
+            DIGITAL_LOSANGES,
             DIGITAL_OUVERTURE,
             S("tuiles", "Services de marketing digital", "Développer votre visibilité en ligne",
               "Une gamme complète de services de marketing digital pour aider votre entreprise à prospérer "
