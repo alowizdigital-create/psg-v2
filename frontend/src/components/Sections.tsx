@@ -9,6 +9,7 @@ import Defilant from "./Defilant";
 import Icon from "./Icon";
 import ListeSurvol from "./ListeSurvol";
 import Losanges from "./Losanges";
+import TexteGeant from "./TexteGeant";
 import Panneaux from "./Panneaux";
 import { Counter, Reveal, Spotlight, Tilt } from "./Motion";
 import OfferCard from "./OfferCard";
@@ -298,6 +299,9 @@ export function BlocSection({ s, ctx }: { s: Section; ctx: Contexte }) {
         </section>
       );
     }
+
+    case "texte_geant":
+      return s.titre ? <TexteGeant texte={s.titre} second={s.sur_titre} /> : null;
 
     case "losanges":
       return (

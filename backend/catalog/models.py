@@ -151,6 +151,7 @@ class Section(Ordonnable):
         ("survol", "Liste interactive (s'anime au survol)"),
         ("panneaux", "Panneaux d'images qui s'ouvrent au survol"),
         ("losanges", "Grille de logos en losanges (réseaux sociaux, partenaires)"),
+        ("texte_geant", "Texte géant qui défile au défilement de la page"),
     ]
 
     page = models.CharField("page", max_length=20, choices=PAGES, db_index=True)

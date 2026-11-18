@@ -12,7 +12,7 @@ export type Element = {
 export type SectionType =
   | "entete" | "texte" | "cartes" | "tuiles" | "lignes" | "galerie" | "personnes"
   | "chiffres" | "liste" | "video" | "liens" | "entreprises" | "offres" | "cta"
-  | "ouverture" | "defilant" | "survol" | "panneaux" | "losanges";
+  | "ouverture" | "defilant" | "survol" | "panneaux" | "losanges" | "texte_geant";
 
 export type Section = {
   id: number;

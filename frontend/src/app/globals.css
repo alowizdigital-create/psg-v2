@@ -991,3 +991,19 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0; }
 @keyframes forme-flotte { 0% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(20px, -30px) rotate(12deg); } 100% { transform: translate(-15px, 20px) rotate(-8deg); } }
 .losanges .badge-rotatif { z-index: 1; }
 @media (max-width: 640px) { .losanges-forme { opacity: 0.35; } .losanges .badge-rotatif { display: none; } }
+
+/* --- Texte géant qui défile (inspiré de derin15.com) --------------------------------- */
+.texte-geant { position: relative; background: #0f0f0f; padding: clamp(60px, 10vw, 150px) 0 clamp(90px, 12vw, 170px); overflow: hidden; isolation: isolate; }
+.texte-geant-rangee { display: flex; width: max-content; white-space: nowrap; will-change: transform; }
+.texte-geant-rangee > span {
+  font-family: var(--font-display); font-weight: 800; line-height: 1.05; letter-spacing: -0.01em;
+  font-size: clamp(4rem, 15vw, 15rem); padding-right: 0.25em; display: inline-flex; align-items: center;
+}
+.texte-geant-rangee.plein > span { color: var(--white); }
+.texte-geant-rangee.evide > span {
+  color: #0f0f0f;
+  text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1.5px 1.5px 0 #fff, -1.5px -1.5px 0 #fff, 1.5px -1.5px 0 #fff, -1.5px 1.5px 0 #fff;
+}
+.geant-etoile { font-size: 0.35em; color: var(--accent); padding-left: 0.5em; }
+.texte-geant-rangee.evide .geant-etoile { color: var(--primary-light); text-shadow: none; }
+@media (max-width: 640px) { .texte-geant { padding-bottom: 130px; } }

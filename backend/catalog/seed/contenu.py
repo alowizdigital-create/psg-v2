@@ -84,6 +84,7 @@ DIGITAL_LOSANGES = S(
     "losanges", "Présence en ligne", "Nous faisons vivre votre marque sur tous les réseaux",
     elements=[E(nom, en_avant=(nom == "Facebook")) for nom in RESEAUX],  # en avant = au centre
 )
+DIGITAL_TEXTE_GEANT = S("texte_geant", titre="PS DIGITAL")
 DIGITAL_SURVOL = {"sur_titre": "Nos expertises", "titre": "Ce que nous faisons pour vous"}
 
 PAGES = {
@@ -292,6 +293,7 @@ ENTREPRISES = [
                     "modélisation crée des visuels époustouflants qui donnent vie à vos idées et captivent "
                     "votre public.")),
             ]),
+            DIGITAL_TEXTE_GEANT,
         ],
     },
     {

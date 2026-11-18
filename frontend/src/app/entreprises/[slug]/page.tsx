@@ -29,7 +29,8 @@ export default async function PageEntreprise({ params }: Props) {
       )}
       <div id="contenu" />
       <Sections sections={e.sections} ctx={{ offres: e.offres.map((o) => ({ ...o, entreprise: e })) }} />
-      {e.offres.length > 0 && (
+      {/* Grille des offres, sauf si la page présente déjà son catalogue (panneaux ou bloc d'offres). */}
+      {e.offres.length > 0 && !e.sections.some((s) => s.type === "panneaux" || s.type === "offres") && (
         <section className="section section-alt">
           <div className="container">
             <Reveal className="section-head center">

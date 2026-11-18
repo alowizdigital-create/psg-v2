@@ -52,6 +52,6 @@ def test_seed_page_ps_digital_avec_blocs_animes(settings, tmp_path):
     call_command("seed_contenu", "--sans-offres", verbosity=0)
     page = APIClient().get("/api/entreprises/psdigital/").json()
     types = [s["type"] for s in page["sections"]]
-    assert types == ["panneaux", "losanges", "ouverture", "defilant", "survol"]
+    assert types == ["panneaux", "losanges", "ouverture", "defilant", "survol", "texte_geant"]
     ouverture = page["sections"][2]
     assert ouverture["titre"] == "Êtes-vous prêt ?" and [e["titre"] for e in ouverture["elements"]][0] == "Digital"
